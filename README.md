@@ -1,6 +1,5 @@
-# Django Practice Assessment
+# Group a-20 Tutor Me Project :)
 
-__Name:__
+__Name:__ David lee
 
-__Computing ID:__
-
+__Computing ID:__ djl7wj
