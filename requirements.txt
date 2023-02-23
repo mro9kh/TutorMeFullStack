@@ -5,3 +5,6 @@ Django
 gunicorn
 
 django-heroku
+
+# for google login
+django-allauth
