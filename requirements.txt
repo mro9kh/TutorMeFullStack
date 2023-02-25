@@ -5,3 +5,14 @@ Django
 gunicorn
 
 django-heroku
+
+# for google login
+django-allauth
+
+#PostgreSQL Database
+dj-database-url
+
+psycopg2
+
+
+
