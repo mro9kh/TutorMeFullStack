@@ -1,4 +1,3 @@
-
 from django.contrib.auth import login
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView
@@ -20,7 +19,7 @@ class StudentSignUpView(CreateView):
 
     def form_valid(self, form):
         user = form.save()
-        login(self.request, user)
+        login(self.request, user, backend='django.contrib.auth.backends.ModelBackend')
         return redirect('student_home')
     
 class TutorSignUpView(CreateView):
@@ -34,7 +33,7 @@ class TutorSignUpView(CreateView):
 
     def form_valid(self, form):
         user = form.save()
-        login(self.request, user)
+        login(self.request, user, backend='django.contrib.auth.backends.ModelBackend')
         return redirect('tutor_home')
     
 
