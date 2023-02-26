@@ -8,26 +8,26 @@ class StudentSignUpForm(forms.ModelForm):
 
     class Meta:
         model = Student
-        fields = ('user', 'email', 'name', 'year' )
+        fields = ('user', 'name', 'year',)
 
     @transaction.atomic
     def save(self):
         user = super().save(commit=False)
         user.is_student = True
         user.save()
-        student = Student.objects.create(user=user)
+        #student = Student.objects.create(user=user)
         return user
     
 class TutorSignUpForm(forms.ModelForm):
 
     class Meta:
         model = Tutor
-        fields = ('user', 'email', 'name', 'year' )
+        fields = ('user', 'name', 'year',)
 
     @transaction.atomic
     def save(self):
         user = super().save(commit=False)
         user.is_tutor = True
         user.save()
-        tutor = Tutor.objects.create(user=user)
+        #tutor = Tutor.objects.create(user=user)
         return user
