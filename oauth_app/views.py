@@ -1,17 +1,33 @@
-from allauth.account.views import login
-from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+
+from django.contrib.auth import login
+from django.shortcuts import redirect, render
 from django.views.generic import CreateView
+from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth.decorators import user_passes_test
 
 
-# Create your views here.
+from .forms import StudentSignUpForm, TutorSignUpForm
+from .models import User, Student, Tutor
 
+class StudentSignUpView(CreateView):
+    model = Student
+    form_class = StudentSignUpForm
+    template_name = 'registration/signup_form.html'
 
-# allow signup as tutor (model of tutor user)
-class TutorSignupView(CreateView):
+    def get_context_data(self, **kwargs):
+        kwargs['user_type'] = 'student'
+
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('student_home')
+    
+class TutorSignUpView(CreateView):
     model = User
-    form_class = TutorSignUpForm  # need a form html
-    template_name = ''
+    form_class = TutorSignUpForm
+    template_name = 'registration/signup_form.html'
 
     def get_context_data(self, **kwargs):
         kwargs['user_type'] = 'tutor'
@@ -20,20 +36,6 @@ class TutorSignupView(CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('accounts/home')
+        return redirect('tutor_home')
+    
 
-
-# allow signup as student (model of student user)
-class StudentSignupView(CreateView):
-    model = User
-    form_class = StudentSignUpForm  # same as above
-    template_name = ''
-
-    def get_context_data(self, **kwargs):
-        kwargs['user_type'] = 'student'
-        return super().get_context_data(**kwargs)
-
-    def form_valid(self, form):
-        user = form.save()
-        login(self.request, user)
-        return redirect('accounts/home')

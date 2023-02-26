@@ -17,13 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LogoutView
+from oauth_app import views
 
 urlpatterns = [
-    # path('', include('mysite.urls')),
+    #path('', include('mysite.urls')),
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name="home.html")),
-    path('accounts/signup', TemplateView.as_view(template_name="signup.html")),
-    path('accounts/home', TemplateView.as_view(template_name="welcome.html")),
+    path('', TemplateView.as_view(template_name="welcome.html"), name='welcome'),
     path('accounts/', include('allauth.urls')),
+    path('accounts/signup/choice', TemplateView.as_view(template_name="signup.html"), name='signup'),
+    path('accounts/signup/student/', views.StudentSignUpView.as_view(), name='student_signup'),
+    path('accounts/signup/tutor/', views.TutorSignUpView.as_view(), name='tutor_signup'),
+    path('accounts/home/student/', TemplateView.as_view(template_name="student/home.html"), name='student_home'),
+    path('accounts/home/tutor/', TemplateView.as_view(template_name="tutor/home.html"), name='tutor_home'),
     path('logout', LogoutView.as_view()),
 ]
