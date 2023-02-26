@@ -34,7 +34,7 @@ AUTH_USER_MODEL = 'oauth_app.User'
 # Application definition
 
 INSTALLED_APPS = [
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -43,8 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'oauth_app',
     'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
+    'allauth.account',
+    'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
 ]
 
