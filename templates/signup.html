@@ -1,0 +1,24 @@
+{% load socialaccount %}
+<html>
+<body>
+<h1>Tutor Me </h1>
+  {% if user.is_authenticated %}
+    <p>You are logged in with {{ user.email }}</p>
+    <p>Choose an option</p>
+    <form method="post" action="{% url 'delete_client' client.id %}">
+        {% csrf_token %}
+        <button type="submit">Sign Up as a Student</button>
+    </form>
+    <a class="btn btn-primary" href=http://127.0.0.1:8000/accounts/home role="button">Sign Up as a Student</button>
+
+
+     </br>
+
+  
+    <a class="btn btn-primary" href=http://127.0.0.1:8000/accounts/home role="button">Sign Up as a Tutor</button>
+
+{% else %}
+        <a href="{% provider_login_url 'google' %}">Sign Up With Google</a>
+{% endif %}
+</body>
+</html>
