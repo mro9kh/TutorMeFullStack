@@ -6,6 +6,7 @@ from django.views.generic import CreateView
 
 # Create your views here.
 
+
 # allow signup as tutor (model of tutor user)
 class TutorSignupView(CreateView):
     model = User
