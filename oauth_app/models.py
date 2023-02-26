@@ -1,3 +1,4 @@
+from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.signals import post_save
@@ -24,6 +25,13 @@ class User(AbstractUser):
 
 
 # Tutor model
+
+class TutorManager(BaseUserManager):
+    def get_queryset(self, *args, **kwargs):
+        results = super().get_queryset(*args, **kwargs)
+        return results.filter(role=User.Role.TUTOR)
+
+
 class Tutor(User):
     base_role = User.Role.TUTOR
 
@@ -44,6 +52,13 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 # ***********************************************************************************************************************
 # Student model
+
+class StudentManager(BaseUserManager):
+    def get_queryset(self, *args, **kwargs):
+        results = super().get_queryset(*args, **kwargs)
+        return results.filter(role=User.Role.STUDENT)
+
+
 class Student(User):
     base_role = User.Role.STUDENT
 
