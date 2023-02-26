@@ -1,15 +1,11 @@
+{% load socialaccount %}
 <html>
 <body>
 <h1>Tutor Me </h1>
-<p>Choose an option</p>
-<a class="btn btn-primary" href=http://127.0.0.1:8000/accounts/home role="button">I already have an account</button>
-
-
-</br>
-
-
-<a class="btn btn-primary" href=http://127.0.0.1:8000/accounts/signup/student role="button">Create an Account</button>
-
-
+{% if user.is_authenticated %}
+  <p>Welcome, You are logged in as {{ user.username }}</p>
+{% else %}
+  <a href="{% provider_login_url 'google' %}">Sign Up With Google</a>
+{% endif %}
 </body>
 </html>

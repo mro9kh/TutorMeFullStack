@@ -1,0 +1,15 @@
+{% load socialaccount %}
+<html>
+<body>
+<h1>Tutor Me: Home</h1>
+{% if user.is_authenticated %}
+    {% if user.is_tutor %}
+        <p>Welcome, You are logged in as {{ user.username }}, a tutor</p>
+    {% else %} 
+        <p>Welcome, You are logged in as {{ user.username }}, a student</p>
+    {% endif %} 
+{% else %} 
+    <p> user is not recognized </p>
+{% endif %}
+</body>
+</html>
