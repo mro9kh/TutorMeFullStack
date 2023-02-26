@@ -29,6 +29,7 @@ DEBUG = True
 # added allowed hosts :)
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'tutor-me-uva-ed.herokuapp.com']
 
+AUTH_USER_MODEL = 'oauth_app.User'
 
 # Application definition
 
@@ -156,6 +157,10 @@ AUTH_USER_MODEL = 'oauth_app.User'
 
 SITE_ID = 5
 
+SOCIALACCOUNT_QUERY_EMAIL = True
+
+
+# ACCOUNT_SIGNUP_REDIRECT_URL = 'accounts/signup'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 

@@ -1,3 +1,4 @@
+
 from django.contrib.auth import login
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView
@@ -15,6 +16,7 @@ class StudentSignUpView(CreateView):
 
     def get_context_data(self, **kwargs):
         kwargs['user_type'] = 'student'
+
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
@@ -36,3 +38,4 @@ class TutorSignUpView(CreateView):
         login(self.request, user)
         return redirect('tutor_home')
     
+

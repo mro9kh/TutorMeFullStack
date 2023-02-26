@@ -16,3 +16,4 @@ class Tutor(models.Model):
     email = models.TextField(max_length=200)
     name = models.TextField(max_length=200)
     year = models.TextField(max_length=500)
+
