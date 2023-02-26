@@ -152,10 +152,13 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-SITE_ID = 4
+AUTH_USER_MODEL = 'oauth_app.User'
+
+SITE_ID = 5
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
 
 try:
     if 'HEROKU' in os.environ:
