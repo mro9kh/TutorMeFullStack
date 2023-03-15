@@ -29,5 +29,6 @@ urlpatterns = [
     path('accounts/signup/tutor/', views.TutorSignUpView.as_view(), name='tutor_signup'),
     path('accounts/home/student/', TemplateView.as_view(template_name="student/home.html"), name='student_home'),
     path('accounts/home/tutor/', TemplateView.as_view(template_name="tutor/home.html"), name='tutor_home'),
+    path('accounts/home/addclass', views.addclass, name="addclass"),
     path('logout', LogoutView.as_view()),
 ]
