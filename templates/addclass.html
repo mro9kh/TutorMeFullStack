@@ -6,6 +6,7 @@
     {{ form.as_p }}
     <input type="submit" value = "Submit">
 </form>
+
 {% block content %} 
     </br>
     <p><strong>{{ department }}</strong> <strong>{{ catalog_number }}</strong> {{ message }}</p>
@@ -13,6 +14,10 @@
 
 <div class = "container" style = "padding-top: 2cm;">
     <h3>Return to home</h3>
-    <a class="btn btn-primary" href=http://127.0.0.1:8000/ role="button">return to home</button>
+    {% if user.is_student %}
+        <a class="btn btn-primary" href= '/accounts/home/student/' role="button">return to home</button>
+    {% else %} 
+        <a class="btn btn-primary" href= '/accounts/home/tutor/' role="button">return to home</button>
+    {% endif %}
 
 </div>

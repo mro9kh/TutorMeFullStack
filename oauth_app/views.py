@@ -20,10 +20,13 @@ def addclass(request):
         catalog_number = formData["catalog_number"]
         urlQuery = 'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject=' + department + '&catalog_nbr=' + catalog_number
         response = requests.get(urlQuery)
-        sisjson = response.json()
-        if len(sisjson)==0:
+        sisjsonTotal = response.json()
+        if len(sisjsonTotal)==0:
             message = "is not a valid course in Spring 2023"
         else:
+            sisjson = sisjsonTotal[0]
+            department = sisjson["subject"]
+            catalog_number = sisjson["catalog_nbr"]
             message = "is a valid course in Spring 2023"
     else:
         form = addClassForm()
