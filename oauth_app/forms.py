@@ -29,3 +29,7 @@ class TutorSignUpForm(UserCreationForm):
         user.save()
         tutor = Tutor.objects.create(user=user)
         return user
+    
+class addClassForm(forms.Form):
+    department = forms.CharField(max_length = 4)
+    catalog_number =  forms.CharField(max_length = 4)

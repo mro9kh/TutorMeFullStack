@@ -1,6 +1,18 @@
 
+<h3>Search a class.</h3>
 
+<form action="" method="post" novalidate>
+    {% csrf_token %} 
+    {{ form.as_p }}
+    <input type="submit" value = "Submit">
+</form>
 {% block content %} 
-    <h2>Class Info</h2>
-    <p><strong>{{ department }}</strong> <strong>{{ catalog_number }}</strong> is a valid course in Spring 2023</p>
+    </br>
+    <p><strong>{{ department }}</strong> <strong>{{ catalog_number }}</strong> {{ message }}</p>
 {% endblock %}
+
+<div class = "container" style = "padding-top: 2cm;">
+    <h3>Return to home</h3>
+    <a class="btn btn-primary" href=http://127.0.0.1:8000/ role="button">return to home</button>
+
+</div>

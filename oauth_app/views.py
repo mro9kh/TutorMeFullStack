@@ -6,23 +6,30 @@ from django.contrib.auth.decorators import user_passes_test
 import requests
 
 
-from .forms import StudentSignUpForm, TutorSignUpForm
+from .forms import StudentSignUpForm, TutorSignUpForm, addClassForm
 from .models import User, Student, Tutor
 
 def addclass(request):
-    response = requests.get('https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject=CS&catalog_nbr=1110')
-    sisjson = response.json()
-    if len(sisjson)==0:
-        return render(request, 'addclass.html', {
-        'department': "Not Found",
-        'catalog_number': "Not Found"
-    })
+    department = ""
+    catalog_number = ""
+    message = ""
+    if request.method == 'POST':
+        formData = request.POST
+        form = addClassForm()
+        department = (formData["department"]).upper()
+        catalog_number = formData["catalog_number"]
+        urlQuery = 'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject=' + department + '&catalog_nbr=' + catalog_number
+        response = requests.get(urlQuery)
+        sisjson = response.json()
+        if len(sisjson)==0:
+            message = "is not a valid course in Spring 2023"
+        else:
+            message = "is a valid course in Spring 2023"
     else:
-        sisdata = sisjson[0]
-        return render(request, 'addclass.html', {
-            'department': sisdata["subject"],
-            'catalog_number': sisdata["catalog_nbr"]
-        })
+        form = addClassForm()
+    return render(request, 'addclass.html', {'form':form, 'department':department, 'catalog_number': catalog_number, 'message': message})
+   
+    
 class StudentSignUpView(CreateView):
     model = Student
     form_class = StudentSignUpForm
