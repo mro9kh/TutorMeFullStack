@@ -25,10 +25,28 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    - name: Integration Test- forms (make sure user input is outputted correctly), models (add something to database then see if it exists), views
+    # manually creating data
+    - model: mysite.user
+      pk: 5432
+      fields:
+        is_tutor: 0
+        is_student: 1
+    - model: mysite.user
+      pk: 5433
+      fields:
+        is_tutor: 1
+        is_student: 0
+
+    # unit testing
+    - name: Uploads Correct Title
       run: |
-        pip install flake8
-        flake8
+        
+
     - name: Run Tests
       run: |
         python manage.py test
+
+
+// add class
+// searches class
+// test if student or tutor exists

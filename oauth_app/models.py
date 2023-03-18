@@ -19,3 +19,4 @@ class Tutor(models.Model):
 #   verify_student = models.BooleanField(default=False)
 #   verify_tutor = models.BooleanField(default=False)
 
+
