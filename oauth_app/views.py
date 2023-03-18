@@ -8,7 +8,7 @@ import requests
 from django.db.models import CharField, Value as V
 
 from .forms import StudentSignUpForm, TutorSignUpForm, addClassForm
-from .models import User, Student, Tutor
+from .models import User, Student, Tutor, TutorClasses
 
 
 def addclass(request):
@@ -30,19 +30,22 @@ def addclass(request):
             department = sisjson["subject"]
             catalog_number = sisjson["catalog_nbr"]
             classes = department + catalog_number
-            tutor = Tutor.objects.filter().first()
-            tutor.classes = tutor.classes + classes + "\n"
-            tutor.save()
+            n = request.user
+            n.classes = n.classes + "\n" + classes
+            n.save()
+            # t = TutorClasses(user=n)
+            # t.save()
+            # request.user.classlist.add(t)
+            # tutor = Tutor.objects.filter().first()
+            # tutor.classes = tutor.classes + classes + "\n"
+            # tutor.save()
             message = "is a valid course in Spring 2023"
-            print(tutor.user)
-            print(tutor.classes)
+            print(request.user.classes)
+            print(request.user)
     else:
         form = addClassForm()
     return render(request, 'addclass.html',
                   {'form': form, 'department': department, 'catalog_number': catalog_number, 'message': message})
-
-
-
 
 
 class StudentSignUpView(CreateView):
