@@ -35,6 +35,14 @@ class TutorClasses(models.Model):
     def __str__(self):
         return self.name
 
+class StudentClasses(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="class_list", null=True)
+    name = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.name
+
+
 
 class Classes(models.Model):
     tutorclass = models.ForeignKey(TutorClasses, on_delete=models.CASCADE)
