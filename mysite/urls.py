@@ -15,16 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.urls import path, include
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LogoutView
+from oauth_app import views
 
 urlpatterns = [
     # path('', include('mysite.urls')),
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name="home.html")),
-    path('accounts/signup/student', TemplateView.as_view(template_name="index.html")),
-    path('accounts/home', TemplateView.as_view(template_name="index.html")),
-    path('accounts/', include('allauth.urls')),
-    path('logout', LogoutView.as_view()),
+    path('', TemplateView.as_view(template_name="welcome.html"), name='welcome'),
+    path('accounts/signup/', TemplateView.as_view(template_name="signup.html"), name='signup'),
+    path('accounts/home/student/', TemplateView.as_view(template_name="student/home.html"), name='student_home'),
+    path('accounts/home/tutor/', TemplateView.as_view(template_name="tutor/home.html"), name='tutor_home'),
+    path('accounts/', include('allauth.urls'))
 ]
