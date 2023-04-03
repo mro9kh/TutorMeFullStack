@@ -106,6 +106,7 @@ def tutor_home(request):
     user = request.user
     tutor = user.tutor
     print(tutor)
+    print("hello")
     print("Hello world")
     context = {'tutor': tutor}
     return render(request, 'tutor/home.html', context)
