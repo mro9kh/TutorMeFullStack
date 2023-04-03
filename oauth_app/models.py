@@ -26,7 +26,7 @@ class Student(models.Model):
 class Tutor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     name = models.TextField(max_length=200)
-    year = models.IntegerField()
+    year = models.TextField(max_length=500, default='')
     classes = models.TextField(max_length=500, default='')
     hourly_rate = models.TextField(max_length=500, default='')
 

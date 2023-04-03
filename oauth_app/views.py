@@ -91,22 +91,24 @@ def tutor_list(request):
 
 def edit_tutor_profile(request):
     template = 'tutor/profile.html'
+    tutor = request.user.tutor
     message = ''
     if request.method == 'POST':
-        profile_form = UpdateTutorProfileForm(request.POST, request.FILES, instance=request.user)
+        profile_form = UpdateTutorProfileForm(request.POST, request.FILES, instance=tutor)
         if profile_form.is_valid():
             profile_form.save()
+            print(tutor.name)
             message = 'Your profile is updated successfully'
     else:
-        profile_form = UpdateTutorProfileForm(instance=request.user)
+        profile_form = UpdateTutorProfileForm(instance=tutor)
     return render(request, template, {'profile_form': profile_form, 'message': message})
 
 
 def tutor_home(request):
     user = request.user
     tutor = user.tutor
-    print(tutor)
-    print("hello")
-    print("Hello world")
-    context = {'tutor': tutor}
+    name = tutor.name
+    year = tutor.year
+    hourly_rate = tutor.hourly_rate
+    context = {'name': name, 'year': year, 'hourly_rate': hourly_rate}
     return render(request, 'tutor/home.html', context)
