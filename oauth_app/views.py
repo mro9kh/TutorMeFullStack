@@ -112,3 +112,7 @@ def tutor_home(request):
     hourly_rate = tutor.hourly_rate
     context = {'name': name, 'year': year, 'hourly_rate': hourly_rate}
     return render(request, 'tutor/home.html', context)
+
+
+def print_something():
+    print("Hello world")
