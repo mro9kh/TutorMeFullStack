@@ -18,7 +18,7 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LogoutView
 from oauth_app import views
-from oauth_app.views import tutor_list
+from oauth_app.views import tutor_list, tutor_home
 
 urlpatterns = [
     # path('', include('mysite.urls')),
@@ -30,6 +30,9 @@ urlpatterns = [
     path('accounts/signup/tutor/', views.TutorSignUpView.as_view(), name='tutor_signup'),
     path('accounts/home/student/', tutor_list, name='tutor_list'),
     path('accounts/home/student/', TemplateView.as_view(template_name="student/home.html"), name='student_home'),
+    path('accounts/home/tutor/', tutor_home, name='tutor_home'),
     path('accounts/home/tutor/', TemplateView.as_view(template_name="tutor/home.html"), name='tutor_home'),
     path('accounts/home/addclass/', views.addclass, name="addclass"),
+    path('accounts/home/tutor/profile', views.edit_tutor_profile, name='tutor_profile'),
+    path('logout/', LogoutView.as_view(), name='logout'),
 ]

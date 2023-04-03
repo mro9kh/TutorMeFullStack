@@ -37,3 +37,20 @@ class addClassForm(forms.Form):
     department = forms.CharField(max_length=4)
     catalog_number = forms.CharField(max_length=4)
     classes = Concat('department', V(' '), 'catalog_number', V(''))
+
+
+# Form class to update profile, like name, year, hour rate
+class UpdateTutorProfileForm(forms.ModelForm):
+    name = forms.CharField(max_length=100,
+                           required=True,
+                           widget=forms.TextInput(attrs={'class': 'form-control'}))
+    year = forms.CharField(max_length=100,
+                           required=True,
+                           widget=forms.TextInput(attrs={'class': 'form-control'}))
+    hourly_rate = forms.CharField(max_length=100,
+                                  required=True,
+                                  widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = Tutor
+        fields = ['name', 'year', 'hourly_rate']

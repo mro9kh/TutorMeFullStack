@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import user_passes_test
 import requests
 from django.db.models import CharField, Value as V
 
-from .forms import StudentSignUpForm, TutorSignUpForm, addClassForm
+from .forms import StudentSignUpForm, TutorSignUpForm, addClassForm, UpdateTutorProfileForm
 from .models import User, Student, Tutor, TutorClasses
 
 
@@ -87,3 +87,25 @@ def tutor_list(request):
     context = {'tutors': tutors}
     # template = loader.get_template('student/home.html')
     return render(request, 'student/home.html', context)
+
+
+def edit_tutor_profile(request):
+    template = 'tutor/profile.html'
+    message = ''
+    if request.method == 'POST':
+        profile_form = UpdateTutorProfileForm(request.POST, request.FILES, instance=request.user)
+        if profile_form.is_valid():
+            profile_form.save()
+            message = 'Your profile is updated successfully'
+    else:
+        profile_form = UpdateTutorProfileForm(instance=request.user)
+    return render(request, template, {'profile_form': profile_form, 'message': message})
+
+
+def tutor_home(request):
+    user = request.user
+    tutor = user.tutor
+    print(tutor)
+    print("Hello world")
+    context = {'tutor': tutor}
+    return render(request, 'tutor/home.html', context)
