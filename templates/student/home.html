@@ -1,3 +1,6 @@
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 <html>
 <body>
 <h1>Tutor Me </h1>
@@ -9,6 +12,18 @@
     Username: {{ user.username }}
     Classes: {{ user.classes }}
   </div>
+</br>
+<div class = "container" style = "padding-top: 2cm;">
+    <h3>Available Tutors</h3>
+  {% for tutor in tutors %}
+    <p>Username: {{ tutor.user.username }}</p>
+    <p>Name: {{ tutor.name }}</p>
+    <p>Year: {{ tutor.year }}</p>
+    <p>Classes Taken: {{ tutor.classes }}</p>
+  -----------------------------------------------------------------------------------------------
+{% endfor %}
+  </div>
+
 </br>
 <div class = "container" style = "padding-top: 2cm;">
   <h3>Add a class</h3>

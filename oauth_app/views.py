@@ -1,7 +1,8 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, get_user_model, logout
 from django.db.models.functions import Concat
 from django.shortcuts import redirect, render, get_object_or_404
-from django.views.generic import CreateView
+from django.template import loader
+from django.views.generic import CreateView, ListView
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
 import requests
@@ -40,6 +41,9 @@ def addclass(request):
             # tutor.classes = tutor.classes + classes + "\n"
             # tutor.save()
             message = "is a valid course in Spring 2023"
+            user = get_user_model()
+            all_users = User.objects.all()
+            print(all_users)
             print(request.user.classes)
             print(request.user)
     else:
@@ -76,3 +80,10 @@ class TutorSignUpView(CreateView):
         user = form.save()
         login(self.request, user, backend='django.contrib.auth.backends.ModelBackend')
         return redirect('tutor_home')
+
+
+def tutor_list(request):
+    tutors = Tutor.objects.all()
+    context = {'tutors': tutors}
+    # template = loader.get_template('student/home.html')
+    return render(request, 'student/home.html', context)
