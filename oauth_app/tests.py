@@ -1,5 +1,6 @@
 from django.test import TestCase
 from .models import User, Student, Tutor, Classes
+from .views import addclass, tutor_list, edit_tutor_profile, tutor_home
 
 class UserTestCase(TestCase):
    def test_user_student(self):
@@ -27,10 +28,12 @@ class UserTestCase(TestCase):
        randoUser = User.objects.create(username="testTutor", is_tutor = True, is_student= False)
        test_model = Tutor.objects.create(user=randoUser, name = "two", year = 3)
        self.assertEqual(test_model.year, 3)
+    
 
 
-   def test_user_searchCourse(self):
-       randoClass = User.objects.create(username="testClass", classes = "COMM 1800")
-       self.assertEqual(randoClass, True)
+   def test_course_appears(self):
+       randoUser = User.objects.create(username="testTutor", is_tutor = True, is_student= False)
+       test_model = Tutor.objects.create(user=randoUser, name = "james", year = 3, classes = "COMM 1800")
+       self.assertEqual(test_model.classes, "COMM 1800")
 
     
