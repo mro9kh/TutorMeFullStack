@@ -84,6 +84,8 @@ class TutorSignUpView(CreateView):
 
 def tutor_list(request):
     tutors = Tutor.objects.all()
+    user = request.user
+    print(user.is_student)
     context = {'tutors': tutors}
     # template = loader.get_template('student/home.html')
     return render(request, 'student/home.html', context)
@@ -111,8 +113,6 @@ def tutor_home(request):
     year = tutor.year
     hourly_rate = tutor.hourly_rate
     context = {'name': name, 'year': year, 'hourly_rate': hourly_rate}
+    print(tutor)
     return render(request, 'tutor/home.html', context)
 
-
-def print_something():
-    print("Hello world")

@@ -6,14 +6,12 @@
     {% if user.is_tutor %}
         <meta http-equiv="Refresh" content="0; url={% url 'tutor_home' %}" />
         <!--<a href = "{% url 'tutor_home' %}">Login as Tutor</a>-->
-    {% else %}
-        {% if user.is_student %}
+    {% elif user.is_student %}
          <meta http-equiv="Refresh" content="0; url={% url 'student_home' %}" />
          <!--<a href = "{% url 'student_home' %}">Login as Student</a>-->
-        {% else %}
-         <meta http-equiv="Refresh" content="0; url={% url 'signup' %}" />
-         <!--<a href = "{% url 'signup' %}">Sign Up</a> -->
-        {% endif %}
+    {% else %}
+        <meta http-equiv="Refresh" content="0; url={% url 'signup' %}" />
+        <!--<a href = "{% url 'signup' %}">Sign Up</a> -->
     {% endif %}
 {% else %}
   <a href="{% provider_login_url 'google' %}">Login With Google</a>

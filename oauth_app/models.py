@@ -6,8 +6,11 @@ from django.contrib.auth import get_user_model
 class User(AbstractUser):
     is_student = models.BooleanField(default=False)
     is_tutor = models.BooleanField(default=False)
+
     classes = models.TextField(max_length=500, default='')
     random = models.TextField(max_length=500, default='')
+
+    # mail = models.EmailField(unique=True)
 
 
 class Student(models.Model):
