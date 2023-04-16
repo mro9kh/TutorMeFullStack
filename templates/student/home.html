@@ -7,26 +7,60 @@
   <div class = "container" style = "padding-top: 2cm;">
     <h3>Profile</h3>
     <p>Username: {{ user.username }}</p>
+    <p>Name: {{ name }}</p>
+    <p>Year: {{ year }}</p>
     <p>Classes: {{ user.classes }}</p>
   </div>
 </br>
+  <div class = "container" style = "padding-top: 2cm;">
+    <a class="btn btn-primary" href=/accounts/home/student/profile role="button">edit profile</a>                    </form>
+    <br>
+    <a class="btn btn-primary" href=/accounts/home/addclass role="button">add a class</button></a>                   </form>
+</div>
+<div class = "container" style = "padding-top: 2cm;">
+    <h3>Pending</h3>
+  {% for requests in tutor_requests %}
+  {% if requests.status == False %}
+    <p>Tutor ID: {{requests.session.tutor.user.username}}</p>
+    <p>Name: {{requests.session.tutor.name}}</p>
+    <p>Date: {{ requests.session.date }}</p>
+    <p>Start Time: {{ requests.session.time_start }}</p>
+    <p>End Time: {{ requests.session.time_end }}</p>
+  -----------------------------------------------------------------------------------------------
+  {% endif %}
+    <br>
+{% endfor %}
+  </div>
+<div class = "container" style = "padding-top: 2cm;">
+    <h3>Scheduled</h3>
+  {% for requests in tutor_requests %}
+  {% if requests.status == True %}
+    <p>Tutor ID: {{requests.session.tutor.user.username}}</p>
+    <p>Name: {{requests.session.tutor.name}}</p>
+    <p>Date: {{ requests.session.date }}</p>
+    <p>Start Time: {{ requests.session.time_start }}</p>
+    <p>End Time: {{ requests.session.time_end }}</p>
+  -----------------------------------------------------------------------------------------------
+  {% endif %}
+    <br>
+{% endfor %}
+  </div>
 <div class = "container" style = "padding-top: 2cm;">
     <h3>Available Tutors</h3>
   {% for tutor in tutors %}
     <p>Username: {{ tutor.user.username }}</p>
     <p>Name: {{ tutor.name }}</p>
-    <p>Email: {{ user.email }}</p>
+    <!--<p>Email: {{ user.email }}</p> -->
     <p>Year: {{ tutor.year }}</p>
     <p>Classes Taken: {{ user.classes }}</p>
     <p>Hourly Rate: {{ tutor.hourly_rate }}</p>
+    <p><a class="btn btn-primary" href=/accounts/home/student/{{tutor.user.username}} role="button">schedule session</a></p>
+    <br>
   -----------------------------------------------------------------------------------------------
 {% endfor %}
   </div>
 
 </br>
-<div class = "container" style = "padding-top: 2cm;">
-  <h3>Add a class</h3>
-  <a class="btn btn-primary" href=/accounts/home/addclass role="button">add a class</button>                    </form>
 
 </body>
 </html>

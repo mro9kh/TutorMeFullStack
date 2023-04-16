@@ -82,8 +82,17 @@ class Classes(models.Model):
         return self.text
 
 
+# Model for a tutoring session a tutor can create. Each tutor can have multiple tutor sessions,
+# but each session is only associated with 1 tutor
 class TutoringSession(models.Model):
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE, related_name='tutoring_sessions')
     date = models.DateField()
     time_start = models.TimeField()
     time_end = models.TimeField()
+
+
+class TutoringRequest(models.Model):
+    session = models.ForeignKey(TutoringSession, on_delete=models.CASCADE, related_name='tutoring_requests')
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='student_requests')
+    message = models.TextField(max_length=200, default='')
+    status = models.BooleanField(default=False)

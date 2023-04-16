@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+ <div class="container" style="padding-top: 2cm;">
+    <h3>Edit Profile</h3>
+  </div>
+  <form action="{% url 'student_profile' %}" method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        {{ profile_form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+
+ {% block content %}
+    </br>
+    <p><strong>{{ message }}</strong></p>
+{% endblock %}
+
+ <a class="btn btn-primary" href="/accounts/home/student" role="button">Return to home</a>
+</body>
+</html>

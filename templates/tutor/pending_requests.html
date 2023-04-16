@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class = "container" style = "padding-top: 2cm;">
+    <h3>Pending</h3>
+  {% for requests in tutoring_requests %}
+    <p>Student ID: {{requests.student.user.username}}</p>
+    <p>Name: {{requests.student.name}}</p>
+    <p>Date: {{requests.date }}</p>
+    <p>Start Time: {{ requests.time_start }}</p>
+    <p>End Time: {{ requests.time_end }}</p>
+  -----------------------------------------------------------------------------------------------
+    <br>
+{% endfor %}
+  </div>
+<div class = "container" style = "padding-top: 2cm;">
+  <a class="btn btn-primary" href=/accounts/home/tutor  role="button">return to home</button>  </a>
+</div>
+</body>
+</html>

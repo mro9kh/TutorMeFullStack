@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tutor</title>
+</head>
+<body>
+ <div class = "container" style = "padding-top: 2cm;">
+  <h3> Tutor: {{ name }}</h3>
+     Username: {{username}}
+ </div>
+ <div class = "container" style = "padding-top: 1cm;">
+  <h3>Tutoring Sessions</h3>
+  {% for session in sessions %}
+    <p>Date: {{ session.date }}</p>
+    <p>Start Time: {{ session.time_start }}</p>
+    <p>End Time: {{ session.time_end }}</p>
+     <p><form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+     <input type="hidden" name="session_id" value="{{ session.id }}">
+     <input type="submit" value="Send Request" class="btn btn-primary">
+        </form></p>
+     <br>
+  -----------------------------------------------------------------------------------------------
+{% endfor %}
+ </div>
+  <br>
+ <br>
+ <a class="btn btn-primary" href="/accounts/home/student/" role="button">return to home</a>
+
+</body>
+</html>

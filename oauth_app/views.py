@@ -10,8 +10,9 @@ from django.db.models import CharField, Value as V
 import calendar
 from calendar import HTMLCalendar
 
-from .forms import StudentSignUpForm, TutorSignUpForm, addClassForm, UpdateTutorProfileForm, TutoringSessionForm
-from .models import User, Student, Tutor, TutorClasses, TutoringSession
+from .forms import StudentSignUpForm, TutorSignUpForm, addClassForm, UpdateTutorProfileForm, TutoringSessionForm, \
+    UpdateStudentProfileForm, SendRequestForm
+from .models import User, Student, Tutor, TutorClasses, TutoringSession, TutoringRequest
 
 
 def addclass(request):
@@ -84,11 +85,15 @@ class TutorSignUpView(CreateView):
         return redirect('tutor_home')
 
 
-def tutor_list(request):
+def student_home(request):
     tutors = Tutor.objects.all()
     user = request.user
+    student = user.student
+    name = student.name
+    year = student.year
+    tutor_requests = TutoringRequest.objects.filter(student=student)
     print(user.is_student)
-    context = {'tutors': tutors}
+    context = {'tutors': tutors, 'name': name, 'year': year, 'tutor_requests': tutor_requests}
     # template = loader.get_template('student/home.html')
     return render(request, 'student/home.html', context)
 
@@ -105,6 +110,21 @@ def edit_tutor_profile(request):
             message = 'Your profile is updated successfully'
     else:
         profile_form = UpdateTutorProfileForm(instance=tutor)
+    return render(request, template, {'profile_form': profile_form, 'message': message})
+
+
+def edit_student_profile(request):
+    template = 'student/profile.html'
+    student = request.user.student
+    message = ''
+    if request.method == 'POST':
+        profile_form = UpdateStudentProfileForm(request.POST, request.FILES, instance=student)
+        if profile_form.is_valid():
+            profile_form.save()
+            print(student.name)
+            message = 'Your profile is updated successfully'
+    else:
+        profile_form = UpdateStudentProfileForm(instance=student)
     return render(request, template, {'profile_form': profile_form, 'message': message})
 
 
@@ -138,3 +158,33 @@ def createsession(request):
     else:
         tutoring_form = TutoringSessionForm()
     return render(request, template, {'tutoring_form': tutoring_form, 'message': message})
+
+
+def send_request(request, tutor):
+    uid = User.objects.get(username=tutor)
+    tutor = uid.tutor
+    name = tutor.name
+    tutor_username = tutor.user.username
+    tutoring_sessions = TutoringSession.objects.filter(tutor=tutor).order_by('date')
+    print(tutoring_sessions)
+    if request.method == "POST":
+        form = SendRequestForm(request.POST, request.FILES)
+        if form.is_valid():
+            tutor_request = form.save(commit=False)
+            tutor_request.student = request.user.student
+            tutor_request.session = TutoringSession.objects.get(pk=request.POST['session_id'])
+            tutor_request.save()
+            print(tutor_request.session.date)
+    else:
+        form = SendRequestForm(initial={'student': request.user.student, 'session': tutoring_sessions.first().id})
+    return render(request, 'student/request.html', {'name': name,
+                                                    'sessions': tutoring_sessions,
+                                                    'username': tutor_username,
+                                                    'form': form})
+
+
+def pending_requests(request):
+    template = 'tutor/pending_requests.html'
+    tutor = request.user.tutor
+    tutoring_requests = TutoringRequest.objects.filter(session__tutor=tutor, status=False)
+    return render(request, template, {'requests': tutoring_requests})

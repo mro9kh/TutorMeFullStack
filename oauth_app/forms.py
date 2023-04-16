@@ -5,7 +5,7 @@ from django.db import transaction
 from django.db.models.functions import Concat
 from django.db.models import CharField, Value as V
 
-from .models import Student, Tutor, User, TutoringSession
+from .models import Student, Tutor, User, TutoringSession, TutoringRequest
 
 
 class StudentSignUpForm(UserCreationForm):
@@ -56,6 +56,19 @@ class UpdateTutorProfileForm(forms.ModelForm):
         fields = ['name', 'year', 'hourly_rate']
 
 
+class UpdateStudentProfileForm(forms.ModelForm):
+    name = forms.CharField(max_length=100,
+                           required=True,
+                           widget=forms.TextInput(attrs={'class': 'form-control'}))
+    year = forms.ChoiceField(choices=Tutor.SCHOOL_YEAR,
+                             required=True,
+                             widget=forms.Select(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = Tutor
+        fields = ['name', 'year']
+
+
 # Form class to be able to create a tutoring session for a specific tutor
 class TutoringSessionForm(forms.ModelForm):
     date = forms.DateField()
@@ -65,3 +78,13 @@ class TutoringSessionForm(forms.ModelForm):
     class Meta:
         model = TutoringSession
         exclude = ['tutor']
+
+
+# Form class that sends tutoring request to tutor
+class SendRequestForm(forms.ModelForm):
+    message = forms.CharField(max_length=200, required=False,
+                              initial='')
+
+    class Meta:
+        model = TutoringRequest
+        exclude = ['student', 'session', 'status']
