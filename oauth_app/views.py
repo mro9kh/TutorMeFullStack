@@ -37,13 +37,7 @@ def addclass(request):
             n = request.user
             n.classes = n.classes + "\n" + classes
             n.save()
-            # t = TutorClasses(user=n)
-            # t.save()
-            # request.user.classlist.add(t)
-            # tutor = Tutor.objects.filter().first()
-            # tutor.classes = tutor.classes + classes + "\n"
-            # tutor.save()
-            message = "is a valid course in Spring 2023"
+            message = "is successfully added"
             user = get_user_model()
             all_users = User.objects.all()
             print(all_users)
@@ -132,6 +126,7 @@ def find_tutor(request):
     catalog_number = ""
     message = " "
     listOfTutors = []
+    validSessions = []
     template = 'student/find_tutor.html'
     if request.method == 'POST':
         formData = request.POST
@@ -140,31 +135,25 @@ def find_tutor(request):
         catalog_number = formData["catalog_number"]
         classStudent = department + catalog_number #turn into one string
         users = User.objects.all()
+        sessions = TutoringSession.objects.all()
         classData = " "
         matches = 0
         for user in users:
             if(user.is_tutor):
                 tutorClassString = user.classes
                 classData = tutorClassString.split("\n")
-            #need to parse classData for classStudent, if match and need to print the tutor
-            #check a long string for another string contained within it
-            #string.split method? make actual list type
                 if classStudent in classData:
-                    tutorName = user.tutor.name
-                    tutorYear = user.tutor.year
-                    tutorClasses = user.classes
-                    tutorHourly = user.tutor.hourly_rate
-                    toPrint = '\nName: ' + tutorName + " Year: " + tutorYear + " Classes taken: " + tutorClasses + " Hourly Rate: " + str(tutorHourly)
                     listOfTutors.append(user)
                     matches += 1
-            
+                    for session in sessions:
+                        if session.tutor_id == user.tutor.user_id:
+                            validSessions.append(session)
         message = "Number of tutors found for " + classStudent + " are: " + str(matches)
 
     else:
         form = findTutorForm()
-    # get something from data table (json equivalent), parse it, change existing variable if match is made (an array), add that variable to message
     return render(request, 'find_tutor.html',
-                  {'form': form, 'department': department, 'catalog_number': catalog_number, 'message': message, 'tutorList': listOfTutors})
+                  {'form': form, 'department': department, 'catalog_number': catalog_number, 'message': message, 'tutorList': listOfTutors, 'sessions':validSessions})
 
 
 
