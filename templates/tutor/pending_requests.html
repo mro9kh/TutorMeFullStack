@@ -8,7 +8,7 @@
 
 <div class = "container" style = "padding-top: 2cm;">
     <h3>Pending</h3>
-  {% for requests in tutoring_requests %}
+  {% for requests in requests %}
     <p>Student ID: {{requests.student.user.username}}</p>
     <p>Name: {{requests.student.name}}</p>
     <p>Date: {{requests.date }}</p>
