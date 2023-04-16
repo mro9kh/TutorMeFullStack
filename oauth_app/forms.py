@@ -38,6 +38,11 @@ class addClassForm(forms.Form):
     catalog_number = forms.CharField(max_length=4)
     classes = Concat('department', V(' '), 'catalog_number', V(''))
 
+class findTutorForm(forms.Form):
+    department = forms.CharField(max_length=4)
+    catalog_number = forms.CharField(max_length=4)
+    classes = Concat('department', V(' '), 'catalog_number', V(''))
+
 
 # Form class to update profile, like name, year, hour rate
 class UpdateTutorProfileForm(forms.ModelForm):

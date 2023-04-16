@@ -11,22 +11,11 @@
   </div>
 </br>
 <div class = "container" style = "padding-top: 2cm;">
-    <h3>Available Tutors</h3>
-  {% for tutor in tutors %}
-    <p>Username: {{ tutor.user.username }}</p>
-    <p>Name: {{ tutor.name }}</p>
-    <p>Email: {{ user.email }}</p>
-    <p>Year: {{ tutor.year }}</p>
-    <p>Classes Taken: {{ user.classes }}</p>
-    <p>Hourly Rate: {{ tutor.hourly_rate }}</p>
-  -----------------------------------------------------------------------------------------------
-{% endfor %}
-  </div>
-
+  <a class="btn btn-primary" href=/accounts/home/find-tutor role="button">Find a tutor</button>
+  </div>    
 </br>
-<div class = "container" style = "padding-top: 2cm;">
-  <h3>Add a class</h3>
-  <a class="btn btn-primary" href=/accounts/home/addclass role="button">add a class</button>                    </form>
-
+<div class = "container" style = "padding-top: 1cm;">
+  <a class="btn btn-primary" href=/accounts/home/addclass role="button">Add a class</button>
+  </div>
 </body>
 </html>

@@ -1,0 +1,21 @@
+<h3>Find a tutor</h3>
+
+<form action="" method="post" novalidate>
+    {% csrf_token %} 
+    {{ form.as_p }}
+    <input type="submit" value = "Submit">
+</form>
+
+{% block content %}
+<div class = "container" style = "padding-top: 2cm;">
+    <h3><strong>{{ message }}</strong></h3>
+    {% for user in tutorList %}
+        <p>Name: {{ user.tutor.name}}</p>
+        <p>Year: {{ user.tutor.year }}</p>
+        <p>Classes Taken: {{ user.classes }}</p>
+        <p>Hourly Rate: $ {{ user.tutor.hourly_rate }}</p>
+        -----------------------------------------------------------------------------------------------
+        </br>
+    {% endfor %}
+</div>
+{% endblock %}

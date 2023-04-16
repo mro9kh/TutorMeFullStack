@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import user_passes_test
 import requests
 from django.db.models import CharField, Value as V
 
-from .forms import StudentSignUpForm, TutorSignUpForm, addClassForm, UpdateTutorProfileForm
+from .forms import StudentSignUpForm, TutorSignUpForm, addClassForm, UpdateTutorProfileForm, findTutorForm
 from .models import User, Student, Tutor, TutorClasses
 
 
@@ -104,6 +104,71 @@ def edit_tutor_profile(request):
     else:
         profile_form = UpdateTutorProfileForm(instance=tutor)
     return render(request, template, {'profile_form': profile_form, 'message': message})
+
+def find_tutor(request):
+    department = ""
+    catalog_number = ""
+    message = " "
+    listOfTutors = []
+    template = 'student/find_tutor.html'
+    if request.method == 'POST':
+        formData = request.POST
+        form = findTutorForm()
+        department = (formData["department"]).upper()
+        catalog_number = formData["catalog_number"]
+        classStudent = department + catalog_number #turn into one string
+        users = User.objects.all()
+        classData = " "
+        matches = 0
+        for user in users:
+            if(user.is_tutor):
+                tutorClassString = user.classes
+                classData = tutorClassString.split("\n")
+            #need to parse classData for classStudent, if match and need to print the tutor
+            #check a long string for another string contained within it
+            #string.split method? make actual list type
+                if classStudent in classData:
+                    tutorName = user.tutor.name
+                    tutorYear = user.tutor.year
+                    tutorClasses = user.classes
+                    tutorHourly = user.tutor.hourly_rate
+                    toPrint = '\nName: ' + tutorName + " Year: " + tutorYear + " Classes taken: " + tutorClasses + " Hourly Rate: " + tutorHourly
+                    listOfTutors.append(user)
+                    matches += 1
+            
+        message = "Number of tutors found for " + classStudent + " are: " + str(matches)
+
+    else:
+        form = findTutorForm()
+    # get something from data table (json equivalent), parse it, change existing variable if match is made (an array), add that variable to message
+    return render(request, 'find_tutor.html',
+                  {'form': form, 'department': department, 'catalog_number': catalog_number, 'message': message, 'tutorList': listOfTutors})
+
+"""""
+        urlQuery = 'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject=' + department + '&catalog_nbr=' + catalog_number
+        response = requests.get(urlQuery)
+        sisjsonTotal = response.json()
+        if len(sisjsonTotal) == 0:
+            message = "is not a valid course in Spring 2023"
+        else:
+            sisjson = sisjsonTotal[0]
+            department = sisjson["subject"]
+            catalog_number = sisjson["catalog_nbr"]
+            classes = department + catalog_number
+            n = request.user
+            n.classes = n.classes + "\n" + classes
+            n.save()
+            message = "is a valid course in Spring 2023"
+            user = get_user_model()
+            all_users = User.objects.all()
+            print(all_users)
+            print(request.user.classes)
+            print(request.user)
+    else:
+        form = addClassForm()
+        """
+    
+
 
 
 def tutor_home(request):
