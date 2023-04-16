@@ -8,12 +8,12 @@
 
 <div class = "container" style = "padding-top: 2cm;">
     <h3>Pending</h3>
-  {% for requests in requests %}
-    <p>Student ID: {{requests.student.user.username}}</p>
-    <p>Name: {{requests.student.name}}</p>
-    <p>Date: {{requests.date }}</p>
-    <p>Start Time: {{ requests.time_start }}</p>
-    <p>End Time: {{ requests.time_end }}</p>
+  {% for request in requests %}
+    <p>Student ID: {{request.student.user.username}}</p>
+    <p>Name: {{request.student.name}}</p>
+    <p>Date: {{request.session.date }}</p>
+    <p>Start Time: {{ request.session.time_start }}</p>
+    <p>End Time: {{ request.session.time_end }}</p>
   -----------------------------------------------------------------------------------------------
     <br>
 {% endfor %}
