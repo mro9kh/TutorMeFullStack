@@ -38,6 +38,7 @@ urlpatterns = [
     path('accounts/home/tutor/profile', views.edit_tutor_profile, name='tutor_profile'),
     path('accounts/home/tutor/createsession', views.createsession, name="tutoring_session"),
     path('accounts/home/tutor/requests', views.pending_requests, name="pending_requests"),
+    path('accounts/home/tutor/schedule', views.schedule, name="schedule"),
     path('accounts/home/find-tutor', views.find_tutor, name='find-tutor'),
 
     path('logout/', LogoutView.as_view(), name='logout'),

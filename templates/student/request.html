@@ -15,6 +15,7 @@
     <p>Date: {{ session.date }}</p>
     <p>Start Time: {{ session.time_start }}</p>
     <p>End Time: {{ session.time_end }}</p>
+     <p>Session ID: {{session.id}}</p>
      <p><form method="POST">
             {% csrf_token %}
             {{ form.as_p }}

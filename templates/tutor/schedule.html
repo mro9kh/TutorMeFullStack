@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class = "container" style = "padding-top: 2cm;">
+    <h3>Scheduled</h3>
+  {% for session in tutoring_schedule %}
+    <p>Student ID: {{session.student.user.username}}</p>
+    <p>Name: {{session.student.name}}</p>
+    <p>Date: {{ session.session.date }}</p>
+    <p>Start Time: {{ session.session.time_start }}</p>
+    <p>End Time: {{ session.session.time_end }}</p>
+  -----------------------------------------------------------------------------------------------
+    <br>
+{% endfor %}
+  </div>
+  </div>
+<div class = "container" style = "padding-top: 2cm;">
+  <a class="btn btn-primary" href=/accounts/home/tutor  role="button">return to home</button>  </a>
+</div>
+
+</body>
+</html>

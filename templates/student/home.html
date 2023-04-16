@@ -28,7 +28,7 @@
 <div class = "container" style = "padding-top: 2cm;">
     <h3>Pending</h3>
   {% for requests in tutor_requests %}
-  {% if requests.status == False %}
+  {% if requests.status == None %}
     <p>Tutor ID: {{requests.session.tutor.user.username}}</p>
     <p>Name: {{requests.session.tutor.name}}</p>
     <p>Date: {{ requests.session.date }}</p>

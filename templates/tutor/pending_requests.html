@@ -8,12 +8,20 @@
 
 <div class = "container" style = "padding-top: 2cm;">
     <h3>Pending</h3>
-  {% for request in requests %}
-    <p>Student ID: {{request.student.user.username}}</p>
-    <p>Name: {{request.student.name}}</p>
-    <p>Date: {{request.session.date }}</p>
-    <p>Start Time: {{ request.session.time_start }}</p>
-    <p>End Time: {{ request.session.time_end }}</p>
+  {% for tutoring_request in tutoring_requests %}
+    <p>Student ID: {{tutoring_request.student.user.username}}</p>
+    <p>Name: {{tutoring_request.student.name}}</p>
+    <p>Date: {{tutoring_request.session.date }}</p>
+    <p>Start Time: {{ tutoring_request.session.time_start }}</p>
+    <p>End Time: {{ tutoring_request.session.time_end }}</p>
+    <p>Session ID: {{ tutoring_request.id }}</p>
+    <p><form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+     <input type="hidden" name="tutoring_request_id" value="{{ tutoring_request.id }}">
+     <input type="submit" value="Accept Request" class="btn btn-primary">
+     </form></p>
+    <br>
   -----------------------------------------------------------------------------------------------
     <br>
 {% endfor %}

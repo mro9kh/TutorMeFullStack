@@ -39,6 +39,7 @@ class addClassForm(forms.Form):
     catalog_number = forms.CharField(max_length=4)
     classes = Concat('department', V(' '), 'catalog_number', V(''))
 
+
 class findTutorForm(forms.Form):
     department = forms.CharField(max_length=4)
     catalog_number = forms.CharField(max_length=4)
@@ -93,3 +94,13 @@ class SendRequestForm(forms.ModelForm):
     class Meta:
         model = TutoringRequest
         exclude = ['student', 'session', 'status']
+
+
+# Form that allows tutors to accept requests. It does this by
+# changing status of request from False to True
+class AcceptRequestForm(forms.ModelForm):
+    status = forms.BooleanField(required=None)
+
+    class Meta:
+        model = TutoringRequest
+        exclude = ['student', 'session', 'message']

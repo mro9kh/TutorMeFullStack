@@ -11,7 +11,7 @@ import calendar
 from calendar import HTMLCalendar
 
 from .forms import StudentSignUpForm, TutorSignUpForm, addClassForm, UpdateTutorProfileForm, TutoringSessionForm, \
-    UpdateStudentProfileForm, SendRequestForm, findTutorForm
+    UpdateStudentProfileForm, SendRequestForm, findTutorForm, AcceptRequestForm
 from .models import User, Student, Tutor, TutorClasses, TutoringSession, TutoringRequest
 
 
@@ -199,7 +199,9 @@ def send_request(request, tutor):
     if request.method == "POST":
         form = SendRequestForm(request.POST, request.FILES)
         if form.is_valid():
+            print(request.POST['session_id'])
             tutor_request = form.save(commit=False)
+            tutor_request.status = None
             tutor_request.student = request.user.student
             tutor_request.session = TutoringSession.objects.get(pk=request.POST['session_id'])
             tutor_request.save()
@@ -215,5 +217,25 @@ def send_request(request, tutor):
 def pending_requests(request):
     template = 'tutor/pending_requests.html'
     tutor = request.user.tutor
-    tutoring_requests = TutoringRequest.objects.filter(session__tutor=tutor, status=False)
-    return render(request, template, {'requests': tutoring_requests})
+    tutoring_requests = TutoringRequest.objects.filter(session__tutor=tutor, status=None)
+    if request.method == "POST":
+        form = AcceptRequestForm(request.POST, request.FILES)
+        if form.is_valid():
+            # print(form.cleaned_data.keys())
+            print(request.POST['tutoring_request_id'])
+            tutor_request = TutoringRequest.objects.get(pk=request.POST['tutoring_request_id'])
+            tutor_request.status = True
+            tutor_request.save()
+            print(tutor_request.status)
+            print(tutor_request.session.date)
+            return redirect('pending_requests')
+    else:
+        form = SendRequestForm()
+    return render(request, template, {'tutoring_requests': tutoring_requests, 'form': form})
+
+
+def schedule(request):
+    template = 'tutor/schedule.html'
+    tutor = request.user.tutor
+    tutoring_schedule = TutoringRequest.objects.filter(session__tutor=tutor, status=True).order_by('session__date')
+    return render(request, template, {'tutoring_schedule': tutoring_schedule})
