@@ -7,9 +7,11 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
 import requests
 from django.db.models import CharField, Value as V
+import calendar
+from calendar import HTMLCalendar
 
-from .forms import StudentSignUpForm, TutorSignUpForm, addClassForm, UpdateTutorProfileForm
-from .models import User, Student, Tutor, TutorClasses
+from .forms import StudentSignUpForm, TutorSignUpForm, addClassForm, UpdateTutorProfileForm, TutoringSessionForm
+from .models import User, Student, Tutor, TutorClasses, TutoringSession
 
 
 def addclass(request):
@@ -112,7 +114,27 @@ def tutor_home(request):
     name = tutor.name
     year = tutor.year
     hourly_rate = tutor.hourly_rate
-    context = {'name': name, 'year': year, 'hourly_rate': hourly_rate}
+    tutoring_sessions = TutoringSession.objects.filter(tutor=tutor)
+    context = {'name': name, 'year': year, 'hourly_rate': hourly_rate, 'sessions': tutoring_sessions}
     print(tutor)
+    print(tutoring_sessions)
     return render(request, 'tutor/home.html', context)
 
+
+# Process and create a tutoring session
+def createsession(request):
+    template = 'tutor/createsession.html'
+    tutor = request.user.tutor
+    message = ''
+    if request.method == 'POST':
+        tutoring_form = TutoringSessionForm(request.POST, request.FILES)
+        if tutoring_form.is_valid():
+            tutoring_session = tutoring_form.save(commit=False)
+            tutoring_session.tutor = tutor
+            tutoring_session.save()
+            print(tutor)
+            print(tutoring_form.errors)
+            message = 'Your session was created successfully'
+    else:
+        tutoring_form = TutoringSessionForm()
+    return render(request, template, {'tutoring_form': tutoring_form, 'message': message})

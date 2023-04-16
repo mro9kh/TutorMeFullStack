@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header> Tutor Session </header>
+<form action="{% url 'tutoring_session' %}" method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        {{ tutoring_form.as_p }}
+        <input type="submit" value="Submit">
+</form>
+
+ {% block content %}
+    </br>
+    <p><strong>{{ message }}</strong></p>
+{% endblock %}
+<br>
+<div class = "container" style = "padding-top: 2cm;">
+  <a class="btn btn-primary" href=/accounts/home/tutor  role="button">return to home</button>  </a>
+</div>
+</body>
+</html>

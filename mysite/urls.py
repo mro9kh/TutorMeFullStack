@@ -34,5 +34,6 @@ urlpatterns = [
     path('accounts/home/tutor/', TemplateView.as_view(template_name="tutor/home.html"), name='tutor_home'),
     path('accounts/home/addclass/', views.addclass, name="addclass"),
     path('accounts/home/tutor/profile', views.edit_tutor_profile, name='tutor_profile'),
+    path('accounts/home/tutor/createsession', views.createsession, name="tutoring_session"),
     path('logout/', LogoutView.as_view(), name='logout'),
 ]

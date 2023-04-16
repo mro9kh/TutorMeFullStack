@@ -18,6 +18,20 @@
 </div>
 </br>
 <div class = "container" style = "padding-top: 2cm;">
+  <h3>Tutoring Sessions</h3>
+  {% for session in sessions %}
+    <p>Date: {{ session.date }}</p>
+    <p>Start Time: {{ session.time_start }}</p>
+    <p>End Time: {{ session.time_end }}</p>
+  -----------------------------------------------------------------------------------------------
+{% endfor %}
+  <br>
+
+  <a class="btn btn-primary" href=/accounts/home/tutor/createsession role="button">add a session</button>  </a>                 </form>
+
+</div>
+</br>
+<div class = "container" style = "padding-top: 2cm;">
   <h3>Add a class</h3>
   <a class="btn btn-primary" href=/accounts/home/addclass role="button">add a class</button>                    </form>
 

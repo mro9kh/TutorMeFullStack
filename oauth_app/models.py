@@ -80,3 +80,10 @@ class Classes(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class TutoringSession(models.Model):
+    tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE, related_name='tutoring_sessions')
+    date = models.DateField()
+    time_start = models.TimeField()
+    time_end = models.TimeField()
