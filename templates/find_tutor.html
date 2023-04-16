@@ -21,13 +21,7 @@
                 <p>Year: {{ user.tutor.year }}</p>
                 <p>Classes Taken: {{ user.classes }}</p>
                 <p>Hourly Rate: $ {{ user.tutor.hourly_rate }}</p>
-                <p><strong>Available sessions: </strong></p>
-                {% for session in sessions %}
-                  <p>Date: {{ session.date }}</p>
-                  <p>Start Time: {{ session.time_start }}</p>
-                  <p>End Time: {{ session.time_end }}</p>
-                  ---------------------------
-                {% endfor %}
+                <p><a class="btn btn-primary" href=/accounts/home/student/{{user.tutor.user.username}} role="button">schedule session</a></p>
                 <br>
                 -----------------------------------------------------------------------------------------------
                 </br>
