@@ -50,7 +50,7 @@
     <p>End Time: {{ requests.session.time_end }}</p>
   -----------------------------------------------------------------------------------------------
   {% endif %}
-    <br>
+  <br>
 {% endfor %}
   </div>
   <<div class = "container" style = "padding-top: 2cm;">
@@ -61,7 +61,7 @@
     <p>Email: {{ user.email }}</p>
     <!--<p>Email: {{ user.email }}</p> -->
     <p>Year: {{ tutor.year }}</p>
-    <p>Classes Taken: {{ user.classes }}</p>
+    <p>Classes Taken: {{ tutor.user.classes }}</p>
     <p>Hourly Rate: {{ tutor.hourly_rate }}</p>
     <p><a class="btn btn-primary" href=/accounts/home/student/{{tutor.user.username}} role="button">schedule session</a></p>
     <br>
