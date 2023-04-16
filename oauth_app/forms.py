@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.core.validators import RegexValidator, DecimalValidator
 from django.db import transaction
 from django.db.models.functions import Concat
 from django.db.models import CharField, Value as V
@@ -44,12 +45,11 @@ class UpdateTutorProfileForm(forms.ModelForm):
     name = forms.CharField(max_length=100,
                            required=True,
                            widget=forms.TextInput(attrs={'class': 'form-control'}))
-    year = forms.CharField(max_length=100,
-                           required=True,
-                           widget=forms.TextInput(attrs={'class': 'form-control'}))
-    hourly_rate = forms.CharField(max_length=100,
-                                  required=True,
-                                  widget=forms.TextInput(attrs={'class': 'form-control'}))
+    year = forms.ChoiceField(choices=Tutor.SCHOOL_YEAR,
+                             required=True,
+                             widget=forms.Select(attrs={'class': 'form-control'}))
+    hourly_rate = forms.DecimalField(max_digits=6, decimal_places=2, required=True,
+                                     widget=forms.NumberInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = Tutor

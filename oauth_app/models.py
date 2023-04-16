@@ -16,7 +16,15 @@ class User(AbstractUser):
 class Student(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, primary_key=True)
     name = models.TextField(max_length=200)
-    year = models.TextField(max_length=500)
+    SCHOOL_YEAR = [
+        ("1", "1st year"),
+        ("2", "2nd year"),
+        ("3", "3rd year"),
+        ("4", "4th year"),
+        ("Grad", "Grad Student"),
+        ("Faculty", "Faculty"),
+    ]
+    year = models.CharField(max_length=10, choices=SCHOOL_YEAR)
     classes = models.TextField(max_length=500, default='')
 
     # classes = models.TextField(max_length=1000, default="")
@@ -30,9 +38,17 @@ class Student(models.Model):
 class Tutor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     name = models.TextField(max_length=200)
-    year = models.TextField(max_length=500, default='')
+    SCHOOL_YEAR = [
+        ("1", "1st year"),
+        ("2", "2nd year"),
+        ("3", "3rd year"),
+        ("4", "4th year"),
+        ("Grad", "Grad Student"),
+        ("Faculty", "Faculty"),
+    ]
+    year = models.CharField(max_length=10, choices=SCHOOL_YEAR)
     classes = models.TextField(max_length=500, default='')
-    hourly_rate = models.TextField(max_length=500, default='')
+    hourly_rate = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
 
     def __str__(self):
         return self.name
