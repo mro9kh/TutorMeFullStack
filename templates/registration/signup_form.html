@@ -1,12 +1,23 @@
-<div class="content">
-    <form method="POST">
-      <fieldset>
-        <legend><h1>Create An Account</h1></legend>
-        <p>Email: {{ user.email }}</p>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Create An Account</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cyborg/bootstrap.min.css" integrity="sha384-nEnU7Ae+3lD52AK+RGNzgieBWMnEfgTbRHIwEvp1XXPdqdO6uLTd/NwXbzboqjc2" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container d-flex align-items-center justify-content-center vh-100">
+      <div class="content">
+        <form method="POST">
           {% csrf_token %}
-          {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </fieldset>
-    </form>
-</div>
-</body>
+          <fieldset>
+            <legend><h1>Create An Account</h1></legend>
+            <p>Email: {{ user.email }}</p>
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,21 +1,58 @@
 <html>
-<body>
-<h1>Tutor Me </h1>
+ <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tutor Me</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cyborg/bootstrap.min.css" integrity="sha384-nEnU7Ae+3lD52AK+RGNzgieBWMnEfgTbRHIwEvp1XXPdqdO6uLTd/NwXbzboqjc2" crossorigin="anonymous">
+ </head>
+ <body>
+  <div class="container text-center mt-4">
+    <h1 class="mb-4">Tutor Me</h1>
+    <p>Welcome {{ user.username }}, you are logged in as a student.</p>
 
-  <p>Welcome {{ user.username }}, you are logged in as a student.</p>
-
-  <div class = "container" style = "padding-top: 2cm;">
+    <div class="container mt-4">
     <h3>Profile</h3>
     <p>Username: {{ user.username }}</p>
+    <p>Name: {{ name }}</p>
+    <p>Year: {{ year }}</p>
     <p>Classes: {{ user.classes }}</p>
   </div>
 </br>
+  <div class = "container" style = "padding-top: 2cm;">
+    <a class="btn btn-primary" href=/accounts/home/student/profile role="button">edit profile</a>                    </form>
+    <br>
+    <a class="btn btn-primary" href=/accounts/home/addclass role="button">add a class</button></a>   
+    <br>
+    <a class="btn btn-primary" href=/accounts/home/find-tutor role="button">Find a tutor</button></a>
+</div>
 <div class = "container" style = "padding-top: 2cm;">
-  <a class="btn btn-primary" href=/accounts/home/find-tutor role="button">Find a tutor</button>
-  </div>    
-</br>
-<div class = "container" style = "padding-top: 1cm;">
-  <a class="btn btn-primary" href=/accounts/home/addclass role="button">Add a class</button>
+    <h3>Pending</h3>
+  {% for requests in tutor_requests %}
+  {% if requests.status == False %}
+    <p>Tutor ID: {{requests.session.tutor.user.username}}</p>
+    <p>Name: {{requests.session.tutor.name}}</p>
+    <p>Date: {{ requests.session.date }}</p>
+    <p>Start Time: {{ requests.session.time_start }}</p>
+    <p>End Time: {{ requests.session.time_end }}</p>
+  -----------------------------------------------------------------------------------------------
+  {% endif %}
+    <br>
+{% endfor %}
   </div>
+<div class = "container" style = "padding-top: 2cm;">
+    <h3>Scheduled</h3>
+  {% for requests in tutor_requests %}
+  {% if requests.status == True %}
+    <p>Tutor ID: {{requests.session.tutor.user.username}}</p>
+    <p>Name: {{requests.session.tutor.name}}</p>
+    <p>Date: {{ requests.session.date }}</p>
+    <p>Start Time: {{ requests.session.time_start }}</p>
+    <p>End Time: {{ requests.session.time_end }}</p>
+  -----------------------------------------------------------------------------------------------
+  {% endif %}
+    <br>
+{% endfor %}
+  </div>
+</br>
 </body>
 </html>

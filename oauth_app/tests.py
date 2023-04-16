@@ -1,6 +1,6 @@
 from django.test import TestCase
 from .models import User, Student, Tutor, Classes
-from .views import addclass, tutor_list, edit_tutor_profile, tutor_home
+from .views import addclass, student_home, edit_tutor_profile, tutor_home
 
 class UserTestCase(TestCase):
    def test_user_student(self):
