@@ -159,6 +159,7 @@ AUTH_USER_MODEL = 'oauth_app.User'
 
 SITE_ID = 6
 
+
 SOCIALACCOUNT_QUERY_EMAIL = True
 
 

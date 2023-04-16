@@ -4,35 +4,48 @@ from django.core.validators import RegexValidator, DecimalValidator
 from django.db import transaction
 from django.db.models.functions import Concat
 from django.db.models import CharField, Value as V
+from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
+from .models import Student
 
 from .models import Student, Tutor, User, TutoringSession, TutoringRequest
 
 
-class StudentSignUpForm(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
+User = get_user_model()
+
+class StudentSignUpForm(forms.ModelForm):
+    username = forms.CharField(max_length=30, required=True)
+
+    class Meta:
         model = User
+        fields = ['username']
 
     @transaction.atomic
-    def save(self):
+    def save(self, commit=True):
         user = super().save(commit=False)
         user.is_student = True
-        user.save()
+        user.set_unusable_password()
+        if commit:
+            user.save()
         student = Student.objects.create(user=user)
         return user
 
+class TutorSignUpForm(forms.ModelForm):
+    username = forms.CharField(max_length=30, required=True)
 
-class TutorSignUpForm(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
+    class Meta:
         model = User
+        fields = ['username']
 
     @transaction.atomic
-    def save(self):
+    def save(self, commit=True):
         user = super().save(commit=False)
         user.is_tutor = True
-        user.save()
+        user.set_unusable_password()
+        if commit:
+            user.save()
         tutor = Tutor.objects.create(user=user)
         return user
-
 
 class addClassForm(forms.Form):
     department = forms.CharField(max_length=4)
