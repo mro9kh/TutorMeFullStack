@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cyborg/bootstrap.min.css" integrity="sha384-nEnU7Ae+3lD52AK+RGNzgieBWMnEfgTbRHIwEvp1XXPdqdO6uLTd/NwXbzboqjc2" crossorigin="anonymous">
 </head>
 <body>
- <div class="container" style="padding-top: 2cm;">
-    <h3>Edit Profile</h3>
-  </div>
-  <form action="{% url 'tutor_profile' %}" method="post" enctype="multipart/form-data" novalidate>
-        {% csrf_token %}
-        {{ profile_form.as_p }}
-        <input type="submit" value="Submit">
+  <div class="container pt-5">
+    <h3 class="text-center mb-4">Edit Profile</h3>
+    <form action="{% url 'tutor_profile' %}" method="post" enctype="multipart/form-data" novalidate>
+      {% csrf_token %}
+      {{ profile_form.as_p }}
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
     </form>
-
- {% block content %}
-    </br>
-    <p><strong>{{ message }}</strong></p>
-{% endblock %}
-
- <a class="btn btn-primary" href="/accounts/home/tutor" role="button">Return to home</a>
-
+    <div class="mt-4 text-center">
+      <p><strong>{{ message }}</strong></p>
+    </div>
+    <div class="text-center mt-4">
+      <a class="btn btn-primary" href="/accounts/home/tutor" role="button">Return to home</a>
+    </div>
+  </div>
 </body>
 </html>

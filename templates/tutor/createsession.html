@@ -2,23 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Tutor Session</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cyborg/bootstrap.min.css" integrity="sha384-nEnU7Ae+3lD52AK+RGNzgieBWMnEfgTbRHIwEvp1XXPdqdO6uLTd/NwXbzboqjc2" crossorigin="anonymous">
 </head>
 <body>
-<header> Tutor Session </header>
-<form action="{% url 'tutoring_session' %}" method="post" enctype="multipart/form-data" novalidate>
-        {% csrf_token %}
-        {{ tutoring_form.as_p }}
-        <input type="submit" value="Submit">
-</form>
-
- {% block content %}
-    </br>
-    <p><strong>{{ message }}</strong></p>
-{% endblock %}
-<br>
-<div class = "container" style = "padding-top: 2cm;">
-  <a class="btn btn-primary" href=/accounts/home/tutor  role="button">return to home</button>  </a>
-</div>
+    <header class="text-center py-4">
+        <h1>Tutor Session</h1>
+    </header>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form action="{% url 'tutoring_session' %}" method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+                    {{ tutoring_form.as_p }}
+                    <div class="text-center my-4">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+                <div class="text-center mb-4">
+                    <p><strong>{{ message }}</strong></p>
+                </div>
+                <div class="text-center">
+                    <a class="btn btn-primary" href="/accounts/home/tutor" role="button">Return to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

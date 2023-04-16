@@ -1,42 +1,52 @@
+<!DOCTYPE html>
 <html>
+<head>
+  <meta charset="UTF-8">
+  <title>Tutor Me</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cyborg/bootstrap.min.css" integrity="sha384-nEnU7Ae+3lD52AK+RGNzgieBWMnEfgTbRHIwEvp1XXPdqdO6uLTd/NwXbzboqjc2" crossorigin="anonymous">
+</head>
 <body>
-<h1>Tutor Me </h1>
 
-  <p>Welcome {{ user.username }}, you are logged in as a tutor.</p>
+  <div class="container" style="padding-top: 2cm;">
 
-  <div class = "container" style = "padding-top: 2cm;">
-    <h3>Profile</h3>
-    <p>Username: {{ user.username }}</p>
-    <p>Name: {{ name }}</p>
-    <p>Year: {{ year }}</p>
-    <p>Hourly Rate: {{ hourly_rate }}</p>
-    <p>Classes: {{ user.classes }}</p>
+    <h1>Tutor Me</h1>
+    <p>Welcome {{ user.username }}, you are logged in as a tutor.</p>
+  
+    <div>
+      <h3>Profile</h3>
+      <p>Username: {{ user.username }}</p>
+      <p>Name: {{ name }}</p>
+      <p>Year: {{ year }}</p>
+      <p>Hourly Rate: {{ hourly_rate }}</p>
+      <p>Classes: {{ user.classes }}</p>
+      <a class="btn btn-primary" href="/accounts/home/tutor/profile" role="button">Edit Profile</a>
+    </div>
 
+    <br>
+
+    <div>
+      <h3>Tutoring Sessions</h3>
+      {% for session in sessions %}
+        <p>Date: {{ session.date }}</p>
+        <p>Start Time: {{ session.time_start }}</p>
+        <p>End Time: {{ session.time_end }}</p>
+        <hr>
+      {% endfor %}
+
+      <a class="btn btn-primary" href="/accounts/home/tutor/createsession" role="button">Add a Session</a>
+    </div>
+
+    <br>
+
+    <div>
+      <h3>Add a Class</h3>
+      <a class="btn btn-primary" href="/accounts/home/addclass" role="button">Add a Class</a>
+    </div>
+
+    <br>
+
+    <img src="https://t3.ftcdn.net/jpg/03/13/52/10/360_F_313521088_pP5Zqe3CxqCbGfDoKI2VbfIfLw6xcrYI.jpg" width="200" height="200"/>
   </div>
-  <div class = "container" style = "padding-top: 2cm;">
-    <a class="btn btn-primary" href=/accounts/home/tutor/profile role="button">edit profile</a>                    </form>
-</div>
-</br>
-<div class = "container" style = "padding-top: 2cm;">
-  <h3>Tutoring Sessions</h3>
-  {% for session in sessions %}
-    <p>Date: {{ session.date }}</p>
-    <p>Start Time: {{ session.time_start }}</p>
-    <p>End Time: {{ session.time_end }}</p>
-  -----------------------------------------------------------------------------------------------
-{% endfor %}
-  <br>
-
-  <a class="btn btn-primary" href=/accounts/home/tutor/createsession role="button">add a session</button>  </a>                 </form>
-
-</div>
-</br>
-<div class = "container" style = "padding-top: 2cm;">
-  <h3>Add a class</h3>
-  <a class="btn btn-primary" href=/accounts/home/addclass role="button">add a class</button>                    </form>
-
-</div>
-
 
 </body>
 </html>

@@ -1,32 +1,43 @@
+<!DOCTYPE html>
 <html>
-<body>
-<h1>Tutor Me </h1>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tutor Me</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cyborg/bootstrap.min.css" integrity="sha384-nEnU7Ae+3lD52AK+RGNzgieBWMnEfgTbRHIwEvp1XXPdqdO6uLTd/NwXbzboqjc2" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container text-center mt-4">
+      <h1 class="mb-4">Tutor Me</h1>
+      <p>Welcome {{ user.username }}, you are logged in as a student.</p>
+      
+      <div class="container mt-4">
+        <h3>Profile</h3>
+        <p>Username: {{ user.username }}</p>
+        <p>Classes: {{ user.classes }}</p>
+      </div>
 
-  <p>Welcome {{ user.username }}, you are logged in as a student.</p>
+      <div class="container mt-4">
+        <h3>Available Tutors</h3>
+        {% for tutor in tutors %}
+          <hr>
+          <p>Username: {{ tutor.user.username }}</p>
+          <p>Name: {{ tutor.name }}</p>
+          <p>Email: {{ tutor.user.email }}</p>
+          <p>Year: {{ tutor.year }}</p>
+          <p>Classes Taken: {{ tutor.classes }}</p>
+          <p>Hourly Rate: {{ tutor.hourly_rate }}</p>
+        {% endfor %}
+      </div>
 
-  <div class = "container" style = "padding-top: 2cm;">
-    <h3>Profile</h3>
-    <p>Username: {{ user.username }}</p>
-    <p>Classes: {{ user.classes }}</p>
-  </div>
-</br>
-<div class = "container" style = "padding-top: 2cm;">
-    <h3>Available Tutors</h3>
-  {% for tutor in tutors %}
-    <p>Username: {{ tutor.user.username }}</p>
-    <p>Name: {{ tutor.name }}</p>
-    <p>Email: {{ user.email }}</p>
-    <p>Year: {{ tutor.year }}</p>
-    <p>Classes Taken: {{ user.classes }}</p>
-    <p>Hourly Rate: {{ tutor.hourly_rate }}</p>
-  -----------------------------------------------------------------------------------------------
-{% endfor %}
-  </div>
+      <div class="container mt-4">
+        <h3>Add a class</h3>
+        <a class="btn btn-primary" href="/accounts/home/addclass" role="button">Add a class</a>
+      </div>
 
-</br>
-<div class = "container" style = "padding-top: 2cm;">
-  <h3>Add a class</h3>
-  <a class="btn btn-primary" href=/accounts/home/addclass role="button">add a class</button>                    </form>
+      <br>
 
-</body>
+      <img src="https://t3.ftcdn.net/jpg/03/13/52/10/360_F_313521088_pP5Zqe3CxqCbGfDoKI2VbfIfLw6xcrYI.jpg" width="200" height="200"/>
+    </div>
+  </body>
 </html>
