@@ -1,10 +1,16 @@
 <html>
-<body>
-<h1>Tutor Me </h1>
+ <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tutor Me</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cyborg/bootstrap.min.css" integrity="sha384-nEnU7Ae+3lD52AK+RGNzgieBWMnEfgTbRHIwEvp1XXPdqdO6uLTd/NwXbzboqjc2" crossorigin="anonymous">
+ </head>
+ <body>
+  <div class="container text-center mt-4">
+    <h1 class="mb-4">Tutor Me</h1>
+    <p>Welcome {{ user.username }}, you are logged in as a student.</p>
 
-  <p>Welcome {{ user.username }}, you are logged in as a student.</p>
-
-  <div class = "container" style = "padding-top: 2cm;">
+    <div class="container mt-4">
     <h3>Profile</h3>
     <p>Username: {{ user.username }}</p>
     <p>Name: {{ name }}</p>
@@ -45,8 +51,8 @@
     <br>
 {% endfor %}
   </div>
-<div class = "container" style = "padding-top: 2cm;">
-    <h3>Available Tutors</h3>
+ <div class="container mt-4">
+        <h3>Available Tutors</h3>
   {% for tutor in tutors %}
     <p>Username: {{ tutor.user.username }}</p>
     <p>Name: {{ tutor.name }}</p>
