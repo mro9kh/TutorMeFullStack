@@ -2,18 +2,56 @@ from django.contrib.auth import login, get_user_model, logout
 from django.db.models.functions import Concat
 from django.shortcuts import redirect, render, get_object_or_404
 from django.template import loader
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, UpdateView
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
 import requests
 from django.db.models import CharField, Value as V
 import calendar
 from calendar import HTMLCalendar
+from django.contrib.auth.decorators import login_required
 
 from .forms import StudentSignUpForm, TutorSignUpForm, addClassForm, UpdateTutorProfileForm, TutoringSessionForm, \
     UpdateStudentProfileForm, SendRequestForm, findTutorForm, AcceptRequestForm
 from .models import User, Student, Tutor, TutorClasses, TutoringSession, TutoringRequest
 
+
+from django.utils.decorators import method_decorator
+
+@method_decorator(login_required, name='dispatch')
+class StudentSignUpView(UpdateView):
+    model = User
+    form_class = StudentSignUpForm
+    template_name = 'registration/signup_form.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        kwargs['user_type'] = 'student'
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        user = form.save(commit=True)
+        return redirect('student_home')
+
+
+@method_decorator(login_required, name='dispatch')
+class TutorSignUpView(UpdateView):
+    model = User
+    form_class = TutorSignUpForm
+    template_name = 'registration/signup_form.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        kwargs['user_type'] = 'tutor'
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        user = form.save(commit=True)
+        return redirect('tutor_home')
 
 def addclass(request):
     department = ""
@@ -49,37 +87,10 @@ def addclass(request):
                   {'form': form, 'department': department, 'catalog_number': catalog_number, 'message': message})
 
 
-class StudentSignUpView(CreateView):
-    model = Student
-    form_class = StudentSignUpForm
-    template_name = 'registration/signup_form.html'
-
-    def get_context_data(self, **kwargs):
-        kwargs['user_type'] = 'student'
-        return super().get_context_data(**kwargs)
-
-    def form_valid(self, form):
-        user = form.save()
-        login(self.request, user, backend='django.contrib.auth.backends.ModelBackend')
-        return redirect('student_home')
-
-
-class TutorSignUpView(CreateView):
-    model = User
-    form_class = TutorSignUpForm
-    template_name = 'registration/signup_form.html'
-
-    def get_context_data(self, **kwargs):
-        kwargs['user_type'] = 'tutor'
-        return super().get_context_data(**kwargs)
-
-    def form_valid(self, form):
-        user = form.save()
-        login(self.request, user, backend='django.contrib.auth.backends.ModelBackend')
-        return redirect('tutor_home')
-
-
 def student_home(request):
+    if not request.user.is_authenticated or not request.user.is_student:
+        return redirect('welcome')
+    
     tutors = Tutor.objects.all()
     user = request.user
     student = user.student
@@ -156,8 +167,10 @@ def find_tutor(request):
                   {'form': form, 'department': department, 'catalog_number': catalog_number, 'message': message, 'tutorList': listOfTutors, 'sessions':validSessions})
 
 
-
 def tutor_home(request):
+    if not request.user.is_authenticated or not request.user.is_tutor:
+        return redirect('welcome')
+    
     user = request.user
     tutor = user.tutor
     name = tutor.name

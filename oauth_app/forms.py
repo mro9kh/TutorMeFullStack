@@ -14,39 +14,68 @@ from .models import Student, Tutor, User, TutoringSession, TutoringRequest
 User = get_user_model()
 
 class StudentSignUpForm(forms.ModelForm):
-    username = forms.CharField(max_length=30, required=True)
-
     class Meta:
         model = User
-        fields = ['username']
+        fields = []
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        cleaned_data['username'] = self.instance.username
+        return cleaned_data
 
     @transaction.atomic
     def save(self, commit=True):
-        user = super().save(commit=False)
-        user.is_student = True
-        user.set_unusable_password()
-        if commit:
+        user = self.instance
+        if user.id:  # If the user already exists in the database
+            user.is_student = True
+            user.set_unusable_password()
             user.save()
-        student = Student.objects.create(user=user)
+            student, _ = Student.objects.get_or_create(user=user)
+            student.save()
+        else:  # If the user doesn't exist yet
+            user = super().save(commit=True)
+            user.is_student = True
+            user.set_unusable_password()
+            user.save()
+            student = Student.objects.create(user=user)
+            student.save()  # Save the related object
         return user
+
 
 class TutorSignUpForm(forms.ModelForm):
-    username = forms.CharField(max_length=30, required=True)
-
     class Meta:
         model = User
-        fields = ['username']
+        fields = []
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        cleaned_data['username'] = self.instance.username
+        return cleaned_data
 
     @transaction.atomic
     def save(self, commit=True):
-        user = super().save(commit=False)
-        user.is_tutor = True
-        user.set_unusable_password()
-        if commit:
+        user = self.instance
+        if user.id:  # If the user already exists in the database
+            user.is_tutor = True
+            user.set_unusable_password()
             user.save()
-        tutor = Tutor.objects.create(user=user)
+            tutor, _ = Tutor.objects.get_or_create(user=user)
+            tutor.save()
+        else:  # If the user doesn't exist yet
+            user = super().save(commit=True)
+            user.is_tutor = True
+            user.set_unusable_password()
+            user.save()
+            tutor = Tutor.objects.create(user=user)
+            tutor.save()  # Save the related object
         return user
-
+    
 class addClassForm(forms.Form):
     department = forms.CharField(max_length=4)
     catalog_number = forms.CharField(max_length=4)
