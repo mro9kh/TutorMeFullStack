@@ -18,6 +18,7 @@ from .models import User, Student, Tutor, TutorClasses, TutoringSession, Tutorin
 
 from django.utils.decorators import method_decorator
 
+
 @method_decorator(login_required, name='dispatch')
 class StudentSignUpView(UpdateView):
     model = User
