@@ -1,50 +1,83 @@
+<!DOCTYPE html>
 <html>
-<body>
-<h1>Tutor Me </h1>
+  <head>
+    <meta charset="UTF-8">
+    <title>Tutor Me</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cyborg/bootstrap.min.css" integrity="sha384-nEnU7Ae+3lD52AK+RGNzgieBWMnEfgTbRHIwEvp1XXPdqdO6uLTd/NwXbzboqjc2" crossorigin="anonymous">
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
 
-  <p>Welcome {{ user.username }}, you are logged in as a tutor.</p>
+      .container {
+        border-radius: 10px;
+        background-color: #edf2ff;
+        padding: 20px;
+        margin: 20px;
+      }
+      .profile-container .profile-info {
+        border-radius: 10px;
+        background-color: #edf2ff;
+        color: #181717;
+        margin: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Tutor Me</h1>
 
-  <div class = "container" style = "padding-top: 2cm;">
-    <h3>Profile</h3>
-    <p>Username: {{ user.username }}</p>
-    <p>Name: {{ name }}</p>
-    <p>Year: {{ year }}</p>
-    <p>Hourly Rate: {{ hourly_rate }}</p>
-    <p>Classes: {{ user.classes }}</p>
+    <p>Welcome {{ user.username }}, you are logged in as a tutor.</p>
 
+
+    <div class="container profile-container">
+      <h3 class="text-center" style="color: #093768;">Profile</h3>
+      <div class="profile-info">
+        <div class="text-center">
+        <p>Username: {{ user.username }}</p>
+        <p>Name: {{ name }}</p>
+        <p>Year: {{ year }}</p>
+        <p>Hourly Rate: {{ hourly_rate }}</p>
+        <p class="profile-info">Classes: {{ user.classes }}</p>
+        <a class="btn btn-primary" href="/accounts/home/tutor/profile" role="button">Edit Profile</a>
+      </div>
+      </div>                    
+    </div>
+
+
+    <div class="container">
+      <h3 class="text-center" style="color: #093768;">Tutoring Sessions</h3>
+      {% for session in sessions %}
+        <p>Date: {{ session.date }}</p>
+        <p>Start Time: {{ session.time_start }}</p>
+        <p>End Time: {{ session.time_end }}</p>
+        <hr>
+      {% endfor %}
+      <br>
+      <div style="display:flex; justify-content: center;">
+        <a class="btn btn-primary" href="/accounts/home/tutor/createsession" role="button">Add a Session</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="btn btn-primary" href="/accounts/home/tutor/requests" role="button">View Requests</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="btn btn-primary" href="/accounts/home/tutor/schedule" role="button">View Schedule</a>
+      </div>
   </div>
-  <div class = "container" style = "padding-top: 2cm;">
-    <a class="btn btn-primary" href=/accounts/home/tutor/profile role="button">edit profile</a>                    </form>
-</div>
-</br>
-<div class = "container" style = "padding-top: 2cm;">
-  <h3>Tutoring Sessions</h3>
-  {% for session in sessions %}
-    <p>Date: {{ session.date }}</p>
-    <p>Start Time: {{ session.time_start }}</p>
-    <p>End Time: {{ session.time_end }}</p>
-  -----------------------------------------------------------------------------------------------
-{% endfor %}
-  <br>
-
-  <a class="btn btn-primary" href=/accounts/home/tutor/createsession role="button">add a session</button>  </a>                 </form>
-  <br>
-  <br>
-  <br>
-  <a class="btn btn-primary" href=/accounts/home/tutor/requests role="button">view requests</button>  </a>
-  <br>
-  <a class="btn btn-primary" href=/accounts/home/tutor/schedule role="button">view schedule</button>  </a>
-
-</div>
-    <div>
-      <h3>Add a Class</h3>
-      <a class="btn btn-primary" href="/accounts/home/addclass" role="button">Add a Class</a>
+    <div class="container">
+      <h3 class="text-center" style="color: #093768;">Add a Class</h3>
+      <div class="text-center">
+        <a class="btn btn-primary" href="/accounts/home/addclass" role="button">Add a Class</a>
+      </div>
     </div>
 
     <br>
 
-    <img src="https://t3.ftcdn.net/jpg/03/13/52/10/360_F_313521088_pP5Zqe3CxqCbGfDoKI2VbfIfLw6xcrYI.jpg" width="200" height="200"/>
-  </div>
+    <div class="container">
+      <div class="text-center">
+      <img src="https://t3.ftcdn.net/jpg/03/13/52/10/360_F_313521088_pP5Zqe3CxqCbGfDoKI2VbfIfLw6xcrYI.jpg" width="200" height="200"/>
+      </div>
+    </div>
 
-</body>
+  </body>
 </html>
