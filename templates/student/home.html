@@ -94,7 +94,7 @@
               <p>Year: {{ tutor.year }}</p>
               <p>Classes Taken: {{ tutor.user.classes }}</p>
               <p>Hourly Rate: {{ tutor.hourly_rate }}</p>
-              <p><a class="btn btn-primary" href=/accounts/home/student/ {{ tutor.user.username }} role="button">Schedule Session</a></p>
+              <p><a class="btn btn-primary" href=/accounts/home/student/{{tutor.user.username}} role="button">Schedule Session</a></p>
             </div>
           </div>
         {% endfor %}
