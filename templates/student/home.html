@@ -38,6 +38,7 @@
       <div class="text-center">
       <div class="profile-info">
         <p>Username: {{ user.username }}</p>
+        <p>Email: {{ user.email }}</p>
         <p>Name: {{ name }}</p>
         <p>Year: {{ year }}</p>
         <p>Classes: {{ user.classes }}</p>
@@ -93,7 +94,7 @@
               <p>Email: {{ tutor.user.email }}</p>
               <p>Year: {{ tutor.year }}</p>
               <p>Classes Taken: {{ tutor.user.classes }}</p>
-              <p>Hourly Rate: {{ tutor.hourly_rate }}</p>
+              <p>Hourly Rate: ${{ tutor.hourly_rate }}</p>
               <p><a class="btn btn-primary" href=/accounts/home/student/{{tutor.user.username}} role="button">Schedule Session</a></p>
             </div>
           </div>

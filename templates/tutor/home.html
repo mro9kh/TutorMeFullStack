@@ -37,9 +37,10 @@
       <div class="profile-info">
         <div class="text-center">
         <p>Username: {{ user.username }}</p>
+          <p>Email: {{ user.email }}</p>
         <p>Name: {{ name }}</p>
         <p>Year: {{ year }}</p>
-        <p>Hourly Rate: {{ hourly_rate }}</p>
+        <p>Hourly Rate: ${{ hourly_rate }}</p>
         <p class="profile-info">Classes: {{ user.classes }}</p>
         <a class="btn btn-primary" href="/accounts/home/tutor/profile" role="button">Edit Profile</a>
       </div>
