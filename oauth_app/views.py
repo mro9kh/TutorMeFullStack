@@ -91,8 +91,7 @@ def addclass(request):
 def student_home(request):
     if not request.user.is_authenticated or not request.user.is_student:
         return redirect('welcome')
-
-    tutors = Tutor.objects.all()
+    tutors = Tutor.objects.prefetch_related('tutoring_sessions').all()
     user = request.user
     student = user.student
     name = student.name
