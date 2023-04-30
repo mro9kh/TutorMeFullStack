@@ -108,7 +108,7 @@ class UpdateStudentProfileForm(forms.ModelForm):
     name = forms.CharField(max_length=100,
                            required=True,
                            widget=forms.TextInput(attrs={'class': 'form-control'}))
-    year = forms.ChoiceField(choices=Tutor.SCHOOL_YEAR,
+    year = forms.ChoiceField(choices=Student.SCHOOL_YEAR,
                              required=True,
                              widget=forms.Select(attrs={'class': 'form-control'}))
 
