@@ -15,7 +15,6 @@ from .forms import StudentSignUpForm, TutorSignUpForm, addClassForm, UpdateTutor
     UpdateStudentProfileForm, SendRequestForm, findTutorForm, AcceptRequestForm
 from .models import User, Student, Tutor, TutorClasses, TutoringSession, TutoringRequest
 
-
 from django.utils.decorators import method_decorator
 
 
@@ -54,6 +53,7 @@ class TutorSignUpView(UpdateView):
         user = form.save(commit=True)
         return redirect('tutor_home')
 
+
 def addclass(request):
     department = ""
     catalog_number = ""
@@ -91,7 +91,7 @@ def addclass(request):
 def student_home(request):
     if not request.user.is_authenticated or not request.user.is_student:
         return redirect('welcome')
-    
+
     tutors = Tutor.objects.all()
     user = request.user
     student = user.student
@@ -133,6 +133,7 @@ def edit_student_profile(request):
         profile_form = UpdateStudentProfileForm(instance=student)
     return render(request, template, {'profile_form': profile_form, 'message': message})
 
+
 def find_tutor(request):
     department = ""
     catalog_number = ""
@@ -145,13 +146,13 @@ def find_tutor(request):
         form = findTutorForm()
         department = (formData["department"]).upper()
         catalog_number = formData["catalog_number"]
-        classStudent = department + catalog_number #turn into one string
+        classStudent = department + catalog_number  # turn into one string
         users = User.objects.all()
         sessions = TutoringSession.objects.all()
         classData = " "
         matches = 0
         for user in users:
-            if(user.is_tutor):
+            if (user.is_tutor):
                 tutorClassString = user.classes
                 classData = tutorClassString.split("\n")
                 if classStudent in classData:
@@ -165,13 +166,14 @@ def find_tutor(request):
     else:
         form = findTutorForm()
     return render(request, 'find_tutor.html',
-                  {'form': form, 'department': department, 'catalog_number': catalog_number, 'message': message, 'tutorList': listOfTutors, 'sessions':validSessions})
+                  {'form': form, 'department': department, 'catalog_number': catalog_number, 'message': message,
+                   'tutorList': listOfTutors, 'sessions': validSessions})
 
 
 def tutor_home(request):
     if not request.user.is_authenticated or not request.user.is_tutor:
         return redirect('welcome')
-    
+
     user = request.user
     tutor = user.tutor
     name = tutor.name

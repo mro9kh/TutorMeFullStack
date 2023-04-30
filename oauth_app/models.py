@@ -22,7 +22,6 @@ class Student(models.Model):
         ("3", "3rd year"),
         ("4", "4th year"),
         ("Grad", "Grad Student"),
-        ("Faculty", "Faculty"),
     ]
     year = models.CharField(max_length=10, choices=SCHOOL_YEAR)
     classes = models.TextField(max_length=500, default='')
