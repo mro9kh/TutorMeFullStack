@@ -12,8 +12,8 @@
     <p>Student ID: {{tutoring_request.student.user.username}}</p>
     <p>Name: {{tutoring_request.student.name}}</p>
     <p>Date: {{tutoring_request.session.date }}</p>
-    <p>Start Time: {{ tutoring_request.session.time_start }}</p>
-    <p>End Time: {{ tutoring_request.session.time_end }}</p>
+    <p>Start Time: {{ tutoring_request.session.start_time }}</p>
+    <p>End Time: {{ tutoring_request.session.end_time }}</p>
     <p>Session ID: {{ tutoring_request.id }}</p>
     <p><form method="POST">
             {% csrf_token %}

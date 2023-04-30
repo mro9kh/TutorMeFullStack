@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.db.models import Q, F
 
 
 class User(AbstractUser):
@@ -86,8 +88,20 @@ class Classes(models.Model):
 class TutoringSession(models.Model):
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE, related_name='tutoring_sessions')
     date = models.DateField()
-    time_start = models.TimeField()
-    time_end = models.TimeField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+
+    def clean(self):
+        if self.start_time and self.end_time and self.start_time > self.end_time:
+            raise ValidationError('Start time should be before the end time!')
+        return super().clean()
+
+    # class Meta:
+    #     constraints = [
+    #         models.CheckConstraint(
+    #             check=Q(start_time__lte=F('end_time')),
+    #             name='start_time_before_end_time')
+    #     ]
 
 
 class TutoringRequest(models.Model):

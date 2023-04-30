@@ -14,9 +14,8 @@
   <h3>Tutoring Sessions</h3>
   {% for session in sessions %}
     <p>Date: {{ session.date }}</p>
-    <p>Start Time: {{ session.time_start }}</p>
-    <p>End Time: {{ session.time_end }}</p>
-     <p>Session ID: {{session.id}}</p>
+    <p>Start Time: {{ session.start_time }}</p>
+    <p>End Time: {{ session.end_time }}</p>
      <p><form method="POST">
             {% csrf_token %}
             {{ form.as_p }}

@@ -1,17 +1,16 @@
+import datetime
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.core.validators import RegexValidator, DecimalValidator
 from django.db import transaction
 from django.db.models.functions import Concat
 from django.db.models import CharField, Value as V
 from django.contrib.auth import get_user_model
+from django.forms import TimeInput
 from django.utils.translation import gettext_lazy as _
-from .models import Student
 
 from .models import Student, Tutor, User, TutoringSession, TutoringRequest
 
-
 User = get_user_model()
+
 
 class StudentSignUpForm(forms.ModelForm):
     class Meta:
@@ -75,7 +74,8 @@ class TutorSignUpForm(forms.ModelForm):
             tutor = Tutor.objects.create(user=user)
             tutor.save()  # Save the related object
         return user
-    
+
+
 class addClassForm(forms.Form):
     department = forms.CharField(max_length=4)
     catalog_number = forms.CharField(max_length=4)
@@ -117,15 +117,25 @@ class UpdateStudentProfileForm(forms.ModelForm):
         fields = ['name', 'year']
 
 
+def present_or_future_date(value):
+    if value < datetime.date.today():
+        raise forms.ValidationError("The date cannot be in the past!")
+    return value
+
+
 # Form class to be able to create a tutoring session for a specific tutor
 class TutoringSessionForm(forms.ModelForm):
-    date = forms.DateField()
-    time_start = forms.TimeField()
-    time_end = forms.TimeField()
+    date = forms.DateField(validators=[present_or_future_date], input_formats=['%d/%m/%Y'])
+    start_time = forms.TimeField(required=True, widget=forms.TimeInput(
+        attrs={'class': 'form-control timepicker', 'autocomplete': 'off'}),
+                                 input_formats=['%I:%M %p'])
+    end_time = forms.TimeField(required=True, widget=forms.TimeInput(
+        attrs={'class': 'form-control timepicker', 'autocomplete': 'off'}),
+                               input_formats=['%I:%M %p'])
 
     class Meta:
         model = TutoringSession
-        exclude = ['tutor']
+        fields = ['date', 'start_time', 'end_time']
 
 
 # Form class that sends tutoring request to tutor

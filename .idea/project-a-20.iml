@@ -6,5 +6,9 @@
     </content>
     <orderEntry type="jdk" jdkName="Python 3.11 (project-a-20)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="jquery-3.3.1.slim" level="application" />
+    <orderEntry type="library" name="datepicker" level="application" />
+    <orderEntry type="library" name="jquery-ui-timepicker-addon" level="application" />
+    <orderEntry type="library" name="jquery.timepicker" level="application" />
   </component>
 </module>

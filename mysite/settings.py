@@ -168,6 +168,8 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 
+TIME_INPUT_FORMATS = ('%I:%M %p',)
+
 try:
     if 'HEROKU' in os.environ:
         import django_heroku
