@@ -94,5 +94,5 @@ class TutoringSession(models.Model):
 class TutoringRequest(models.Model):
     session = models.ForeignKey(TutoringSession, on_delete=models.CASCADE, related_name='tutoring_requests')
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='student_requests')
-    message = models.TextField(max_length=200, default='')
+    # message = models.TextField(max_length=200, default='')
     status = models.BooleanField(default=None, null=True)

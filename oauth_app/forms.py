@@ -130,8 +130,8 @@ class TutoringSessionForm(forms.ModelForm):
 
 # Form class that sends tutoring request to tutor
 class SendRequestForm(forms.ModelForm):
-    message = forms.CharField(max_length=200, required=False,
-                              initial='')
+    # message = forms.CharField(max_length=200, required=False,
+    #                           initial='')
 
     class Meta:
         model = TutoringRequest
