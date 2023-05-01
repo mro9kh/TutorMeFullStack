@@ -3,6 +3,8 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models import Q, F
+from django.template.defaultfilters import title
+from django.utils.text import capfirst
 
 
 class User(AbstractUser):
@@ -32,6 +34,11 @@ class Student(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        # Capitalize the first letter of each word in the name field
+        self.name = title(self.name.lower())
+        super(Student, self).save(*args, **kwargs)
+
 
 #   verify_student = models.BooleanField(default=False)
 #   verify_tutor = models.BooleanField(default=False)
@@ -53,6 +60,11 @@ class Tutor(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        # Capitalize the first letter of each word in the name field
+        self.name = title(self.name.lower())
+        super(Tutor, self).save(*args, **kwargs)
 
 
 #   verify_student = models.BooleanField(default=False)

@@ -69,7 +69,7 @@
 
       <div class="profile">
         <img src="{% static 'img/profile-img.jpg' %}" alt="" class="img-fluid rounded-circle">
-        <h1 class="text-light"><a href="#profile">{{ user.first_name }} {{user.last_name}}</a></h1>
+        <h1 class="text-light"><a href="#profile">{{ user.student.name|title }}</a></h1>
       </div>
 
       <nav id="navbar" class="nav-menu navbar">
@@ -114,8 +114,8 @@
             <p><strong>Email:</strong> {{ user.email }}</p>
             <p><strong>Name:</strong> {{ name }}</p>
             <p><strong>Year:</strong> {{ year }}</p>
-            <p class="profile-info"><strong>Classes:</strong> {{ user.classes }} <a class="btn btn-secondary" href="#add a class" role="button">Edit Classes</a></p>
-            <a class="btn btn-primary" href="/accounts/home/student/profile" role="button">Edit Profile</a>
+            <p class="profile-info"><strong>Classes:</strong> {{ user.classes }} </p>
+            <a class="btn btn-primary" href="/accounts/home/student/profile" role="button">Edit Profile</a> <a class="btn btn-secondary" href="#add a class" role="button">Edit Classes</a>
         </div>
 
       </div>
@@ -174,12 +174,11 @@
         {% for request in tutor_requests %}
         {% if request.status == True %}
           <div class="profile-info">
-            <p><strong>Tutor Username:</strong> {{ request.session.tutor.user.username }}</p>
-            <p><strong>Tutor:</strong> {{ request.session.tutor.name }}</p>
-            <p><strong>Email:</strong> {{ request.session.tutor.user.email }}</p>
-            <p><strong>Date:</strong> {{ request.session.date }}</p>
-            <p><strong>Start Time:</strong> {{ request.session.start_time }}</p>
-            <p><strong>End Time:</strong> {{ request.session.end_time }}</p>
+            <h1>{{ request.session.date }}</h1>
+            <p><strong>Username:</strong> {{ request.session.tutor.user.username }}</p>
+             <p><strong>Tutor Email:</strong> {{ request.session.tutor.user.email }}</p>
+            <p><strong>Tutor Name:</strong> {{ request.session.tutor.name }}</p>
+            <p><strong>Session Time:</strong> {{ request.session.start_time }} - {{ request.session.end_time }}</p>
             <p><strong>Hourly Rate:</strong> ${{ request.session.tutor.hourly_rate }}</p>
           </div>
           {% endif %} 
@@ -223,24 +222,14 @@
       <div class="container">
 
         <div class="section-title">
-          <h2>Add a Class</h2>
+          <h2>Edit Classes</h2>
           <p>Add a class to your student profile</p>
         </div>
-
-        <a class="btn btn-primary" href="/accounts/home/addclass" role="button">Add a Class</a>
-      
+        <p><strong>Current Classes in Profile: </strong>{{user.classes}}</p>
+        <a class="btn btn-primary" href="/accounts/home/addclass" role="button">Add a Class</a> <a class="btn btn-primary" href="/accounts/home/delete-class" role="button">Delete a Class</a>
+      </div>
     </section><!-- End Portfolio Section -->
 
-    <section id="delete a class" class="delete a class">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Delete a Class</h2>
-          <p>Delete a class from your student profile</p>
-        </div>
-
-        <a class="btn btn-primary" href="/accounts/home/delete-class" role="button">Delete a Class</a>
-    </section><!-- End Portfolio Section -->
 
   </main><!-- End #main -->
 

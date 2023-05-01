@@ -72,7 +72,7 @@
 
       <div class="profile">
         <img src="{% static 'img/profile-img.jpg' %}" alt="" class="img-fluid rounded-circle">
-        <h1 class="text-light"><a href="#profile">{{ user.first_name }} {{user.last_name}}</a></h1>
+        <h1 class="text-light"><a href="#profile">{{ user.tutor.name|title }}</a></h1>
       </div>
 
       <nav id="navbar" class="nav-menu navbar">
@@ -117,8 +117,8 @@
             <p><strong>Name:</strong> {{ name }}</p>
             <p><strong>Year:</strong> {{ year }}</p>
             <p><strong>Hourly Rate:</strong> ${{ hourly_rate }}</p>
-            <p class="profile-info"><strong>Classes:</strong> {{ user.classes }} <a class="btn btn-secondary" href="#add a class" role="button">Edit Classes</a></p>
-            <a class="btn btn-primary" href="/accounts/home/tutor/profile" role="button">Edit Profile</a>
+            <p class="profile-info"><strong>Classes:</strong> {{ user.classes }} </p>
+            <a class="btn btn-primary" href="/accounts/home/tutor/profile" role="button">Edit Profile</a> <a class="btn btn-secondary" href="#add a class" role="button">Edit Classes</a>
         </div>
 
       </div>
@@ -175,25 +175,14 @@
       <div class="container">
 
         <div class="section-title">
-          <h2>Add a Class</h2>
+          <h2>Edit Classes</h2>
           <p>Add a class to your tutor profile</p>
         </div>
-
-        <a class="btn btn-primary" href="/accounts/home/addclass" role="button">Add a Class</a>
-      
+        <p><strong>Current Classes in Profile: </strong>{{user.classes}}</p>
+        <a class="btn btn-primary" href="/accounts/home/addclass" role="button">Add a Class</a> <a class="btn btn-primary" href="/accounts/home/delete-class" role="button">Delete a Class</a>
+      </div>
     </section><!-- End Portfolio Section (Add class) -->
-    
-    <!-- ======= Portfolio Section (Delete class) ======= -->
-    <section id="delete a class" class="delete a class">
-      <div class="container">
 
-        <div class="section-title">
-          <h2>Delete a Class</h2>
-          <p>Delete a class from your student profile</p>
-        </div>
-
-        <a class="btn btn-primary" href="/accounts/home/delete-class" role="button">Delete a Class</a>
-    </section><!-- End Portfolio Section (Delete class) -->
 
   </main><!-- End #main -->
 

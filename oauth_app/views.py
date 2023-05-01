@@ -240,6 +240,8 @@ def send_request(request, tutor):
     else:
         form = SendRequestForm(initial={'student': request.user.student, 'session': tutoring_sessions.first().id})
     return render(request, 'student/request.html', {'name': name,
+                                                    'user': uid,
+                                                    'tutor': tutor,
                                                     'sessions': tutoring_sessions,
                                                     'username': tutor_username,
                                                     'form': form,

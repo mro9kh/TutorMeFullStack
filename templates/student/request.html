@@ -40,7 +40,10 @@
 <body>
  <div class = "container" style = "padding-top: 2cm;">
   <h3> Tutor: {{ name }}</h3>
-     Username: {{username}}
+     <p>Username: {{username}}</p>
+     <p>Tutor email: {{tutor.user.email}}</p>
+     <p>Classes taken: {{user.classes}}</p>
+     <p>Hourly Rate: ${{tutor.hourly_rate}}</p>
      <br>
      {% if messages %}
      {% for message in messages %}
