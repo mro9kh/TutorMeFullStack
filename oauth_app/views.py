@@ -275,6 +275,7 @@ def schedule(request):
     tutoring_schedule = TutoringRequest.objects.filter(session__tutor=tutor, status=True).order_by('session__date')
     return render(request, template, {'tutoring_schedule': tutoring_schedule})
 
+
 def delete_class(request):
     user = request.user
     department = ""
@@ -290,7 +291,7 @@ def delete_class(request):
         classToDelete = department + catalog_number
         found = False
         for i in classes:
-            if( i == classToDelete ):
+            if (i == classToDelete):
                 classes.remove(classToDelete)
                 found = True
                 message = "has been deleted from your profile"
@@ -307,5 +308,6 @@ def delete_class(request):
                 n.save()
     else:
         form = deleteClassForm()
-    return render(request, 'delete_class.html', {'form': form, 'department': department, 'catalog_number': catalog_number, 'message': message, 'classes': classes})
-
+    return render(request, 'delete_class.html',
+                  {'form': form, 'department': department, 'catalog_number': catalog_number, 'message': message,
+                   'classes': classes})
