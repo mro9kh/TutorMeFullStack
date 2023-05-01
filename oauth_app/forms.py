@@ -132,6 +132,10 @@ def present_or_future_date(value):
 
 # Form class to be able to create a tutoring session for a specific tutor
 class TutoringSessionForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(TutoringSessionForm, self).__init__(*args, **kwargs)
+
     date = forms.DateField(validators=[present_or_future_date], input_formats=['%d/%m/%Y'], widget=forms.DateInput(
         attrs={'class': 'form-control'}))
     start_time = forms.TimeField(required=True, widget=forms.TimeInput(
@@ -145,6 +149,18 @@ class TutoringSessionForm(forms.ModelForm):
         model = TutoringSession
         fields = ['date', 'start_time', 'end_time']
 
+    def clean(self):
+        cleaned_data = super().clean()
+        tutor = self.request.user.tutor
+        start_time = cleaned_data.get('start_time')
+        end_time = cleaned_data.get('end_time')
+        date = cleaned_data.get('date')
+        if tutor and start_time and end_time and date:
+            overlapping_sessions = TutoringSession.objects.filter(tutor=tutor, date=date).exclude(pk=self.instance.pk)
+            for session in overlapping_sessions:
+                if start_time < session.end_time and end_time > session.start_time:
+                    raise forms.ValidationError('This timeslot overlaps with another session!')
+        return cleaned_data
 
 # Form class that sends tutoring request to tutor
 class SendRequestForm(forms.ModelForm):

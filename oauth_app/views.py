@@ -216,7 +216,7 @@ def createsession(request):
     tutor = request.user.tutor
     message = ''
     if request.method == 'POST':
-        tutoring_form = TutoringSessionForm(request.POST, request.FILES)
+        tutoring_form = TutoringSessionForm(request.POST, request.FILES, request=request)
         if tutoring_form.is_valid():
             tutoring_session = tutoring_form.save(commit=False)
             tutoring_session.tutor = tutor
@@ -225,7 +225,7 @@ def createsession(request):
             print(tutoring_form.errors)
             message = 'Your session was created successfully'
     else:
-        tutoring_form = TutoringSessionForm()
+        tutoring_form = TutoringSessionForm(request=request)
     return render(request, template, {'tutoring_form': tutoring_form, 'message': message})
 
 
