@@ -73,16 +73,25 @@ def addclass(request):
             sisjson = sisjsonTotal[0]
             department = sisjson["subject"]
             catalog_number = sisjson["catalog_nbr"]
-            classes = department + catalog_number
+            newClass = department + catalog_number
+            allowed = True
             n = request.user
-            n.classes = n.classes + "\n" + classes
-            n.save()
-            message = "is successfully added"
-            user = get_user_model()
-            all_users = User.objects.all()
-            print(all_users)
-            print(request.user.classes)
-            print(request.user)
+            classList = n.classes.split()
+            for i in classList:
+                print(i)
+                print(newClass)
+                if i == newClass:
+                    message = ": that course is already in your profile"
+                    allowed = False
+            if allowed == True:
+                n.classes = n.classes + "\n" + newClass
+                n.save()
+                message = "is successfully added"
+                user = get_user_model()
+                all_users = User.objects.all()
+                print(all_users)
+                print(request.user.classes)
+                print(request.user)
     else:
         form = addClassForm()
     return render(request, 'addclass.html',
@@ -138,6 +147,7 @@ def find_tutor(request):
     department = ""
     catalog_number = ""
     message = " "
+    nameMessage = ""
     listOfTutors = []
     validSessions = []
     template = 'student/find_tutor.html'
@@ -146,6 +156,17 @@ def find_tutor(request):
         form = findTutorForm()
         department = (formData["department"]).upper()
         catalog_number = formData["catalog_number"]
+        urlQuery = 'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject=' + department + '&catalog_nbr=' + catalog_number
+        response = requests.get(urlQuery)
+        sisjsonTotal = response.json()
+        if len(sisjsonTotal) == 0:
+            nameMessage = ""
+        else:
+            sisjson = sisjsonTotal[0]
+            department = sisjson["subject"]
+            catalog_number = sisjson["catalog_nbr"]
+            className = sisjson["descr"]
+            nameMessage = className
         classStudent = department + catalog_number  # turn into one string
         users = User.objects.all()
         sessions = TutoringSession.objects.all()
@@ -161,13 +182,13 @@ def find_tutor(request):
                     for session in sessions:
                         if session.tutor_id == user.tutor.user_id:
                             validSessions.append(session)
-        message = "Number of tutors found for " + classStudent + " are: " + str(matches)
+        message = "Number of tutors found for " + classStudent + ": " + nameMessage + " are: " + str(matches)
 
     else:
         form = findTutorForm()
     return render(request, 'find_tutor.html',
                   {'form': form, 'department': department, 'catalog_number': catalog_number, 'message': message,
-                   'tutorList': listOfTutors, 'sessions': validSessions})
+                   'tutorList': listOfTutors, 'sessions': validSessions, 'nameMessage':nameMessage})
 
 
 def tutor_home(request):
