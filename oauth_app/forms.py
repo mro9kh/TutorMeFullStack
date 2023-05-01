@@ -132,7 +132,8 @@ def present_or_future_date(value):
 
 # Form class to be able to create a tutoring session for a specific tutor
 class TutoringSessionForm(forms.ModelForm):
-    date = forms.DateField(validators=[present_or_future_date], input_formats=['%d/%m/%Y'])
+    date = forms.DateField(validators=[present_or_future_date], input_formats=['%d/%m/%Y'], widget=forms.DateInput(
+        attrs={'class': 'form-control'}))
     start_time = forms.TimeField(required=True, widget=forms.TimeInput(
         attrs={'class': 'form-control timepicker', 'autocomplete': 'off'}),
                                  input_formats=['%I:%M %p'])
