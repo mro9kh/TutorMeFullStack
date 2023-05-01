@@ -73,6 +73,7 @@ def addclass(request):
             sisjson = sisjsonTotal[0]
             department = sisjson["subject"]
             catalog_number = sisjson["catalog_nbr"]
+            className = sisjson["descr"]
             newClass = department + catalog_number
             allowed = True
             n = request.user
@@ -81,12 +82,12 @@ def addclass(request):
                 print(i)
                 print(newClass)
                 if i == newClass:
-                    message = ": that course is already in your profile"
+                    message = ": " + className + " is already in your profile"
                     allowed = False
             if allowed == True:
                 n.classes = n.classes + "\n" + newClass
                 n.save()
-                message = "is successfully added"
+                message = ": " + className + " is successfully added"
                 user = get_user_model()
                 all_users = User.objects.all()
                 print(all_users)
@@ -309,15 +310,25 @@ def delete_class(request):
         form = deleteClassForm()
         department = (formData["department"]).upper()
         catalog_number = formData["catalog_number"]
+        urlQuery = 'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject=' + department + '&catalog_nbr=' + catalog_number
+        response = requests.get(urlQuery)
+        sisjsonTotal = response.json()
+        if len(sisjsonTotal) == 0:
+            nameMessage = ""
+        else:
+            sisjson = sisjsonTotal[0]
+            department = sisjson["subject"]
+            catalog_number = sisjson["catalog_nbr"]
+            className = sisjson["descr"]
         classToDelete = department + catalog_number
         found = False
         for i in classes:
             if (i == classToDelete):
                 classes.remove(classToDelete)
                 found = True
-                message = "has been deleted from your profile"
+                message = ": " + className + " has been deleted from your profile"
         if found == False:
-            message = "was not found in your profile"
+            message = ": " + className + " was not found in your profile"
         n = request.user
         n.classes = ""
         if len(classes) == 0:
