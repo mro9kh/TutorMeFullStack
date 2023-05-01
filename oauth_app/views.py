@@ -108,7 +108,7 @@ def student_home(request):
     student = user.student
     name = student.name
     year = student.year
-    tutor_requests = TutoringRequest.objects.filter(student=student)
+    tutor_requests = TutoringRequest.objects.filter(student=student, date__gte=datetime.date.today())
     print(user.is_student)
     context = {'tutors': tutors, 'name': name, 'year': year, 'tutor_requests': tutor_requests}
     # template = loader.get_template('student/home.html')
@@ -234,7 +234,7 @@ def send_request(request, tutor):
     tutor = uid.tutor
     name = tutor.name
     tutor_username = tutor.user.username
-    tutoring_sessions = TutoringSession.objects.filter(tutor=tutor).order_by('date')
+    tutoring_sessions = TutoringSession.objects.filter(tutor=tutor, date__gte=datetime.date.today()).order_by('date')
     print(tutoring_sessions)
     if request.method == "POST":
         form = SendRequestForm(request.POST, request.FILES)
@@ -275,7 +275,8 @@ def send_request(request, tutor):
 def pending_requests(request):
     template = 'tutor/pending_requests.html'
     tutor = request.user.tutor
-    tutoring_requests = TutoringRequest.objects.filter(session__tutor=tutor, status=None)
+    tutoring_requests = TutoringRequest.objects.filter(session__tutor=tutor, status=None,
+                                                       session__date__gte=datetime.date.today())
     if request.method == "POST":
         form = AcceptRequestForm(request.POST, request.FILES)
         if form.is_valid():
