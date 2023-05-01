@@ -172,13 +172,12 @@ def find_tutor(request):
 def tutor_home(request):
     if not request.user.is_authenticated or not request.user.is_tutor:
         return redirect('welcome')
-
     user = request.user
     tutor = user.tutor
     name = tutor.name
     year = tutor.year
     hourly_rate = tutor.hourly_rate
-    tutoring_sessions = TutoringSession.objects.filter(tutor=tutor)
+    tutoring_sessions = TutoringSession.objects.filter(tutor=tutor).order_by('date')
     context = {'name': name, 'year': year, 'hourly_rate': hourly_rate, 'sessions': tutoring_sessions}
     print(tutor)
     print(tutoring_sessions)

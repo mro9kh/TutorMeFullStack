@@ -132,9 +132,16 @@
           <h2>Add a Session</h2>
           <p>Create a new tutoring session</p>
         </div>
-
         <a class="btn btn-primary" href="/accounts/home/tutor/createsession" role="button">Add a Session</a>
-
+        <br>
+        <br>
+          <h3 class="text-center" style="color: #093768;">All Created Sessions</h3>
+      {% for session in sessions %}
+        <p>Date: {{ session.date }}</p>
+        <p>Start Time: {{ session.start_time }}</p>
+        <p>End Time: {{ session.end_time }}</p>
+        <hr>
+      {% endfor %}
       </div>
     </section><!-- Add a Session Section -->
 
@@ -160,6 +167,8 @@
           <h2>Schedule</h2>
           <p>Scheduled tutoring sessions appear below</p>
         </div>
+        <div class="container">
+      <br>
 
         <a class="btn btn-primary" href="/accounts/home/tutor/schedule" role="button">View Schedule</a>
 

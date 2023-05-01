@@ -174,11 +174,13 @@
         {% for request in tutor_requests %}
         {% if request.status == True %}
           <div class="profile-info">
-            <p><strong>Tutor ID:</strong> {{ request.session.tutor.user.username }}</p>
-            <p><strong>Name:</strong> {{ request.session.tutor.name }}</p>
+            <p><strong>Tutor Username:</strong> {{ request.session.tutor.user.username }}</p>
+            <p><strong>Tutor:</strong> {{ request.session.tutor.name }}</p>
+            <p><strong>Email:</strong> {{ request.session.tutor.user.email }}</p>
             <p><strong>Date:</strong> {{ request.session.date }}</p>
-            <p><strong>Start Time:</strong> {{ request.session.time_start }}</p>
-            <p><strong>End Time:</strong> {{ request.session.time_end }}</p>
+            <p><strong>Start Time:</strong> {{ request.session.start_time }}</p>
+            <p><strong>End Time:</strong> {{ request.session.end_time }}</p>
+            <p><strong>Hourly Rate:</strong> ${{ request.session.tutor.hourly_rate }}</p>
           </div>
           {% endif %} 
         {% endfor %} 
