@@ -74,13 +74,13 @@
 
       <nav id="navbar" class="nav-menu navbar">
         <ul>
-          <li><a href="#home" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
+          <li><a href="#hero" class="nav-link scrollto"><i class="bx bx-home"></i> <span>Home</span></a></li>
           <li><a href="#profile" class="nav-link scrollto"><i class="bx bx-user"></i> <span>Profile</span></a></li>
           <li><a href="#find a tutor" class="nav-link scrollto"><i class="bx bx-search"></i> <span>Find a Tutor</span></a></li>
           <li><a href="#requests" class="nav-link scrollto"><i class="bx bxs-time"></i> <span>Requests</span></a></li>
           <li><a href="#schedule" class="nav-link scrollto"><i class="bx bx-calendar"></i> <span>Schedule</span></a></li>
-          <li><a href="#add a class" class="nav-link scrollto"><i class="bx bx-list-plus"></i> <span>Edit Classes</span></a></li>
           <li><a href="#tutors" class="nav-link scrollto"><i class="bx bx-planet"></i> <span>Available Tutors</span></a></li>
+          <li><a href="#add a class" class="nav-link scrollto"><i class="bx bx-list-plus"></i> <span>Edit Classes</span></a></li>
           <li><a href="/logout"><i class="bi bi-arrow-90deg-right"></i> <span>Logout</span></a></li>
         </ul>
       </nav><!-- .nav-menu -->
@@ -90,10 +90,10 @@
   <!-- ======= Home Section ======= -->
   <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
     <div class="hero-container" data-aos="fade-in">
-    <div class="text-center">
-      <h1>Tutor Me</h1>
-      <p><span class="typed" data-typed-items="Welcome {{ user.username }}, You are logged in as a student"></span></p>
-    </div>
+      <div class="text-center">
+        <h1>Tutor Me</h1>
+        <p><span class="typed" data-typed-items="Welcome {{ user.username }}, You are logged in as a student"></span></p>
+      </div>
     </div>
   </section><!-- End Home -->
 
@@ -114,7 +114,7 @@
             <p><strong>Email:</strong> {{ user.email }}</p>
             <p><strong>Name:</strong> {{ name }}</p>
             <p><strong>Year:</strong> {{ year }}</p>
-            <p class="profile-info"><strong>Classes:</strong> {{ user.classes }} <a class="btn btn-secondary" href="#add a class" role="button">Add a Class</a></p>
+            <p class="profile-info"><strong>Classes:</strong> {{ user.classes }} <a class="btn btn-secondary" href="#add a class" role="button">Edit Classes</a></p>
             <a class="btn btn-primary" href="/accounts/home/student/profile" role="button">Edit Profile</a>
         </div>
 
