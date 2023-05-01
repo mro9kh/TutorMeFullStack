@@ -109,7 +109,8 @@ def student_home(request):
     student = user.student
     name = student.name
     year = student.year
-    tutor_requests = TutoringRequest.objects.filter(student=student, session__date__gte=datetime.date.today())
+    tutor_requests = TutoringRequest.objects.filter(student=student, session__date__gte=datetime.date.
+                                                    today()).order_by('session__date')
     print(user.is_student)
     context = {'tutors': tutors, 'name': name, 'year': year, 'tutor_requests': tutor_requests}
     # template = loader.get_template('student/home.html')
