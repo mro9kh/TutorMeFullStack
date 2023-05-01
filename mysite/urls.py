@@ -40,6 +40,7 @@ urlpatterns = [
     path('accounts/home/tutor/requests', views.pending_requests, name="pending_requests"),
     path('accounts/home/tutor/schedule', views.schedule, name="schedule"),
     path('accounts/home/find-tutor', views.find_tutor, name='find-tutor'),
+    path('accounts/home/delete-class', views.delete_class, name='delete-class'),
 
     path('logout/', LogoutView.as_view(), name='logout'),
 ]

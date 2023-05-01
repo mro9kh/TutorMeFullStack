@@ -12,7 +12,7 @@ from calendar import HTMLCalendar
 from django.contrib.auth.decorators import login_required
 
 from .forms import StudentSignUpForm, TutorSignUpForm, addClassForm, UpdateTutorProfileForm, TutoringSessionForm, \
-    UpdateStudentProfileForm, SendRequestForm, findTutorForm, AcceptRequestForm
+    UpdateStudentProfileForm, SendRequestForm, findTutorForm, AcceptRequestForm, deleteClassForm
 from .models import User, Student, Tutor, TutorClasses, TutoringSession, TutoringRequest
 
 from django.utils.decorators import method_decorator
@@ -254,3 +254,38 @@ def schedule(request):
     tutor = request.user.tutor
     tutoring_schedule = TutoringRequest.objects.filter(session__tutor=tutor, status=True).order_by('session__date')
     return render(request, template, {'tutoring_schedule': tutoring_schedule})
+
+def delete_class(request):
+    user = request.user
+    department = ""
+    catalog_number = ""
+    message = ""
+    rawClasses = user.classes
+    classes = rawClasses.split()
+    if request.method == 'POST':
+        formData = request.POST
+        form = deleteClassForm()
+        department = (formData["department"]).upper()
+        catalog_number = formData["catalog_number"]
+        classToDelete = department + catalog_number
+        found = False
+        for i in classes:
+            if( i == classToDelete ):
+                classes.remove(classToDelete)
+                found = True
+                message = "has been deleted from your profile"
+        if found == False:
+            message = "was not found in your profile"
+        n = request.user
+        n.classes = ""
+        if len(classes) == 0:
+            n.classes = ""
+            n.save()
+        else:
+            for j in classes:
+                n.classes = n.classes + "\n" + j
+                n.save()
+    else:
+        form = deleteClassForm()
+    return render(request, 'delete_class.html', {'form': form, 'department': department, 'catalog_number': catalog_number, 'message': message, 'classes': classes})
+

@@ -81,6 +81,11 @@ class addClassForm(forms.Form):
     catalog_number = forms.CharField(max_length=4)
     classes = Concat('department', V(' '), 'catalog_number', V(''))
 
+class deleteClassForm(forms.Form):
+    department = forms.CharField(max_length=4)
+    catalog_number = forms.CharField(max_length=4)
+    classes = Concat('department', V(' '), 'catalog_number', V(''))
+
 
 class findTutorForm(forms.Form):
     department = forms.CharField(max_length=4)
