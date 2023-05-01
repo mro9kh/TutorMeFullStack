@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth import login, get_user_model, logout
 from django.db.models.functions import Concat
 from django.shortcuts import redirect, render, get_object_or_404
@@ -294,7 +296,9 @@ def pending_requests(request):
 def schedule(request):
     template = 'tutor/schedule.html'
     tutor = request.user.tutor
-    tutoring_schedule = TutoringRequest.objects.filter(session__tutor=tutor, status=True).order_by('session__date')
+    tutoring_schedule = TutoringRequest.objects.filter(session__tutor=tutor, status=True,
+                                                       session__date__gte=datetime.date.
+                                                       today()).order_by('session__date')
     return render(request, template, {'tutoring_schedule': tutoring_schedule})
 
 
