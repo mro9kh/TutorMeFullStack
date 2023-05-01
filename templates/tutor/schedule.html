@@ -39,13 +39,17 @@
 </head>
 <body>
 <div class = "container" style = "padding-top: 2cm;">
+  <div>
     <h3>Scheduled</h3>
+    </div>
+  <br>
   {% for session in tutoring_schedule %}
-    <p>Student ID: {{session.student.user.username}}</p>
-    <p>Name: {{session.student.name}}</p>
-    <p>Date: {{ session.session.date }}</p>
-    <p>Start Time: {{ session.session.start_time }}</p>
-    <p>End Time: {{ session.session.end_time }}</p>
+  <h1>{{ session.session.date }}</h1>
+    <p>Username: {{session.student.user.username}}</p>
+    <p>Student Email: {{session.student.user.email}}</p>
+    <p>Student Name: {{session.student.name}}</p>
+    <p>Year: {{session.student.year}}</p>
+    <p>Session Time: {{ session.session.start_time }} - {{ session.session.end_time }}</p>
   -----------------------------------------------------------------------------------------------
     <br>
 {% endfor %}
