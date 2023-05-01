@@ -276,6 +276,7 @@ def send_request(request, tutor):
 
 def pending_requests(request):
     template = 'tutor/pending_requests.html'
+    message = ''
     tutor = request.user.tutor
     tutoring_requests = TutoringRequest.objects.filter(session__tutor=tutor, status=None,
                                                        session__date__gte=datetime.date.today())
@@ -287,12 +288,13 @@ def pending_requests(request):
             tutor_request = TutoringRequest.objects.get(pk=request.POST['tutoring_request_id'])
             tutor_request.status = True
             tutor_request.save()
+            message = "Request Accepted! " + tutor_request.student.name + " is now in your session."
             print(tutor_request.status)
             print(tutor_request.session.date)
-            return redirect('pending_requests')
+            # return redirect('pending_requests')
     else:
         form = SendRequestForm()
-    return render(request, template, {'tutoring_requests': tutoring_requests, 'form': form})
+    return render(request, template, {'tutoring_requests': tutoring_requests, 'form': form, 'message': message})
 
 
 def schedule(request):
