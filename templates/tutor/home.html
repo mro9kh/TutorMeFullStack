@@ -1,84 +1,209 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Tutor Me</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cyborg/bootstrap.min.css" integrity="sha384-nEnU7Ae+3lD52AK+RGNzgieBWMnEfgTbRHIwEvp1XXPdqdO6uLTd/NwXbzboqjc2" crossorigin="anonymous">
-    <style>
-      body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-      }
+<html lang="en">
 
-      .container {
-        border-radius: 10px;
-        background-color: #edf2ff;
-        padding: 20px;
-        margin: 20px;
-      }
-      .profile-container .profile-info {
-        border-radius: 10px;
-        background-color: #edf2ff;
-        color: #181717;
-        margin: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Tutor Me</h1>
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <p>Welcome {{ user.username }}, you are logged in as a tutor.</p>
+  <title>Tutor Me</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
 
 
-    <div class="container profile-container">
-      <h3 class="text-center" style="color: #093768;">Profile</h3>
-      <div class="profile-info">
-        <div class="text-center">
-        <p>Username: {{ user.username }}</p>
-          <p>Email: {{ user.email }}</p>
-        <p>Name: {{ name }}</p>
-        <p>Year: {{ year }}</p>
-        <p>Hourly Rate: ${{ hourly_rate }}</p>
-        <p class="profile-info">Classes: {{ user.classes }}</p>
-        <a class="btn btn-primary" href="/accounts/home/tutor/profile" role="button">Edit Profile</a>
+  <!-- Favicons -->
+  <link href="{% static 'img/favicon.png' %}" rel="icon">
+  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: iPortfolio
+  * Updated: Mar 10 2023 with Bootstrap v5.2.3
+  * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .container {
+      border-radius: 10px;
+      background-color: #F8E9D9;
+      padding: 20px;
+      margin: 20px;
+    }
+    .profile-container .profile-info {
+      border-radius: 10px;
+      background-color: #F8E9D9;
+      color: #181717;
+      margin: 20px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- ======= Mobile nav toggle button ======= -->
+  <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+
+  <!-- ======= Header ======= -->
+  <header id="header">
+    <div class="d-flex flex-column">
+
+      <div class="profile">
+        <img src="{% static 'img/profile-img.jpg' %}" alt="" class="img-fluid rounded-circle">
+        <h1 class="text-light"><a href="#profile"> {{ user.username }}</a></h1>
       </div>
-      </div>                    
+
+      <nav id="navbar" class="nav-menu navbar">
+        <ul>
+          <li><a href="#home" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
+          <li><a href="#profile" class="nav-link scrollto"><i class="bx bx-user"></i> <span>Profile</span></a></li>
+          <li><a href="#add a session" class="nav-link scrollto"><i class="bx bx-calendar-plus"></i> <span>Add a Session</span></a></li>
+          <li><a href="#requests" class="nav-link scrollto"><i class="bx bx-calendar-star"></i> <span>Requests</span></a></li>
+          <li><a href="#schedule" class="nav-link scrollto"><i class="bx bx-calendar"></i> <span>Schedule</span></a></li>
+          <li><a href="#add a class" class="nav-link scrollto"><i class="bx bx-list-plus"></i> <span>Add a Class</span></a></li>
+          <li><a href="/logout"><i class="bi bi-arrow-90deg-right"></i> <span>Logout</span></a></li>
+        </ul>
+      </nav><!-- .nav-menu -->
     </div>
+  </header><!-- End Header -->
 
+  <!-- ======= Home Section ======= -->
+  <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
+    <div class="hero-container" data-aos="fade-in">
+    <div class="text-center">
+      <h1>Tutor Me</h1>
+      <p><span class="typed" data-typed-items="Welcome {{ user.username }}, You are logged in as a tutor"></span></p>
+    </div>
+    </div>
+  </section><!-- End Home -->
 
-    <div class="container">
-      <h3 class="text-center" style="color: #093768;">Tutoring Sessions</h3>
-      {% for session in sessions %}
-        <p>Date: {{ session.date }}</p>
-        <p>Start Time: {{ session.start_time }}</p>
-        <p>End Time: {{ session.end_time }}</p>
-        <hr>
-      {% endfor %}
-      <br>
-      <div style="display:flex; justify-content: center;">
+  <main id="main">
+
+    <!-- ======= Profile Section ======= -->
+    <section id="profile" class="profile ">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Profile</h2>
+          <p>This is your tutor profile that is public to students</p>
+        </div>
+
+        <div class="row">
+          <div class="text-center">
+            <p><strong>Username:</strong> {{ user.username }}</p>
+              <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Name:</strong> {{ name }}</p>
+            <p><strong>Year:</strong> {{ year }}</p>
+            <p><strong>Hourly Rate:</strong> ${{ hourly_rate }}</p>
+            <p class="profile-info"><strong>Classes:</strong> {{ user.classes }} <a class="btn btn-secondary" href="#add a class" role="button">Add a Class</a></p>
+            <a class="btn btn-primary" href="/accounts/home/tutor/profile" role="button">Edit Profile</a>
+        </div>
+
+      </div>
+    </section><!-- End Profile Section -->
+
+    <!-- ======= Add a Session Section ======= -->
+    <section id="add a session" class="add a session">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Add a Session</h2>
+          <p>Create a new tutoring session</p>
+        </div>
+
         <a class="btn btn-primary" href="/accounts/home/tutor/createsession" role="button">Add a Session</a>
-        &nbsp;&nbsp;&nbsp;&nbsp;
+
+      </div>
+    </section><!-- Add a Session Section -->
+
+    <!-- ======= Requests Section ======= -->
+    <section id="requests" class="requests">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Requests</h2>
+          <p>Pending session requests</p>
+        </div>
         <a class="btn btn-primary" href="/accounts/home/tutor/requests" role="button">View Requests</a>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <a class="btn btn-primary" href="/accounts/home/tutor/schedule" role="button">View Schedule</a>
-      </div>
   </div>
-    <div class="container">
-      <h3 class="text-center" style="color: #093768;">Add a Class</h3>
-      <div class="text-center">
+
+      </div>
+    </section><!-- End Requests Section -->
+
+    <!-- ======= Resume Section ======= -->
+    <section id="schedule" class="schedule">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Schedule</h2>
+          <p>Scheduled tutoring sessions appear below</p>
+        </div>
+
+        <a class="btn btn-primary" href="/accounts/home/tutor/schedule" role="button">View Schedule</a>
+
+      </div>
+    </section><!-- End Resume Section -->
+
+    <!-- ======= Portfolio Section ======= -->
+    <section id="add a class" class="add a class">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Add a Class</h2>
+          <p>Add a class to your tutor profile</p>
+        </div>
+
         <a class="btn btn-primary" href="/accounts/home/addclass" role="button">Add a Class</a>
-      </div>
-    </div>
 
-    <br>
+        
 
-    <div class="container">
-      <div class="text-center">
-        <a class="btn btn-secondary" href="/logout" role="button">Logout</a>
-      </div>
-    </div>
+        
 
-  </body>
+      
+    </section><!-- End Portfolio Section -->
+
+  </main><!-- End #main -->
+
+
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'vendor/purecounter/purecounter_vanilla.js' %}"></script>
+  <script src="{% static 'vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'vendor/typed.js/typed.min.js' %}"></script>
+  <script src="{% static 'vendor/waypoints/noframework.waypoints.js' %}"></script>
+  <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'js/main.js' %}"></script>
+
+</body>
+
 </html>

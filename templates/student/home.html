@@ -1,100 +1,209 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Tutor Me</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cyborg/bootstrap.min.css" integrity="sha384-nEnU7Ae+3lD52AK+RGNzgieBWMnEfgTbRHIwEvp1XXPdqdO6uLTd/NwXbzboqjc2" crossorigin="anonymous">
-    <style>
-      body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-      }
+<html lang="en">
 
-      .container {
-        border-radius: 10px;
-        background-color: #edf2ff;
-        padding: 20px;
-        margin: 20px;
-      }
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-      .profile-container .profile-info {
-        border-radius: 10px;
-        background-color: #edf2ff;
-        color: #181717;
-        margin: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Tutor Me</h1>
-
-    <p>Welcome {{ user.username }}, you are logged in as a student.</p>
+  <title>Tutor Me</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
 
 
-    <div class="container profile-container">
-      <h3 class="text-center" style="color: #093768;">Profile</h3>
-      <div class="text-center">
-      <div class="profile-info">
-        <p>Username: {{ user.username }}</p>
-        <p>Email: {{ user.email }}</p>
-        <p>Name: {{ name }}</p>
-        <p>Year: {{ year }}</p>
-        <p>Classes: {{ user.classes }}</p>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: iPortfolio
+  * Updated: Mar 10 2023 with Bootstrap v5.2.3
+  * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .container {
+      border-radius: 10px;
+      background-color: #F8E9D9;
+      padding: 20px;
+      margin: 20px;
+    }
+    .profile-container .profile-info {
+      border-radius: 10px;
+      background-color: #F8E9D9;
+      color: #181717;
+      margin: 20px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- ======= Mobile nav toggle button ======= -->
+  <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+
+  <!-- ======= Header ======= -->
+  <header id="header">
+    <div class="d-flex flex-column">
+
+      <div class="profile">
+        <img src="{% static 'img/profile-img.jpg' %}" alt="" class="img-fluid rounded-circle">
+        <h1 class="text-light"><a href="#profile"> {{ user.username }}</a></h1>
       </div>
-      <div style="display:flex; justify-content: center;">
-        <a class="btn btn-primary" href="/accounts/home/student/profile" role="button">Edit Profile</a>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <a class="btn btn-primary" href="/accounts/home/addclass" role="button">Add a Class</a>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <a class="btn btn-primary" href="/accounts/home/find-tutor" role="button">Find a Tutor</a>
-      </div>
-      </div>
+
+      <nav id="navbar" class="nav-menu navbar">
+        <ul>
+          <li><a href="#home" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
+          <li><a href="#profile" class="nav-link scrollto"><i class="bx bx-user"></i> <span>Profile</span></a></li>
+          <li><a href="#find a tutor" class="nav-link scrollto"><i class="bx bx-search"></i> <span>Find a Tutor</span></a></li>
+          <li><a href="#requests" class="nav-link scrollto"><i class="bx bxs-time"></i> <span>Requests</span></a></li>
+          <li><a href="#schedule" class="nav-link scrollto"><i class="bx bx-calendar"></i> <span>Schedule</span></a></li>
+          <li><a href="#add a class" class="nav-link scrollto"><i class="bx bx-list-plus"></i> <span>Add a Class</span></a></li>
+          <li><a href="#tutors" class="nav-link scrollto"><i class="bx bx-planet"></i> <span>Available Tutors</span></a></li>
+          <li><a href="/logout"><i class="bi bi-arrow-90deg-right"></i> <span>Logout</span></a></li>
+        </ul>
+      </nav><!-- .nav-menu -->
     </div>
+  </header><!-- End Header -->
 
-    <div class="container">
-      <h3 class="text-center" style="color: #093768;">Pending</h3>
-      {% for request in tutor_requests %}
+  <!-- ======= Home Section ======= -->
+  <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
+    <div class="hero-container" data-aos="fade-in">
+    <div class="text-center">
+      <h1>Tutor Me</h1>
+      <p><span class="typed" data-typed-items="Welcome {{ user.username }}, You are logged in as a student"></span></p>
+    </div>
+    </div>
+  </section><!-- End Home -->
+
+  <main id="main">
+
+    <!-- ======= Profile Section ======= -->
+    <section id="profile" class="profile ">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Profile</h2>
+          <p>This is your student profile that is public to tutors</p>
+        </div>
+
+        <div class="row">
+          <div class="text-center">
+            <p><strong>Username:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Name:</strong> {{ name }}</p>
+            <p><strong>Year:</strong> {{ year }}</p>
+            <p class="profile-info"><strong>Classes:</strong> {{ user.classes }} <a class="btn btn-secondary" href="#add a class" role="button">Add a Class</a></p>
+            <a class="btn btn-primary" href="/accounts/home/student/profile" role="button">Edit Profile</a>
+        </div>
+
+      </div>
+    </section><!-- End Profile Section -->
+
+    <!-- ======= Add a Session Section ======= -->
+    <section id="find a tutor" class="find a tutor">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Find a Tutor</h2>
+          <p>Search for a tutor by class</p>
+        </div>
+
+        <a class="btn btn-primary" href="/accounts/home/find-tutor" role="button">Find a Tutor</a>
+
+      </div>
+    </section><!-- Add a Session Section -->
+
+    <!-- ======= Requests Section ======= -->
+    <section id="requests" class="requests">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Requests</h2>
+          <p>Outgoing session requests</p>
+        </div>
+
+        <h4>Pending</h4>
+        {% for request in tutor_requests %}
         {% if request.status == None %}
           <div class="profile-info">
-            <p>Tutor ID: {{ request.session.tutor.user.username }}</p>
-            <p>Name: {{ request.session.tutor.name }}</p>
-            <p>Date: {{ request.session.date }}</p>
-            <p>Start Time: {{ request.session.time_start }}</p>
-            <p>End Time: {{ request.session.time_end }}</p>
+            <p><strong>Tutor ID:</strong> {{ request.session.tutor.user.username }}</p>
+            <p><strong>Name:</strong> {{ request.session.tutor.name }}</p>
+            <p><strong>Date:</strong> {{ request.session.date }}</p>
+            <p><strong>Start Time:</strong>  {{ request.session.start_time }}</p>
+            <p><strong>End Time:</strong> {{ request.session.end_time }}</p>
           </div>
           <br>
         {% endif %}
       {% endfor %}
-    </div>
-    <div class="container">
-      <h3 class="text-center" style="color: #093768;">Scheduled</h3>
-      {% for request in tutor_requests %}
+  </div>
+
+      </div>
+    </section><!-- End Requests Section -->
+
+    <!-- ======= Resume Section ======= -->
+    <section id="schedule" class="schedule">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Schedule</h2>
+          <p>Scheduled tutoring sessions appear below</p>
+        </div>
+
+        {% for request in tutor_requests %}
         {% if request.status == True %}
           <div class="profile-info">
-            <p>Tutor ID: {{ request.session.tutor.user.username }}</p>
-            <p>Name: {{ request.session.tutor.name }}</p>
-            <p>Date: {{ request.session.date }}</p>
-            <p>Start Time: {{ request.session.time_start }}</p>
-            <p>End Time: {{ request.session.time_end }}</p>
+            <p><strong>Tutor ID:</strong> {{ request.session.tutor.user.username }}</p>
+            <p><strong>Name:</strong> {{ request.session.tutor.name }}</p>
+            <p><strong>Date:</strong> {{ request.session.date }}</p>
+            <p><strong>Start Time:</strong> {{ request.session.time_start }}</p>
+            <p><strong>End Time:</strong> {{ request.session.time_end }}</p>
           </div>
           {% endif %} 
-          {% endfor %} 
-        </div>
+        {% endfor %} 
+
       </div>
-      <br>
+    </section><!-- End Resume Section -->
+
+    <!-- ======= Resume Section ======= -->
+    <section id="tutors" class="tutors">
       <div class="container">
-        <h3 class="text-center" style="color: #093768;">Available Tutors</h3>
+
+        <div class="section-title">
+          <h2>Available Tutors</h2>
+          <p>All available tutoring sessions appear below</p>
+        </div>
+
         {% for tutor in tutors %}
             <div class="text-center">
               <div class="profile-info">
-              <p>Username: {{ tutor.user.username }}</p>
-              <p>Name: {{ tutor.name }}</p>
-              <p>Email: {{ tutor.user.email }}</p>
-              <p>Year: {{ tutor.year }}</p>
-              <p>Classes Taken: {{ tutor.user.classes }}</p>
-              <p>Hourly Rate: ${{ tutor.hourly_rate }}</p>
+              <p><strong>Username:</strong> {{ tutor.user.username }}</p>
+              <p><strong>Name:</strong> {{ tutor.name }}</p>
+              <p><strong>Email:</strong> {{ tutor.user.email }}</p>
+              <p><strong>Year:</strong> {{ tutor.year }}</p>
+              <p><strong>Classes Taken:</strong> {{ tutor.user.classes }}</p>
+              <p><strong>Hourly Rate:</strong> ${{ tutor.hourly_rate }}</p>
                 {% if tutor.tutoring_sessions.all %}
                   <p><a class="btn btn-primary" href="/accounts/home/student/{{ tutor.user.username }}" role="button">Schedule Session</a></p>
                 {% else %}
@@ -103,11 +212,48 @@
             </div>
           </div>
         {% endfor %}
+
       </div>
+    </section><!-- End Resume Section -->
+
+    <!-- ======= Portfolio Section ======= -->
+    <section id="add a class" class="add a class">
       <div class="container">
-        <div class="text-center">
-          <a class="btn btn-secondary" href="/logout" role="button">Logout</a>
+
+        <div class="section-title">
+          <h2>Add a Class</h2>
+          <p>Add a class to your student profile</p>
         </div>
-      </div>
+
+        <a class="btn btn-primary" href="/accounts/home/addclass" role="button">Add a Class</a>
+
+        
+
+        
+
+      
+    </section><!-- End Portfolio Section -->
+
+  </main><!-- End #main -->
+
+
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'vendor/purecounter/purecounter_vanilla.js' %}"></script>
+  <script src="{% static 'vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'vendor/typed.js/typed.min.js' %}"></script>
+  <script src="{% static 'vendor/waypoints/noframework.waypoints.js' %}"></script>
+  <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'js/main.js' %}"></script>
+
 </body>
+
 </html>
