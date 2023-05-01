@@ -41,6 +41,17 @@
  <div class = "container" style = "padding-top: 2cm;">
   <h3> Tutor: {{ name }}</h3>
      Username: {{username}}
+     <br>
+     {% if messages %}
+     {% for message in messages %}
+     {% if message.message == "You have already requested this session." %}
+     <div class="alert alert-danger">
+         {{ message }}
+         </div>
+     {% endif %}
+     {% endfor %}
+     {% endif %}
+     <p style="color: green;"> {{ message }}</p>
  </div>
  <div class = "container" style = "padding-top: 1cm;">
   <h3>Tutoring Sessions</h3>
@@ -53,7 +64,8 @@
             {{ form.as_p }}
      <input type="hidden" name="session_id" value="{{ session.id }}">
      <input type="submit" value="Send Request" class="btn btn-primary">
-        </form></p>
+        </form>
+     </p>
      <br>
 {% endfor %}
 <br>

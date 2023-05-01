@@ -109,3 +109,8 @@ class TutoringRequest(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='student_requests')
     # message = models.TextField(max_length=200, default='')
     status = models.BooleanField(default=None, null=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['session', 'student'], name='unique_request_per_session')
+        ]

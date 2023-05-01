@@ -10,6 +10,7 @@ from django.db.models import CharField, Value as V
 import calendar
 from calendar import HTMLCalendar
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from .forms import StudentSignUpForm, TutorSignUpForm, addClassForm, UpdateTutorProfileForm, TutoringSessionForm, \
     UpdateStudentProfileForm, SendRequestForm, findTutorForm, AcceptRequestForm, deleteClassForm
@@ -205,6 +206,8 @@ def createsession(request):
 
 def send_request(request, tutor):
     uid = User.objects.get(username=tutor)
+    current_session_id = None
+    message = ''
     tutor = uid.tutor
     name = tutor.name
     tutor_username = tutor.user.username
@@ -214,18 +217,34 @@ def send_request(request, tutor):
         form = SendRequestForm(request.POST, request.FILES)
         if form.is_valid():
             print(request.POST['session_id'])
+            # Check if the user has already requested this session
+
+            session_id = request.POST['session_id']
+            existing_request = TutoringRequest.objects.filter(session_id=session_id,
+                                                              student=request.user.student).exists()
+
+            if existing_request:
+                # Display an error message and reload the page
+                messages.error(request, 'You have already requested this session.')
+                return redirect('request', tutor=tutor_username)
+
             tutor_request = form.save(commit=False)
             tutor_request.status = None
             tutor_request.student = request.user.student
             tutor_request.session = TutoringSession.objects.get(pk=request.POST['session_id'])
+            current_session_id = tutor_request.session.id
+            print(current_session_id)
             tutor_request.save()
+            message = "Request sent to " + tutor_username + '!'
             print(tutor_request.session.date)
     else:
         form = SendRequestForm(initial={'student': request.user.student, 'session': tutoring_sessions.first().id})
     return render(request, 'student/request.html', {'name': name,
                                                     'sessions': tutoring_sessions,
                                                     'username': tutor_username,
-                                                    'form': form})
+                                                    'form': form,
+                                                    'message': message,
+                                                    'current_session_id': current_session_id})
 
 
 def pending_requests(request):
