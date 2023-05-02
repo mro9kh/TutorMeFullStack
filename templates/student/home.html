@@ -177,8 +177,7 @@
               <p><strong>Email:</strong> {{ tutor.user.email }}</p>
               <p><strong>Year:</strong> {{ tutor.year }}</p>
               <p><strong>Classes Taken:</strong> {{ tutor.user.classes }}</p>
-              <p><strong>Hourly Rate:</strong> ${{ tutor.hourly_rate }}</p>
-              <hr>
+              <p><strong>Hourly Rate:</strong> ${{ tutor.hourly_rate }}</p> 
                 {% if tutor.tutoring_sessions.all %}
                   <p><a class="btn btn-primary" href="/accounts/home/student/{{ tutor.user.username }}" role="button">Schedule Session</a></p>
                 {% else %}
