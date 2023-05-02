@@ -44,12 +44,12 @@
   <br>
   {% for tutoring_request in tutoring_requests %}
     <h1>{{tutoring_request.session.date }}</h1>
-    <p>Username: {{tutoring_request.student.user.username}}</p>
-    <p>Student Email: {{tutoring_request.student.user.email}}</p>
-    <p>Student Name: {{tutoring_request.student.name}}</p>
-    <p>Year: {{tutoring_request.student.year}}</p>
-    <p>Start Time: {{ tutoring_request.session.start_time }}</p>
-    <p>End Time: {{ tutoring_request.session.end_time }}</p>
+    <p><strong>Username: </strong>{{tutoring_request.student.user.username}}</p>
+    <p><strong>Student Email: </strong>{{tutoring_request.student.user.email}}</p>
+    <p><strong>Student Name: </strong>{{tutoring_request.student.name}}</p>
+    <p><strong>Year: </strong>{{tutoring_request.student.year}}</p>
+    <p><strong>Classes: </strong>{{tutoring_request.student.user.classes}}</p>
+    <p><strong>Session Time:</strong> {{ tutoring_request.session.start_time }} - {{ tutoring_request.session.end_time }} </p>
     <p><form method="POST">
             {% csrf_token %}
             {{ form.as_p }}

@@ -60,8 +60,7 @@
   <h3>Tutoring Sessions</h3>
   {% for session in sessions %}
     <p><strong>Date:</strong> {{ session.date }}</p>
-    <p><strong>Start Time:</strong> {{ session.start_time }}</p>
-    <p><strong>End Time:</strong> {{ session.end_time }}</p>
+    <p><strong>Session Time:</strong> {{ session.start_time }} - {{ session.end_time }} </p>
      <p><form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
