@@ -180,10 +180,11 @@
               <p><strong>Hourly Rate:</strong> ${{ tutor.hourly_rate }}</p> 
                 {% if tutor.tutoring_sessions.all %}
                   <p><a class="btn btn-primary" href="/accounts/home/student/{{ tutor.user.username }}" role="button">Schedule Session</a></p>
-                {% else %}
+                  <hr>
+                  {% else %}
                 <p><strong>No Session</strong></p>
                 <hr>
-      {% endif %}
+             {% endif %}
             </div>
           </div>
         {% endfor %}
