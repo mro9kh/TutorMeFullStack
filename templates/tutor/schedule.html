@@ -45,11 +45,12 @@
   <br>
   {% for session in tutoring_schedule %}
   <h1>{{ session.session.date }}</h1>
-  <p><strong>Username:</strong> {{session.student.user.username}}</p>
-    <p><strong>Student Email: </strong>{{session.student.user.email}}</p>
-    <p><strong>Student Name: </strong>{{session.student.name}}</p>
-    <p><strong>Year: </strong>{{session.student.year}}</p>
-    <p><strong>Session Time: </strong>{{ session.session.start_time }} - {{ session.session.end_time }}</p>
+  <p><strong><strong>Username:</strong></strong> {{session.student.user.username}}</p>
+    <p><strong><strong>Student Email:</strong> </strong>{{session.student.user.email}}</p>
+    <p><strong><strong>Student Name:</strong> </strong>{{session.student.name}}</p>
+    <p><strong><strong>Year:</strong> </strong>{{session.student.year}}</p>
+    <p><strong><strong>Session Time:</strong> </strong>{{ session.session.start_time }} - {{ session.session.end_time }}</p>
+    <hr>
     <br>
 {% endfor %}
   </div>

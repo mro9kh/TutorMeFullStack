@@ -40,10 +40,10 @@
 <body>
  <div class = "container" style = "padding-top: 2cm;">
   <h3> Tutor: {{ name }}</h3>
-     <p>Username: {{username}}</p>
-     <p>Tutor email: {{tutor.user.email}}</p>
-     <p>Classes taken: {{user.classes}}</p>
-     <p>Hourly Rate: ${{tutor.hourly_rate}}</p>
+     <p><strong>Username:</strong> {{username}}</p>
+     <p><strong>Tutor email:</strong> {{tutor.user.email}}</p>
+     <p><strong>Classes taken:</strong> {{user.classes}}</p>
+     <p><strong>Hourly Rate:</strong> ${{tutor.hourly_rate}}</p>
      <br>
      {% if messages %}
      {% for message in messages %}
@@ -59,9 +59,9 @@
  <div class = "container" style = "padding-top: 1cm;">
   <h3>Tutoring Sessions</h3>
   {% for session in sessions %}
-     <p><strong>Date: {{ session.date }}</strong></p>
-    <p>Start Time: {{ session.start_time }}</p>
-    <p>End Time: {{ session.end_time }}</p>
+    <p><strong>Date:</strong> {{ session.date }}</p>
+    <p><strong>Start Time:</strong> {{ session.start_time }}</p>
+    <p><strong>End Time:</strong> {{ session.end_time }}</p>
      <p><form method="POST">
             {% csrf_token %}
             {{ form.as_p }}

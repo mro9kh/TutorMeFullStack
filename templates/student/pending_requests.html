@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
+  
   <title>Tutor Me</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
@@ -37,48 +37,25 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 </head>
-
 <body>
-  <header class="text-center py-4">
-      <h1>Find a Tutor</h1>
-  </header>
-  <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-      <form action="" method="post" novalidate>
-          {% csrf_token %} 
-          {{ form.as_p }}
-          <div class="text-center my-4">
-            <button type="submit" class="btn btn-primary">Search</button>
-        </div>
-      </form>
-
-      <div class="mt-4 text-center">
-        {% block content %}
-        <div class = "container" style = "padding-top: 2cm;">
-            <h3><strong>{{ message }}</strong></h3>
-            {% for user in tutorList %}
-                <p><strong>Name:</strong> {{ user.tutor.name}}</p>
-                <p><strong>Year:</strong> {{ user.tutor.year }}</p>
-                <p><strong>Classes Taken:</strong> {{ user.tutor.user.classes }}</p>
-                <p><strong>Hourly Rate:</strong> $ {{ user.tutor.hourly_rate }}</p>
-                <p><a class="btn btn-primary" href=/accounts/home/student/{{user.tutor.user.username}} role="button">Schedule Session</a></p>
-                <hr>
-                <br>
-                </br>
-            {% endfor %}
-        </div>
-        {% endblock %}
+<div class = "container" style = "padding-top: 2cm;">
+    <h3>Pending</h3>
+    {% for request in tutor_requests %}
+    {% if request.status == None %}
+      <div class="profile-info">
+        <h1>{{ request.session.date }}</h1>
+        <p><strong>Tutor ID:</strong> {{ request.session.tutor.user.username }}</p>
+        <p><strong>Name:</strong> {{ request.session.tutor.name }}</p>
+        <p><strong>Start Time:</strong>  {{ request.session.start_time }}</p>
+        <p><strong>End Time:</strong> {{ request.session.end_time }}</p>
+        <hr>
       </div>
-     
-      <div class="mt-4 text-center">
-        {% if user.is_student %}
-          <a class="btn btn-secondary" href="/accounts/home/student/" role="button">Return to home</a>
-        {% else %}
-          <a class="btn btn-secondary" href="/accounts/home/tutor/" role="button">Return to home</a>
-        {% endif %}
-      </div>
-    </div>
+      <br>
+    {% endif %}
+  {% endfor %}
   </div>
+<div class = "container" style = "padding-top: 2cm;">
+  <a class="btn btn-secondary" href=/accounts/home/student  role="button">Return to Home</button>  </a>
 </div>
 </body>
+</html>

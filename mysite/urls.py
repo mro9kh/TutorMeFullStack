@@ -30,6 +30,8 @@ urlpatterns = [
     path('accounts/signup/tutor/', views.TutorSignUpView.as_view(), name='tutor_signup'),
     path('accounts/home/student/', student_home, name='student_home'),
     path('accounts/home/student/profile', views.edit_student_profile, name='student_profile'),
+    path('accounts/home/student/requests',  views.student_pending_requests, name="student_pending_requests"),
+    path('accounts/home/student/schedule', views.student_schedule, name="student_schedule"),
     path('accounts/home/student/<str:tutor>', views.send_request, name="request"),
     # path('accounts/home/student/', TemplateView.as_view(template_name="student/home.html"), name='student_home'),
     path('accounts/home/tutor/', tutor_home, name='tutor_home'),
