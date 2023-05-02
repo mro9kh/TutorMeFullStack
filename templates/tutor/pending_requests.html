@@ -40,6 +40,7 @@
 <body>
 <div class = "container" style = "padding-top: 2cm;">
     <h3>Pending</h3>
+  {{ message }}
   {% for tutoring_request in tutoring_requests %}
     <h1>{{tutoring_request.session.date }}</h1>
     <p>Username: {{tutoring_request.student.user.username}}</p>
@@ -52,10 +53,11 @@
             {% csrf_token %}
             {{ form.as_p }}
      <input type="hidden" name="tutoring_request_id" value="{{ tutoring_request.id }}">
-     <input type="submit" value="Accept Request" class="btn btn-primary">
+     <input type="submit" name="accept" value="Accept Request" class="btn btn-primary">
+     <input type="submit" name="reject" value="Reject Request" class="btn btn-danger">
      <hr>
-     </form></p>
-
+     </form>
+    </p>
     <br>
     <br>
 {% endfor %}

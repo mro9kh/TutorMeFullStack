@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from .forms import StudentSignUpForm, TutorSignUpForm, addClassForm, UpdateTutorProfileForm, TutoringSessionForm, \
-    UpdateStudentProfileForm, SendRequestForm, findTutorForm, AcceptRequestForm, deleteClassForm
+    UpdateStudentProfileForm, SendRequestForm, findTutorForm, AcceptRequestForm, deleteClassForm, RejectRequestForm
 from .models import User, Student, Tutor, TutorClasses, TutoringSession, TutoringRequest
 
 from django.utils.decorators import method_decorator
@@ -276,23 +276,36 @@ def send_request(request, tutor):
 
 def pending_requests(request):
     template = 'tutor/pending_requests.html'
+    message = ''
     tutor = request.user.tutor
     tutoring_requests = TutoringRequest.objects.filter(session__tutor=tutor, status=None,
                                                        session__date__gte=datetime.date.today())
     if request.method == "POST":
-        form = AcceptRequestForm(request.POST, request.FILES)
-        if form.is_valid():
-            # print(form.cleaned_data.keys())
-            print(request.POST['tutoring_request_id'])
-            tutor_request = TutoringRequest.objects.get(pk=request.POST['tutoring_request_id'])
-            tutor_request.status = True
-            tutor_request.save()
-            print(tutor_request.status)
-            print(tutor_request.session.date)
-            return redirect('pending_requests')
+        if 'accept' in request.POST:
+            form = AcceptRequestForm(request.POST, request.FILES)
+            if form.is_valid():
+                # print(form.cleaned_data.keys())
+                print(request.POST['tutoring_request_id'])
+                tutor_request = TutoringRequest.objects.get(pk=request.POST['tutoring_request_id'])
+                tutor_request.status = True
+                tutor_request.save()
+                message = "Request Accepted! " + tutor_request.student.name + " is now in your session."
+                print(tutor_request.status)
+                print(tutor_request.session.date)
+            # return redirect('pending_requests')
+        elif 'reject' in request.POST:
+            form = RejectRequestForm(request.POST, request.FILES)
+            if form.is_valid():
+                print(request.POST['tutoring_request_id'])
+                tutor_request = TutoringRequest.objects.get(pk=request.POST['tutoring_request_id'])
+                tutor_request.status = False
+                tutor_request.save()
+                message = "Request Rejected!"
+                print(tutor_request.status)
+                print(tutor_request.session.date)
     else:
         form = SendRequestForm()
-    return render(request, template, {'tutoring_requests': tutoring_requests, 'form': form})
+    return render(request, template, {'tutoring_requests': tutoring_requests, 'form': form, 'message': message})
 
 def student_pending_requests(request):
     template = 'student/pending_requests.html'

@@ -182,7 +182,8 @@
                 {% if tutor.tutoring_sessions.all %}
                   <p><a class="btn btn-primary" href="/accounts/home/student/{{ tutor.user.username }}" role="button">Schedule Session</a></p>
                 {% else %}
-                  <p>No Session</p>
+                <p><strong>No Session</strong></p>
+                <hr>
       {% endif %}
             </div>
           </div>
