@@ -89,7 +89,7 @@ def addclass(request):
             if allowed == True:
                 n.classes = n.classes + "\n" + newClass
                 n.save()
-                message = ": " + className + " is successfully added"
+                message = ": " + className + " was successfully added"
                 user = get_user_model()
                 all_users = User.objects.all()
                 print(all_users)
@@ -164,30 +164,31 @@ def find_tutor(request):
         response = requests.get(urlQuery)
         sisjsonTotal = response.json()
         if len(sisjsonTotal) == 0:
-            nameMessage = ""
+            message = department + catalog_number + " is not a valid course in Spring 2023"
         else:
             sisjson = sisjsonTotal[0]
             department = sisjson["subject"]
             catalog_number = sisjson["catalog_nbr"]
             className = sisjson["descr"]
             nameMessage = className
-        classStudent = department + catalog_number  # turn into one string
-        users = User.objects.all()
-        sessions = TutoringSession.objects.all()
-        classData = " "
-        matches = 0
-        for user in users:
-            if (user.is_tutor):
-                tutorClassString = user.classes
-                classData = tutorClassString.split("\n")
-                if classStudent in classData:
-                    listOfTutors.append(user)
-                    matches += 1
-                    for session in sessions:
-                        if session.tutor_id == user.tutor.user_id:
-                            validSessions.append(session)
-        message = "Number of tutors found for " + classStudent + ": " + nameMessage + " are: " + str(matches)
-
+            # *********************************
+            classStudent = department + catalog_number  # turn into one string
+            users = User.objects.all()
+            sessions = TutoringSession.objects.all()
+            classData = " "
+            matches = 0
+            for user in users:
+                if (user.is_tutor):
+                    tutorClassString = user.classes
+                    classData = tutorClassString.split("\n")
+                    if classStudent in classData:
+                        listOfTutors.append(user)
+                        matches += 1
+                        for session in sessions:
+                            if session.tutor_id == user.tutor.user_id:
+                                validSessions.append(session)
+            message = "Number of tutors found for " + classStudent + ": " + nameMessage + " are: " + str(matches)
+                # *********************
     else:
         form = findTutorForm()
     return render(request, 'find_tutor.html',
@@ -367,30 +368,32 @@ def delete_class(request):
         response = requests.get(urlQuery)
         sisjsonTotal = response.json()
         if len(sisjsonTotal) == 0:
-            nameMessage = ""
+            message = "is not a valid course in Spring 2023"
         else:
             sisjson = sisjsonTotal[0]
             department = sisjson["subject"]
             catalog_number = sisjson["catalog_nbr"]
             className = sisjson["descr"]
-        classToDelete = department + catalog_number
-        found = False
-        for i in classes:
-            if (i == classToDelete):
-                classes.remove(classToDelete)
-                found = True
-                message = ": " + className + " has been deleted from your profile"
-        if found == False:
-            message = ": " + className + " was not found in your profile"
-        n = request.user
-        n.classes = ""
-        if len(classes) == 0:
+            # *********************************************
+            classToDelete = department + catalog_number
+            found = False
+            for i in classes:
+                if (i == classToDelete):
+                    classes.remove(classToDelete)
+                    found = True
+                    message = ": " + className + " has been deleted from your profile"
+            if found == False:
+                message = ": " + className + " was not found in your profile"
+            n = request.user
             n.classes = ""
-            n.save()
-        else:
-            for j in classes:
-                n.classes = n.classes + "\n" + j
+            if len(classes) == 0:
+                n.classes = ""
                 n.save()
+            else:
+                for j in classes:
+                    n.classes = n.classes + "\n" + j
+                    n.save()
+                    # ***********************
     else:
         form = deleteClassForm()
     return render(request, 'delete_class.html',
