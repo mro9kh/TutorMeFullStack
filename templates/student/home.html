@@ -141,7 +141,7 @@
 
         <div class="section-title">
           <h2>Requests</h2>
-          <p>View outgoing session requests</p>
+          <p>View outgoing session requests to tutors</p>
         </div>
         <a class="btn btn-primary" href="/accounts/home/student/requests" role="button">View Requests</a>
     </div>
@@ -166,7 +166,7 @@
 
         <div class="section-title">
           <h2>Available Tutors</h2>
-          <p>All available tutoring sessions appear below</p>
+          <p>All available tutors below</p>
         </div>
 
         {% for tutor in tutors %}
@@ -198,7 +198,7 @@
 
         <div class="section-title">
           <h2>Edit Classes</h2>
-          <p>Add a class to your student profile</p>
+          <p>Add a class from UVA you want help in</p>
         </div>
         <p><strong>Current Classes in Profile: </strong>{{user.classes}}</p>
         <a class="btn btn-secondary" href="/accounts/home/addclass" role="button">Add a Class</a> <a class="btn btn-danger" href="/accounts/home/delete-class" role="button">Delete a Class</a>

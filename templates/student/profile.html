@@ -38,10 +38,13 @@
   ======================================================== -->
 </head>
 <body>
-  <div class="container pt-5">
+<header style="background-color: #F8E9D9; padding: 30px; text-align: center; border-radius: 15px">
     <div class="container mb-4">
-      <h3 class="text-center">Edit Profile</h3>
+      <h1 class="text-center">Edit Profile</h1>
+      <p>Edit your name and school year</p>
     </div>
+</header>
+<br>
     <div class="container">
         <form action="{% url 'student_profile' %}" method="post" enctype="multipart/form-data" novalidate>
         {% csrf_token %}

@@ -38,12 +38,16 @@
   ======================================================== -->
 </head>
 <body>
+<header style="background-color: #F8E9D9; padding: 30px; text-align: center; border-radius: 15px">
+        <h1>Pending</h1>
+        <p>Accept or reject a request from a student for a tutoring session</p>
+    </header>
 <div class = "container" style = "padding-top: 2cm;">
-    <h3>Pending</h3>
-  {{ message }}
-  <br>
+    <br>
+    <br>
+    {{ message }}
   {% for tutoring_request in tutoring_requests %}
-    <h1>{{tutoring_request.session.date }}</h1>
+    <h3>{{tutoring_request.session.date }}</h3>
     <p><strong>Username: </strong>{{tutoring_request.student.user.username}}</p>
     <p><strong>Student Email: </strong>{{tutoring_request.student.user.email}}</p>
     <p><strong>Student Name: </strong>{{tutoring_request.student.name}}</p>

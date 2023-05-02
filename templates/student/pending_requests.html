@@ -38,12 +38,15 @@
   ======================================================== -->
 </head>
 <body>
+<header style="background-color: #F8E9D9; padding: 30px; text-align: center; border-radius: 15px">
+  <h1>Pending</h1>
+  <p>Here are your pending requests. The tutor has not accepted nor rejected these requests</p>
+</header>
 <div class = "container" style = "padding-top: 2cm;">
-    <h3>Pending</h3>
     {% for request in tutor_requests %}
     {% if request.status == None %}
       <div class="profile-info">
-        <h1>{{ request.session.date }}</h1>
+        <h2>{{ request.session.date }}</h2>
         <p><strong>Tutor ID:</strong> {{ request.session.tutor.user.username }}</p>
         <p><strong>Name:</strong> {{ request.session.tutor.name }}</p>
         <p><strong>Email:</strong> {{ request.session.tutor.user.email}}</p>

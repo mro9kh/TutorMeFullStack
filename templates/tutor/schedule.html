@@ -38,13 +38,13 @@
   ======================================================== -->
 </head>
 <body>
+<header style="background-color: #F8E9D9; padding: 30px; text-align: center; border-radius: 15px">
+    <h1>Scheduled</h1>
+    <p>Here are all your currently scheduled tutoring sessions</p>
+  </header>
 <div class = "container" style = "padding-top: 2cm;">
-  <div>
-    <h3>Scheduled</h3>
-    </div>
-  <br>
   {% for session in tutoring_schedule %}
-  <h1>{{ session.session.date }}</h1>
+  <h2>{{ session.session.date }}</h2>
   <p><strong><strong>Username:</strong></strong> {{session.student.user.username}}</p>
     <p><strong><strong>Student Email:</strong> </strong>{{session.student.user.email}}</p>
     <p><strong><strong>Student Name:</strong> </strong>{{session.student.name}}</p>

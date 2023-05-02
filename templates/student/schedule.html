@@ -38,15 +38,15 @@
   ======================================================== -->
 </head>
 <body>
-<div class = "container" style = "padding-top: 2cm;">
-  <div>
-    <h3>Scheduled</h3>
-</div>
-  <br>
+<header style="background-color: #F8E9D9; padding: 30px; text-align: center; border-radius: 15px">
+    <h1>Scheduled</h1>
+    <p>Here are all your currently scheduled tutoring sessions</p>
+  </header>
+<div class = "container" style = "padding-top: 1cm;">
   {% for request in tutor_requests %}
         {% if request.status == True %}
           <div class="profile-info">
-            <h1>{{ request.session.date }}</h1>
+            <h2>{{ request.session.date }}</h2>
             <p><strong>Username:</strong> {{ request.session.tutor.user.username }}</p>
             <p><strong>Tutor Email:</strong> {{ request.session.tutor.user.email }}</p>
             <p><strong>Tutor Name:</strong> {{ request.session.tutor.name }}</p>

@@ -38,17 +38,21 @@
   ======================================================== -->
 </head>
 <body>
- <div class = "container" style = "padding-top: 2cm;">
-  <h3> Tutor: {{ name }}</h3>
+<header style="background-color: #F8E9D9; padding: 30px; text-align: center; border-radius: 15px">
+     <h1> Tutor: {{ name }}</h1>
+     <div class = "container" style = "padding-top: 1cm; text-align: center">
      <p><strong>Username:</strong> {{username}}</p>
      <p><strong>Tutor email:</strong> {{tutor.user.email}}</p>
+         <p><strong>Year:</strong> {{tutor.year}}</p>
      <p><strong>Classes taken:</strong> {{user.classes}}</p>
      <p><strong>Hourly Rate:</strong> ${{tutor.hourly_rate}}</p>
-     <br>
+         <br>
+         <p>View and send a request for tutoring sessions from {{tutor.name}}</p>
+</header>
      {% if messages %}
      {% for message in messages %}
      {% if message.message == "You have already requested this session." %}
-     <div class="alert alert-danger">
+     <div class="alert alert-danger" style="text-align: center;">
          {{ message }}
          </div>
      {% endif %}
