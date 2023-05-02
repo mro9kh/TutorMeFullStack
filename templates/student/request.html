@@ -65,8 +65,13 @@
      <p><form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
+     {% if session.has_request %}
+        <input type="hidden" name="session_id" value="{{ session.id }}">
+        <input type="submit" value="Requested" class="btn btn-secondary">
+       {% else %}
      <input type="hidden" name="session_id" value="{{ session.id }}">
      <input type="submit" value="Send Request" class="btn btn-primary">
+     {% endif %}
         </form>
      </p>
      <hr>

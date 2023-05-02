@@ -237,6 +237,10 @@ def send_request(request, tutor):
     name = tutor.name
     tutor_username = tutor.user.username
     tutoring_sessions = TutoringSession.objects.filter(tutor=tutor, date__gte=datetime.date.today()).order_by('date')
+    tutoring_requests = TutoringRequest.objects.filter(student=request.user.student)
+    for session in tutoring_sessions:
+        has_request = tutoring_requests.filter(session=session, student=request.user.student).exists()
+        session.has_request = has_request
     print(tutoring_sessions)
     if request.method == "POST":
         form = SendRequestForm(request.POST, request.FILES)
@@ -259,7 +263,10 @@ def send_request(request, tutor):
             print(current_session_id)
             tutor_request.save()
             message = "Request sent to " + tutor_username + '!'
-            print(tutor_request.session.date)
+            for session in tutoring_sessions:
+                has_request = tutoring_requests.filter(session=session, student=request.user.student).exists()
+                session.has_request = has_request
+            # return redirect('request', tutor=tutor_username)
     else:
         form = SendRequestForm(initial={'student': request.user.student, 'session': tutoring_sessions.first().id})
     return render(request, 'student/request.html', {'name': name,
@@ -269,7 +276,8 @@ def send_request(request, tutor):
                                                     'username': tutor_username,
                                                     'form': form,
                                                     'message': message,
-                                                    'current_session_id': current_session_id})
+                                                    'current_session_id': current_session_id,
+                                                    'tutoring_requests': tutoring_requests})
 
 
 def pending_requests(request):
@@ -305,6 +313,7 @@ def pending_requests(request):
         form = SendRequestForm()
     return render(request, template, {'tutoring_requests': tutoring_requests, 'form': form, 'message': message})
 
+
 def student_pending_requests(request):
     template = 'student/pending_requests.html'
     tutors = Tutor.objects.prefetch_related('tutoring_sessions').all()
@@ -318,6 +327,7 @@ def student_pending_requests(request):
     context = {'tutors': tutors, 'name': name, 'year': year, 'tutor_requests': tutor_requests}
     return render(request, template, context)
 
+
 def schedule(request):
     template = 'tutor/schedule.html'
     tutor = request.user.tutor
@@ -325,6 +335,7 @@ def schedule(request):
                                                        session__date__gte=datetime.date.
                                                        today()).order_by('session__date')
     return render(request, template, {'tutoring_schedule': tutoring_schedule})
+
 
 def student_schedule(request):
     tutors = Tutor.objects.prefetch_related('tutoring_sessions').all()
