@@ -162,6 +162,7 @@ class TutoringSessionForm(forms.ModelForm):
                     raise forms.ValidationError('This timeslot overlaps with another session!')
         return cleaned_data
 
+
 # Form class that sends tutoring request to tutor
 class SendRequestForm(forms.ModelForm):
     # message = forms.CharField(max_length=200, required=False,
@@ -175,6 +176,14 @@ class SendRequestForm(forms.ModelForm):
 # Form that allows tutors to accept requests. It does this by
 # changing status of request from False to True
 class AcceptRequestForm(forms.ModelForm):
+    status = forms.BooleanField(required=None)
+
+    class Meta:
+        model = TutoringRequest
+        exclude = ['student', 'session', 'message']
+
+
+class RejectRequestForm(forms.ModelForm):
     status = forms.BooleanField(required=None)
 
     class Meta:
