@@ -83,6 +83,7 @@ class addClassForm(forms.Form):
     classes = Concat('department', V(' '), 'catalog_number', V(''))
 
 
+
 class deleteClassForm(forms.Form):
     department = forms.CharField(max_length=4, widget=forms.TextInput(attrs={'placeholder': 'e.g., CS'}), required=True)
     catalog_number = forms.CharField(max_length=4, widget=forms.TextInput(attrs={'placeholder': 'e.g., 1110'}),
@@ -91,8 +92,9 @@ class deleteClassForm(forms.Form):
 
 
 class findTutorForm(forms.Form):
-    department = forms.CharField(max_length=4, widget=forms.TextInput(attrs={'placeholder': 'e.g., CS'}))
-    catalog_number = forms.CharField(max_length=4, widget=forms.TextInput(attrs={'placeholder': 'e.g., 1110'}))
+    department = forms.CharField(max_length=4, widget=forms.TextInput(attrs={'placeholder': 'e.g., CS'}), required=True)
+    catalog_number = forms.CharField(max_length=4, widget=forms.TextInput(attrs={'placeholder': 'e.g., 1110'}),
+                                     required=True)
     classes = Concat('department', V(' '), 'catalog_number', V(''))
 
 

@@ -55,6 +55,15 @@
         <h1>Delete a Class</h1>
          <p>Search for a class from UVA to delete from your profile</p>
     </header>
+     {% if messages %}
+     {% for message in messages %}
+     {% if message.message == 'Please do not leave department or catalog number empty' %}
+     <div class="alert alert-danger" style="text-align: center;">
+         {{ message }}
+         </div>
+     {% endif %}
+     {% endfor %}
+     {% endif %}
      <br>
     <div class="container">
       <div class="row justify-content-center">

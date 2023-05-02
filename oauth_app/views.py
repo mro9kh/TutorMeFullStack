@@ -66,6 +66,10 @@ def addclass(request):
         form = addClassForm()
         department = (formData["department"]).upper()
         catalog_number = formData["catalog_number"]
+        if department == "" or catalog_number == "":
+            # Display an error message and reload the page
+            messages.error(request, 'Please do not leave department or catalog number empty')
+            return redirect('addclass')
         urlQuery = 'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject=' + department + '&catalog_nbr=' + catalog_number
         response = requests.get(urlQuery)
         sisjsonTotal = response.json()
@@ -160,6 +164,12 @@ def find_tutor(request):
         form = findTutorForm()
         department = (formData["department"]).upper()
         catalog_number = formData["catalog_number"]
+        print(department)
+        print(catalog_number)
+        if department == "" or catalog_number == "":
+            # Display an error message and reload the page
+            messages.error(request, 'Please do not leave department or catalog number empty')
+            return redirect('find-tutor')
         urlQuery = 'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject=' + department + '&catalog_nbr=' + catalog_number
         response = requests.get(urlQuery)
         sisjsonTotal = response.json()
@@ -364,6 +374,10 @@ def delete_class(request):
         form = deleteClassForm()
         department = (formData["department"]).upper()
         catalog_number = formData["catalog_number"]
+        if department == "" or catalog_number == "":
+            # Display an error message and reload the page
+            messages.error(request, 'Please do not leave department or catalog number empty')
+            return redirect('delete-class')
         urlQuery = 'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=UVA01&term=1232&subject=' + department + '&catalog_nbr=' + catalog_number
         response = requests.get(urlQuery)
         sisjsonTotal = response.json()
