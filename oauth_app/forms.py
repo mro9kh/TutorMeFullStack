@@ -176,16 +176,12 @@ class SendRequestForm(forms.ModelForm):
 # Form that allows tutors to accept requests. It does this by
 # changing status of request from False to True
 class AcceptRequestForm(forms.ModelForm):
-    status = forms.BooleanField(required=None)
-
     class Meta:
         model = TutoringRequest
-        exclude = ['student', 'session', 'message']
+        exclude = ['student', 'session', 'message', 'status']
 
 
 class RejectRequestForm(forms.ModelForm):
-    status = forms.BooleanField(required=None)
-
     class Meta:
         model = TutoringRequest
-        exclude = ['student', 'session', 'message']
+        exclude = ['student', 'session', 'message', 'status']

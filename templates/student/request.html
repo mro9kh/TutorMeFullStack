@@ -59,7 +59,7 @@
  <div class = "container" style = "padding-top: 1cm;">
   <h3>Tutoring Sessions</h3>
   {% for session in sessions %}
-    <p>Date: {{ session.date }}</p>
+     <p><strong>Date: {{ session.date }}</strong></p>
     <p>Start Time: {{ session.start_time }}</p>
     <p>End Time: {{ session.end_time }}</p>
      <p><form method="POST">
@@ -69,6 +69,7 @@
      <input type="submit" value="Send Request" class="btn btn-primary">
         </form>
      </p>
+     <hr>
      <br>
 {% endfor %}
 <br>

@@ -41,6 +41,7 @@
 <div class = "container" style = "padding-top: 2cm;">
     <h3>Pending</h3>
   {{ message }}
+  <br>
   {% for tutoring_request in tutoring_requests %}
     <h1>{{tutoring_request.session.date }}</h1>
     <p>Username: {{tutoring_request.student.user.username}}</p>

@@ -8,7 +8,7 @@ from django.views.generic import CreateView, ListView, UpdateView
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
 import requests
-from django.db.models import CharField, Value as V
+from django.db.models import CharField, Value as V, Q
 import calendar
 from calendar import HTMLCalendar
 from django.contrib.auth.decorators import login_required
@@ -192,7 +192,7 @@ def find_tutor(request):
         form = findTutorForm()
     return render(request, 'find_tutor.html',
                   {'form': form, 'department': department, 'catalog_number': catalog_number, 'message': message,
-                   'tutorList': listOfTutors, 'sessions': validSessions, 'nameMessage':nameMessage})
+                   'tutorList': listOfTutors, 'sessions': validSessions, 'nameMessage': nameMessage})
 
 
 def tutor_home(request):
@@ -243,11 +243,9 @@ def send_request(request, tutor):
         if form.is_valid():
             print(request.POST['session_id'])
             # Check if the user has already requested this session
-
             session_id = request.POST['session_id']
             existing_request = TutoringRequest.objects.filter(session_id=session_id,
                                                               student=request.user.student).exists()
-
             if existing_request:
                 # Display an error message and reload the page
                 messages.error(request, 'You have already requested this session.')
