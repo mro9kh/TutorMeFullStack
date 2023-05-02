@@ -294,6 +294,18 @@ def pending_requests(request):
         form = SendRequestForm()
     return render(request, template, {'tutoring_requests': tutoring_requests, 'form': form})
 
+def student_pending_requests(request):
+    template = 'student/pending_requests.html'
+    tutors = Tutor.objects.prefetch_related('tutoring_sessions').all()
+    user = request.user
+    student = user.student
+    name = student.name
+    year = student.year
+    tutor_requests = TutoringRequest.objects.filter(student=student, session__date__gte=datetime.date.
+                                                    today()).order_by('session__date')
+    print(user.is_student)
+    context = {'tutors': tutors, 'name': name, 'year': year, 'tutor_requests': tutor_requests}
+    return render(request, template, context)
 
 def schedule(request):
     template = 'tutor/schedule.html'
@@ -302,6 +314,19 @@ def schedule(request):
                                                        session__date__gte=datetime.date.
                                                        today()).order_by('session__date')
     return render(request, template, {'tutoring_schedule': tutoring_schedule})
+
+def student_schedule(request):
+    tutors = Tutor.objects.prefetch_related('tutoring_sessions').all()
+    user = request.user
+    student = user.student
+    name = student.name
+    year = student.year
+    tutor_requests = TutoringRequest.objects.filter(student=student, session__date__gte=datetime.date.
+                                                    today()).order_by('session__date')
+    print(user.is_student)
+    context = {'tutors': tutors, 'name': name, 'year': year, 'tutor_requests': tutor_requests}
+    template = 'student/schedule.html'
+    return render(request, template, context)
 
 
 def delete_class(request):

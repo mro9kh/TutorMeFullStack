@@ -141,25 +141,11 @@
 
         <div class="section-title">
           <h2>Requests</h2>
-          <p>Outgoing session requests</p>
+          <p>View outgoing session requests</p>
         </div>
+        <a class="btn btn-primary" href="/accounts/home/student/requests" role="button">View Requests</a>
+    </div>
 
-        <h4>Pending</h4>
-        {% for request in tutor_requests %}
-        {% if request.status == None %}
-          <div class="profile-info">
-            <p><strong>Tutor ID:</strong> {{ request.session.tutor.user.username }}</p>
-            <p><strong>Name:</strong> {{ request.session.tutor.name }}</p>
-            <p><strong>Date:</strong> {{ request.session.date }}</p>
-            <p><strong>Start Time:</strong>  {{ request.session.start_time }}</p>
-            <p><strong>End Time:</strong> {{ request.session.end_time }}</p>
-          </div>
-          <br>
-        {% endif %}
-      {% endfor %}
-  </div>
-
-      </div>
     </section><!-- End Requests Section -->
 
     <!-- ======= Resume Section ======= -->
@@ -168,22 +154,9 @@
 
         <div class="section-title">
           <h2>Schedule</h2>
-          <p>Scheduled tutoring sessions appear below</p>
+          <p>View scheduled tutoring sessions</p>
         </div>
-
-        {% for request in tutor_requests %}
-        {% if request.status == True %}
-          <div class="profile-info">
-            <h1>{{ request.session.date }}</h1>
-            <p><strong>Username:</strong> {{ request.session.tutor.user.username }}</p>
-             <p><strong>Tutor Email:</strong> {{ request.session.tutor.user.email }}</p>
-            <p><strong>Tutor Name:</strong> {{ request.session.tutor.name }}</p>
-            <p><strong>Session Time:</strong> {{ request.session.start_time }} - {{ request.session.end_time }}</p>
-            <p><strong>Hourly Rate:</strong> ${{ request.session.tutor.hourly_rate }}</p>
-          </div>
-          {% endif %} 
-        {% endfor %} 
-
+        <a class="btn btn-primary" href="/accounts/home/student/schedule" role="button">View Schedule</a>
       </div>
     </section><!-- End Resume Section -->
 
@@ -205,6 +178,7 @@
               <p><strong>Year:</strong> {{ tutor.year }}</p>
               <p><strong>Classes Taken:</strong> {{ tutor.user.classes }}</p>
               <p><strong>Hourly Rate:</strong> ${{ tutor.hourly_rate }}</p>
+              <hr>
                 {% if tutor.tutoring_sessions.all %}
                   <p><a class="btn btn-primary" href="/accounts/home/student/{{ tutor.user.username }}" role="button">Schedule Session</a></p>
                 {% else %}

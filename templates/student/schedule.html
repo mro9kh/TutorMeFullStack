@@ -37,48 +37,30 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 </head>
-
 <body>
-  <header class="text-center py-4">
-      <h1>Find a Tutor</h1>
-  </header>
-  <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-      <form action="" method="post" novalidate>
-          {% csrf_token %} 
-          {{ form.as_p }}
-          <div class="text-center my-4">
-            <button type="submit" class="btn btn-primary">Search</button>
-        </div>
-      </form>
-
-      <div class="mt-4 text-center">
-        {% block content %}
-        <div class = "container" style = "padding-top: 2cm;">
-            <h3><strong>{{ message }}</strong></h3>
-            {% for user in tutorList %}
-                <p><strong>Name:</strong> {{ user.tutor.name}}</p>
-                <p><strong>Year:</strong> {{ user.tutor.year }}</p>
-                <p><strong>Classes Taken:</strong> {{ user.tutor.user.classes }}</p>
-                <p><strong>Hourly Rate:</strong> $ {{ user.tutor.hourly_rate }}</p>
-                <p><a class="btn btn-primary" href=/accounts/home/student/{{user.tutor.user.username}} role="button">Schedule Session</a></p>
-                <hr>
-                <br>
-                </br>
-            {% endfor %}
-        </div>
-        {% endblock %}
-      </div>
-     
-      <div class="mt-4 text-center">
-        {% if user.is_student %}
-          <a class="btn btn-secondary" href="/accounts/home/student/" role="button">Return to home</a>
-        {% else %}
-          <a class="btn btn-secondary" href="/accounts/home/tutor/" role="button">Return to home</a>
-        {% endif %}
-      </div>
-    </div>
-  </div>
+<div class = "container" style = "padding-top: 2cm;">
+  <div>
+    <h3>Scheduled</h3>
 </div>
+  <br>
+  {% for request in tutor_requests %}
+        {% if request.status == True %}
+          <div class="profile-info">
+            <h1>{{ request.session.date }}</h1>
+            <p><strong>Username:</strong> {{ request.session.tutor.user.username }}</p>
+            <p><strong>Tutor Email:</strong> {{ request.session.tutor.user.email }}</p>
+            <p><strong>Tutor Name:</strong> {{ request.session.tutor.name }}</p>
+            <p><strong>Session Time:</strong> {{ request.session.start_time }} - {{ request.session.end_time }}</p>
+            <p><strong>Hourly Rate:</strong> ${{ request.session.tutor.hourly_rate }}</p>
+            <hr>
+          </div>
+          {% endif %} 
+        {% endfor %} 
+  </div>
+  </div>
+<div class = "container" style = "padding-top: 2cm;">
+  <a class="btn btn-secondary" href=/accounts/home/student  role="button">Return to Home</button>  </a>
+</div>
+
 </body>
+</html>
