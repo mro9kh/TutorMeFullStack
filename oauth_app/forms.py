@@ -160,6 +160,9 @@ class TutoringSessionForm(forms.ModelForm):
             for session in overlapping_sessions:
                 if start_time < session.end_time and end_time > session.start_time:
                     raise forms.ValidationError('This timeslot overlaps with another session!')
+        if tutor and start_time and end_time and date:
+            if start_time == end_time:
+                raise forms.ValidationError('Start time must be different from end time!')
         return cleaned_data
 
 
