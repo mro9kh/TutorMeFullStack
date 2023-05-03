@@ -36,7 +36,7 @@ class StudentSignUpView(UpdateView):
 
     def form_valid(self, form):
         user = form.save(commit=True)
-        return redirect('student_home')
+        return redirect('student_success')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -54,7 +54,7 @@ class TutorSignUpView(UpdateView):
 
     def form_valid(self, form):
         user = form.save(commit=True)
-        return redirect('tutor_home')
+        return redirect('tutor_success')
 
 
 def addclass(request):
