@@ -42,29 +42,42 @@
         <h1>Pending</h1>
         <p>Accept or reject a request from a student for a tutoring session</p>
     </header>
-<div class = "container" style = "padding-top: 2cm;">
+<div class = "container">
     <br>
     <br>
     {{ message }}
   {% for tutoring_request in tutoring_requests %}
-    <h3>{{tutoring_request.session.date }}</h3>
-    <p><strong>Username: </strong>{{tutoring_request.student.user.username}}</p>
-    <p><strong>Student Email: </strong>{{tutoring_request.student.user.email}}</p>
-    <p><strong>Student Name: </strong>{{tutoring_request.student.name}}</p>
-    <p><strong>Year: </strong>{{tutoring_request.student.year}}</p>
-    <p><strong>Classes: </strong>{{tutoring_request.student.user.classes}}</p>
-    <p><strong>Session Time:</strong> {{ tutoring_request.session.start_time }} - {{ tutoring_request.session.end_time }} </p>
-    <p><form method="POST">
+  <div class="container" style="padding-top: 2cm;">
+    <div class="row">
+      <div class="col-md-8" style="text-align: left;">
+        <h3>{{tutoring_request.session.date }}</h3>
+        <p><strong>Username: </strong>{{tutoring_request.student.user.username}}</p>
+        <p><strong>Student Email: </strong>{{tutoring_request.student.user.email}}</p>
+        <p><strong>Student Name: </strong>{{tutoring_request.student.name}}</p>
+        <p><strong>Year: </strong>{{tutoring_request.student.year}}</p>
+        <p><strong>Classes: </strong>{{tutoring_request.student.user.classes}}</p>
+        <p><strong>Session Time:</strong> {{ tutoring_request.session.start_time }} - {{ tutoring_request.session.end_time }} </p>
+        <p>
+          <form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
-     <input type="hidden" name="tutoring_request_id" value="{{ tutoring_request.id }}">
-     <input type="submit" name="accept" value="Accept Request" class="btn btn-primary">
-     <input type="submit" name="reject" value="Reject Request" class="btn btn-danger">
-     <hr>
-     </form>
-    </p>
-    <br>
-    <br>
+            <input type="hidden" name="tutoring_request_id" value="{{ tutoring_request.id }}">
+            <input type="submit" name="accept" value="Accept Request" class="btn btn-primary">
+            <input type="submit" name="reject" value="Reject Request" class="btn btn-danger">
+          </form>
+        </p>
+      </div>
+      <div class="col-md-4" style="text-align: right;">
+        {% if tutoring_request.student.profile_image %}
+          <img src="{{ tutoring_request.student.profile_image.url }}" alt="" class="img-fluid rounded-circle tutor-profile-image" style="max-width: 100%;">
+        {% else %}
+          <img src="{% static 'img/profile-img.jpg' %}" alt="" class="img-fluid rounded-circle tutor-profile-image" style="max-width: 100%;">
+        {% endif %}
+      </div>
+    </div>
+    <hr>
+  </div>
+  <br>
 {% endfor %}
   </div>
 <div class = "container" style = "padding-top: 2cm;">
