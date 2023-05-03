@@ -1,5 +1,5 @@
 import datetime
-
+import time
 from django.contrib.auth import login, get_user_model, logout
 from django.db.models.functions import Concat
 from django.shortcuts import redirect, render, get_object_or_404
@@ -8,6 +8,7 @@ from django.views.generic import CreateView, ListView, UpdateView
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
 import requests
+from django.urls import reverse_lazy
 from django.db.models import CharField, Value as V, Q
 import calendar
 from calendar import HTMLCalendar
@@ -22,7 +23,6 @@ from .models import User, Student, Tutor, TutorClasses, TutoringSession, Tutorin
 from django.utils.decorators import method_decorator
 
 
-@method_decorator(login_required, name='dispatch')
 class StudentSignUpView(UpdateView):
     model = User
     form_class = StudentSignUpForm
@@ -37,7 +37,7 @@ class StudentSignUpView(UpdateView):
 
     def form_valid(self, form):
         user = form.save(commit=True)
-        return redirect('student_success')
+        return redirect('student_home')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -55,8 +55,7 @@ class TutorSignUpView(UpdateView):
 
     def form_valid(self, form):
         user = form.save(commit=True)
-        return redirect('tutor_success')
-
+        return redirect('tutor_home')
 
 def addclass(request):
     department = ""

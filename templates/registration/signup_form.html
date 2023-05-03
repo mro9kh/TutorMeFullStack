@@ -29,7 +29,18 @@
 
   <!-- Template Main CSS File -->
   <link href="{% static 'css/style.css' %}" rel="stylesheet">
-
+  <style>
+    
+    .hidden {
+      display: none;
+    }
+    
+    #btn2-text{
+      margin: 25px 0;
+      font-size: 25px;
+      color: white;
+    }
+  </style>
   <!-- =======================================================
   * Template Name: iPortfolio
   * Updated: Mar 10 2023 with Bootstrap v5.2.3
@@ -56,7 +67,7 @@
               <legend><h1>Create An Account</h1></legend>
               <p>Email: {{ user.email }}</p>
               {{ form.as_p }}
-              <button type="submit" class="btn btn-warning">Sign Up</button>
+                <button id="submit-button" class="btn btn-warning">Sign Up</button>
             </fieldset>
           </form>
         </div>
@@ -79,6 +90,14 @@
   <script src="{% static 'vendor/typed.js/typed.min.js' %}"></script>
   <script src="{% static 'vendor/waypoints/noframework.waypoints.js' %}"></script>
   <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+  <script>
+    const btn1 = document.getElementById('submit-button');
+
+    btn1.addEventListener('click', () => {
+    alert('Account created successfully! You will now be redirected to login');
+  });
+</script>
+
 
   <!-- Template Main JS File -->
   <script src="{% static 'js/main.js' %}"></script>
