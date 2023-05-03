@@ -249,14 +249,31 @@ def send_request(request, tutor):
     tutor_username = tutor.user.username
     tutoring_sessions = TutoringSession.objects.filter(tutor=tutor, date__gte=datetime.date.today()).order_by('date')
     tutoring_requests = TutoringRequest.objects.filter(student=request.user.student)
+
+    # this checks to see if a session already has a request
     for session in tutoring_sessions:
         has_request = tutoring_requests.filter(session=session, student=request.user.student).exists()
+        # session.has_request = has_request
+        request_status = None
+        # this checks the status of the request
+        if has_request:
+            request_status = tutoring_requests.get(session=session, student=request.user.student).status
+            print(request_status)
         session.has_request = has_request
-    print(tutoring_sessions)
+        session.request_status = request_status
+
+        #     print(request_status)
+        # session.has_request = has_request
+        # session.request = None if not has_request else tutoring_requests.get(session=session,
+        #                                                                      student=request.user.student)
+        # session.request.status = request_status if request_status is not None else None
+        # print(session.has_request)
+    # print(tutoring_sessions)
+    # print(session.has_request)
     if request.method == "POST":
         form = SendRequestForm(request.POST, request.FILES)
         if form.is_valid():
-            print(request.POST['session_id'])
+            # print(request.POST['session_id'])
             # Check if the user has already requested this session
             session_id = request.POST['session_id']
             existing_request = TutoringRequest.objects.filter(session_id=session_id,
@@ -271,12 +288,17 @@ def send_request(request, tutor):
             tutor_request.student = request.user.student
             tutor_request.session = TutoringSession.objects.get(pk=request.POST['session_id'])
             current_session_id = tutor_request.session.id
-            print(current_session_id)
+            # print(current_session_id)
             tutor_request.save()
             message = "Request sent to " + tutor_username + '!'
             for session in tutoring_sessions:
                 has_request = tutoring_requests.filter(session=session, student=request.user.student).exists()
+                request_status = None
+                if has_request:
+                    request_status = tutoring_requests.get(session=session, student=request.user.student).status
+                    print(request_status)
                 session.has_request = has_request
+                session.request_status = request_status
             # return redirect('request', tutor=tutor_username)
     else:
         form = SendRequestForm(initial={'student': request.user.student, 'session': tutoring_sessions.first().id})
