@@ -68,7 +68,11 @@
     <div class="d-flex flex-column">
 
       <div class="profile">
-        <img src="{% static 'img/profile-img.jpg' %}" alt="" class="img-fluid rounded-circle">
+        {% if user.student.profile_image %}
+          <img src="{{ user.student.profile_image.url }}" alt="" class="img-fluid rounded-circle">
+        {% else %}
+          <img src="{% static 'img/profile-img.jpg' %}" alt="" class="img-fluid rounded-circle">
+        {% endif %}
         <h1 class="text-light"><a href="#profile">{{ user.student.name|title }}</a></h1>
       </div>
 

@@ -83,7 +83,6 @@ class addClassForm(forms.Form):
     classes = Concat('department', V(' '), 'catalog_number', V(''))
 
 
-
 class deleteClassForm(forms.Form):
     department = forms.CharField(max_length=4, widget=forms.TextInput(attrs={'placeholder': 'e.g., CS'}), required=True)
     catalog_number = forms.CharField(max_length=4, widget=forms.TextInput(attrs={'placeholder': 'e.g., 1110'}),
@@ -193,3 +192,19 @@ class RejectRequestForm(forms.ModelForm):
         model = TutoringRequest
         exclude = ['student', 'session', 'message', 'status']
 
+
+# Profile picture form!
+class TutorProfilePicForm(forms.ModelForm):
+    profile_image = forms.ImageField(label="Profile Picture")
+
+    class Meta:
+        model = Tutor
+        fields = ('profile_image',)
+
+
+class StudentProfilePicForm(forms.ModelForm):
+    profile_image = forms.ImageField(label="Profile Picture")
+
+    class Meta:
+        model = Student
+        fields = ('profile_image',)

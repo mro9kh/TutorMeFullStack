@@ -15,7 +15,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from .forms import StudentSignUpForm, TutorSignUpForm, addClassForm, UpdateTutorProfileForm, TutoringSessionForm, \
-    UpdateStudentProfileForm, SendRequestForm, findTutorForm, AcceptRequestForm, deleteClassForm, RejectRequestForm
+    UpdateStudentProfileForm, SendRequestForm, findTutorForm, AcceptRequestForm, deleteClassForm, RejectRequestForm, \
+    StudentProfilePicForm, TutorProfilePicForm
 from .models import User, Student, Tutor, TutorClasses, TutoringSession, TutoringRequest
 
 from django.utils.decorators import method_decorator
@@ -127,13 +128,16 @@ def edit_tutor_profile(request):
     message = ''
     if request.method == 'POST':
         profile_form = UpdateTutorProfileForm(request.POST, request.FILES, instance=tutor)
-        if profile_form.is_valid():
+        pic_form = TutorProfilePicForm(request.POST, request.FILES, instance=tutor)
+        if profile_form.is_valid() and pic_form.is_valid():
             profile_form.save()
+            pic_form.save()
             print(tutor.name)
             message = 'Your profile is updated successfully'
     else:
         profile_form = UpdateTutorProfileForm(instance=tutor)
-    return render(request, template, {'profile_form': profile_form, 'message': message})
+        pic_form = TutorProfilePicForm(instance=tutor)
+    return render(request, template, {'profile_form': profile_form, 'message': message, 'pic_form': pic_form})
 
 
 def edit_student_profile(request):
@@ -142,13 +146,17 @@ def edit_student_profile(request):
     message = ''
     if request.method == 'POST':
         profile_form = UpdateStudentProfileForm(request.POST, request.FILES, instance=student)
+        pic_form = StudentProfilePicForm(request.POST, request.FILES, instance=student)
         if profile_form.is_valid():
             profile_form.save()
+            pic_form.save()
             print(student.name)
             message = 'Your profile is updated successfully'
     else:
         profile_form = UpdateStudentProfileForm(instance=student)
-    return render(request, template, {'profile_form': profile_form, 'message': message})
+        pic_form = StudentProfilePicForm(instance=student)
+    return render(request, template, {'profile_form': profile_form, 'message': message,
+                                      'pic_form': pic_form})
 
 
 def find_tutor(request):

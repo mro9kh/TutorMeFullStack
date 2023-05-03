@@ -30,6 +30,9 @@ class Student(models.Model):
     year = models.CharField(max_length=10, choices=SCHOOL_YEAR)
     classes = models.TextField(max_length=500, default='')
 
+    # ---------------
+    profile_image = models.ImageField(null=True, blank=True, upload_to="images/")
+
     # classes = models.TextField(max_length=1000, default="")
     def __str__(self):
         return self.name
@@ -57,6 +60,9 @@ class Tutor(models.Model):
     year = models.CharField(max_length=10, choices=SCHOOL_YEAR)
     classes = models.TextField(max_length=500, default='')
     hourly_rate = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
+    # ---------------
+    profile_image = models.ImageField(null=True, blank=True, upload_to="images/")
+
 
     def __str__(self):
         return self.name

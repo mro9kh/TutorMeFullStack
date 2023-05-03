@@ -19,6 +19,8 @@ from django.views.generic import TemplateView
 from django.contrib.auth.views import LogoutView
 from oauth_app import views
 from oauth_app.views import student_home, tutor_home
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     # path('', include('mysite.urls')),
@@ -47,4 +49,4 @@ urlpatterns = [
     path('accounts/home/delete-class', views.delete_class, name='delete-class'),
 
     path('logout/', LogoutView.as_view(), name='logout'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

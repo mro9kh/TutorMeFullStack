@@ -49,6 +49,7 @@
         <form action="{% url 'student_profile' %}" method="post" enctype="multipart/form-data" novalidate>
         {% csrf_token %}
         {{ profile_form.as_p }}
+            {{ pic_form.as_p }}
         <div class="text-center mt-4">
           <button type="submit" class="btn btn-primary">Submit</button>
         </div>
