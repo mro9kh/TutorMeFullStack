@@ -72,7 +72,7 @@
         {% if session.request_status == True %}
             <input type="submit" value="Accepted!" class="btn btn-success" disabled>
         {% elif session.request_status == False %}
-            <input type="submit" value="Denied!" class="btn btn-danger" disabled>
+            <input type="submit" value="Declined!" class="btn btn-danger" disabled>
         {% else %}
             <input type="hidden" name="session_id" value="{{ session.id }}">
             <input type="submit" value="Requested" class="btn btn-secondary"d>
