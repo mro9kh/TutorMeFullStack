@@ -39,15 +39,26 @@
 </head>
 <body>
 <header style="background-color: #F8E9D9; padding: 30px; text-align: center; border-radius: 15px">
-     <h1> Tutor: {{ name }}</h1>
-     <div class = "container" style = "padding-top: 1cm; text-align: center">
-     <p><strong>Username:</strong> {{username}}</p>
-     <p><strong>Tutor email:</strong> {{tutor.user.email}}</p>
-         <p><strong>Year:</strong> {{tutor.year}}</p>
-     <p><strong>Classes taken:</strong> {{user.classes}}</p>
-     <p><strong>Hourly Rate:</strong> ${{tutor.hourly_rate}}</p>
-         <br>
-         <p>View and send a request for tutoring sessions from {{tutor.name}}</p>
+  <div class="d-flex justify-content-center align-items-center">
+    <div style="flex: 0 0 20%; text-align: left;">
+      {% if tutor.profile_image %}
+        <img src="{{ tutor.profile_image.url }}" alt="" class="img-fluid rounded-circle tutor-profile-image" style="max-width: 100%;">
+      {% else %}
+        <img src="{% static 'img/profile-img.jpg' %}" alt="" class="img-fluid rounded-circle tutor-profile-image" style="max-width: 100%;">
+      {% endif %}
+    </div>
+    <div style="flex: 0 0 60%; text-align: center;">
+      <h1>Tutor: {{ name }}</h1>
+      <p><strong>Username:</strong> {{username}}</p>
+      <p><strong>Tutor email:</strong> {{tutor.user.email}}</p>
+      <p><strong>Year:</strong> {{tutor.year}}</p>
+      <p><strong>Classes taken:</strong> {{user.classes}}</p>
+      <p><strong>Hourly Rate:</strong> ${{tutor.hourly_rate}}</p>
+      <br>
+      <p>View and send a request for tutoring sessions from {{tutor.name}}</p>
+    </div>
+    <div style="flex: 0 0 20%;"></div>
+  </div>
 </header>
      {% if messages %}
      {% for message in messages %}
