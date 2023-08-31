@@ -17,7 +17,7 @@ __Name:__ Johnny Azizi
 
 __Computing ID:__ hja8ybr
 
-
+** Margaret Owens was the testing manager, spearheading beta and unit testing as well as working as a developer on both the back end and front end of the app **
 
 
 REDACTED: ****************
